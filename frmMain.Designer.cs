@@ -30,9 +30,10 @@
         {
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkInternetExplorer = new System.Windows.Forms.CheckBox();
+            this.chkDeprovisionStoreApps = new System.Windows.Forms.CheckBox();
             this.chkOneDrive = new System.Windows.Forms.CheckBox();
-            this.chkWindowsStoreApps = new System.Windows.Forms.CheckBox();
+            this.chkRemoveStoreApps = new System.Windows.Forms.CheckBox();
             this.txtResults = new System.Windows.Forms.TextBox();
             this.grpTreatments.SuspendLayout();
             this.SuspendLayout();
@@ -49,9 +50,10 @@
             // 
             // grpTreatments
             // 
-            this.grpTreatments.Controls.Add(this.checkBox1);
+            this.grpTreatments.Controls.Add(this.chkInternetExplorer);
+            this.grpTreatments.Controls.Add(this.chkDeprovisionStoreApps);
             this.grpTreatments.Controls.Add(this.chkOneDrive);
-            this.grpTreatments.Controls.Add(this.chkWindowsStoreApps);
+            this.grpTreatments.Controls.Add(this.chkRemoveStoreApps);
             this.grpTreatments.Location = new System.Drawing.Point(12, 12);
             this.grpTreatments.Name = "grpTreatments";
             this.grpTreatments.Size = new System.Drawing.Size(422, 251);
@@ -59,18 +61,31 @@
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
             // 
-            // checkBox1
+            // chkInternetExplorer
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(6, 42);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(184, 17);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Tag = "DeprovisionStoreApps";
-            this.checkBox1.Text = "Deprovision Windows Store Apps";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkInternetExplorer.AutoSize = true;
+            this.chkInternetExplorer.Checked = true;
+            this.chkInternetExplorer.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkInternetExplorer.Location = new System.Drawing.Point(6, 88);
+            this.chkInternetExplorer.Name = "chkInternetExplorer";
+            this.chkInternetExplorer.Size = new System.Drawing.Size(141, 17);
+            this.chkInternetExplorer.TabIndex = 3;
+            this.chkInternetExplorer.Tag = "InternetExplorer";
+            this.chkInternetExplorer.Text = "Disable Internet Explorer";
+            this.chkInternetExplorer.UseVisualStyleBackColor = true;
+            // 
+            // chkDeprovisionStoreApps
+            // 
+            this.chkDeprovisionStoreApps.AutoSize = true;
+            this.chkDeprovisionStoreApps.Checked = true;
+            this.chkDeprovisionStoreApps.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDeprovisionStoreApps.Location = new System.Drawing.Point(6, 42);
+            this.chkDeprovisionStoreApps.Name = "chkDeprovisionStoreApps";
+            this.chkDeprovisionStoreApps.Size = new System.Drawing.Size(184, 17);
+            this.chkDeprovisionStoreApps.TabIndex = 2;
+            this.chkDeprovisionStoreApps.Tag = "DeprovisionStoreApps";
+            this.chkDeprovisionStoreApps.Text = "Deprovision Windows Store Apps";
+            this.chkDeprovisionStoreApps.UseVisualStyleBackColor = true;
             // 
             // chkOneDrive
             // 
@@ -85,18 +100,18 @@
             this.chkOneDrive.Text = "Remove OneDrive (including all OneDrive data)";
             this.chkOneDrive.UseVisualStyleBackColor = true;
             // 
-            // chkWindowsStoreApps
+            // chkRemoveStoreApps
             // 
-            this.chkWindowsStoreApps.AutoSize = true;
-            this.chkWindowsStoreApps.Checked = true;
-            this.chkWindowsStoreApps.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWindowsStoreApps.Location = new System.Drawing.Point(6, 19);
-            this.chkWindowsStoreApps.Name = "chkWindowsStoreApps";
-            this.chkWindowsStoreApps.Size = new System.Drawing.Size(210, 17);
-            this.chkWindowsStoreApps.TabIndex = 0;
-            this.chkWindowsStoreApps.Tag = "RemoveStoreApps";
-            this.chkWindowsStoreApps.Text = "Remove Installed Windows Store Apps";
-            this.chkWindowsStoreApps.UseVisualStyleBackColor = true;
+            this.chkRemoveStoreApps.AutoSize = true;
+            this.chkRemoveStoreApps.Checked = true;
+            this.chkRemoveStoreApps.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkRemoveStoreApps.Location = new System.Drawing.Point(6, 19);
+            this.chkRemoveStoreApps.Name = "chkRemoveStoreApps";
+            this.chkRemoveStoreApps.Size = new System.Drawing.Size(210, 17);
+            this.chkRemoveStoreApps.TabIndex = 0;
+            this.chkRemoveStoreApps.Tag = "RemoveStoreApps";
+            this.chkRemoveStoreApps.Text = "Remove Installed Windows Store Apps";
+            this.chkRemoveStoreApps.UseVisualStyleBackColor = true;
             // 
             // txtResults
             // 
@@ -133,8 +148,9 @@
         private System.Windows.Forms.Button btnInitiateTreatment;
         private System.Windows.Forms.GroupBox grpTreatments;
         private System.Windows.Forms.CheckBox chkOneDrive;
-        private System.Windows.Forms.CheckBox chkWindowsStoreApps;
+        private System.Windows.Forms.CheckBox chkRemoveStoreApps;
         private System.Windows.Forms.TextBox txtResults;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkDeprovisionStoreApps;
+        private System.Windows.Forms.CheckBox chkInternetExplorer;
     }
 }
