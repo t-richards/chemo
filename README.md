@@ -16,6 +16,25 @@ another round of treatment, if you desire.
 Note: This program is designed strictly for Windows 10. Use on other versions
 Microsoft Windows is not supported.
 
+## Available Treatments
+
+### Remove Installed Windows Store Apps
+
+This treatment removes a select subset of pre-installed Windows Store apps. For
+the complete list of removals, please see:
+
+https://github.com/t-richards/chemo/blob/master/Treatment/RemoveStoreApps.cs#L15-L44
+
+### Deprovision Windows Store Apps
+
+Uninstalling store apps using the above treatment will only apply to the current
+user. The "Deprovision" treatment prevents store apps from being automatically
+installed when a new user is created, or when a feature update is applied.
+
+### Remove OneDrive
+
+This treatment completely removes OneDrive and ALL OF YOUR ONEDRIVE DATA.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at
