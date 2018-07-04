@@ -1,0 +1,13 @@
+pull_requests:
+  do_not_increment_build_number: true
+skip_branch_with_pr: true
+branches:
+  only:
+  - master
+image: Visual Studio 2017
+build_script:
+  - cmd: >-
+      MsBuild /p:Configuration=Release /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+artifacts:
+  - path: 'bin\x64\Release\*.exe'
+    name: Binary
