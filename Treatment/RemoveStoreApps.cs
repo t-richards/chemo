@@ -2,41 +2,53 @@
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
+using Windows.Foundation;
+using System.Threading;
 
 namespace Chemo.Treatment
 {
     class RemoveStoreApps : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
+        private static PackageManager packageManager = new PackageManager();
 
         public readonly IDictionary<string, bool> AppsToRemove = new Dictionary<string, bool>
         {
+            { "Microsoft.3DBuilder", true },
             { "Microsoft.BingWeather", true },
             { "Microsoft.GetHelp", true },
             { "Microsoft.Getstarted", true },
+            { "Microsoft.Messaging", true },
             { "Microsoft.Microsoft3DViewer", true },
+            { "Microsoft.MicrosoftOfficeHub", true },
+            { "Microsoft.MicrosoftSolitaireCollection", true },
             { "Microsoft.MicrosoftStickyNotes", true },
+            { "Microsoft.MSPaint", true },
+            { "Microsoft.Office.OneNote", true },
             { "Microsoft.OneConnect", true },
             { "Microsoft.People", true },
             { "Microsoft.Print3D", true },
             { "Microsoft.SkypeApp", true },
             { "Microsoft.Wallet", true },
             { "Microsoft.WindowsAlarms", true },
+            { "Microsoft.WindowsCamera", true },
+            { "microsoft.windowscommunicationsapps", true },
             { "Microsoft.WindowsFeedbackHub", true },
             { "Microsoft.WindowsMaps", true },
+            { "Microsoft.WindowsSoundRecorder", true },
             { "Microsoft.Xbox.TCUI", true },
             { "Microsoft.XboxApp", true },
             { "Microsoft.XboxGameOverlay", true },
+            { "Microsoft.XboxGamingOverlay", true },
+            { "Microsoft.XboxIdentityProvider", true },
             { "Microsoft.XboxSpeechToTextOverlay", true },
             { "Microsoft.ZuneMusic", true },
             { "Microsoft.ZuneVideo", true },
-            { "Microsoft.MicrosoftOfficeHub", true }
         };
 
         public void PerformTreatment()
         {
-            PackageManager packageManager = new PackageManager();
-
+            int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
 
             foreach (var package in packages)
@@ -56,25 +68,28 @@ namespace Chemo.Treatment
                 AppsToRemove.TryGetValue(package.Id.Name, out bool shouldRemove);
 
                 logger.Log("Should remove? {0}", shouldRemove);
-                DisplayPackageInfo(package);
+                logger.Log("Name: {0}", package.Id.Name);
+                logger.Log("Full Name: {0}", package.Id.FullName);
                 logger.Log("");
+
+                RemovePackage(package);
+                packageCount += 1;
+            }
+
+            if (packageCount < 1)
+            {
+                logger.Log("No Windows Store applications were uninstalled.");
             }
         }
 
-        private static void DisplayPackageInfo(Package package)
+        private static void RemovePackage(Package package)
         {
-            logger.Log("Name: {0}", package.Id.Name);
-            logger.Log("Full Name: {0}", package.Id.FullName);
+            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation = 
+                packageManager.RemovePackageAsync(package.Id.FullName);
 
-            try
-            {
-                logger.Log("Installed Location: {0}", package.InstalledLocation.Path);
-
-            }
-            catch (Exception ex)
-            {
-                logger.Log("Could not determine installed location: {0}", ex.Message);
-            }
+            deploymentOperation.Completed = (result, progress) => {
+                logger.Log("Removal operation completed: {0} Status: {1}", package.Id.FullName, result.Status);
+            };
         }
     }
 }

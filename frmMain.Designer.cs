@@ -75,7 +75,7 @@
             // chkOneDrive
             // 
             this.chkOneDrive.AutoSize = true;
-            this.chkOneDrive.Location = new System.Drawing.Point(0, 104);
+            this.chkOneDrive.Location = new System.Drawing.Point(6, 106);
             this.chkOneDrive.Name = "chkOneDrive";
             this.chkOneDrive.Size = new System.Drawing.Size(114, 17);
             this.chkOneDrive.TabIndex = 1;

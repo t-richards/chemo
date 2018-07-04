@@ -25,9 +25,9 @@ namespace Chemo
 
             foreach (CheckBox c in grpTreatments.Controls.OfType<CheckBox>())
             {
-                logger.Log("Component {0} value: {1}", c.Text, c.Checked.ToString());
                 if (c.Checked && c.Tag != null)
                 {
+                    logger.Log("== Applying Treatment: {0} ==", c.Text);
                     Type componentType = Type.GetType("Chemo.Treatment." + c.Tag.ToString());
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
                     tr.PerformTreatment();

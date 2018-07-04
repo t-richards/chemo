@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace Chemo
 {
@@ -8,6 +9,8 @@ namespace Chemo
         private static readonly object padlock = new object();
         private static TextBox target = null;
 
+        delegate void LogCallback(string format, params object[] args);
+
         public void SetTarget(TextBox textBox)
         {
             target = textBox;
@@ -16,7 +19,17 @@ namespace Chemo
         public void Log(string format, params object[] args)
         {
             format += "\r\n";
-            target.AppendText(string.Format(format, args));
+
+            if (target.InvokeRequired)
+            {
+                target.Invoke(new Action(() =>
+                    target.AppendText(string.Format(format, args))
+                ));
+            }
+            else
+            {
+                target.AppendText(string.Format(format, args));
+            }
         }
 
         public static Logger Instance

@@ -19,5 +19,6 @@ Microsoft Windows is not supported.
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/t-richards/chemo
 
+## License
 
-
+MIT License.

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Dism;
+﻿using Microsoft.Dism;
 
 namespace Chemo.Treatment
 {
@@ -13,15 +8,22 @@ namespace Chemo.Treatment
 
         public void PerformTreatment()
         {
-            logger.Log("== Deprovision ==");
+            int packageCount = 0;
 
             using (DismSession session = DismApi.OpenOnlineSession())
             {
                 DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
                 foreach (var package in dismAppxPackages)
                 {
-                    logger.Log("DISM package display name: {0}", package.DisplayName);
+                    logger.Log("Deprovisioning package: {0}", package.DisplayName);
+                    DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                    packageCount += 1;
                 }
+            }
+
+            if (packageCount < 1)
+            {
+                logger.Log("No Windows Store packages were deprovisioned.");
             }
         }
     }
