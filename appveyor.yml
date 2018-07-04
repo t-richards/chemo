@@ -9,14 +9,21 @@ configuration: Release
 build_script:
   - cmd: >-
       nuget restore
+
       msbuild /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
 after_build:
   - ps: >-
       cd bin\Release
+
       Get-ChildItem * -Include *.xml -Recurse | Remove-Item
+
       Get-ChildItem * -Include *.pdb -Recurse | Remove-Item
+
       cd ..\..\
+
       7z a ChemoDevBuild.zip .\bin\Release\*
+      
 artifacts:
   - path: 'bin\Release\ChemoDevBuild.zip'
     name: ChemoDevBuild
