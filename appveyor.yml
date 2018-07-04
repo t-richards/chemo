@@ -9,7 +9,7 @@ configuration: Release
 build_script:
   - cmd: >-
       nuget restore
-      msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+      msbuild /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 after_build:
   - ps: >-
       cd bin\Release
