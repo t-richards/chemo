@@ -5,9 +5,18 @@ branches:
   only:
   - master
 image: Visual Studio 2017
+configuration: Release
 build_script:
   - cmd: >-
-      MsBuild /p:Configuration=Release /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+      nuget restore
+      msbuild /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+after_build:
+  - ps: >-
+      cd bin\Release
+      Get-ChildItem * -Include *.xml -Recurse | Remove-Item
+      Get-ChildItem * -Include *.pdb -Recurse | Remove-Item
+      cd ..\..\
+      7z a ChemoDevBuild.zip .\bin\Release\*
 artifacts:
-  - path: 'bin\x64\Release\*.exe'
-    name: Binary
+  - path: 'bin\Release\ChemoDevBuild.zip'
+    name: ChemoDevBuild
