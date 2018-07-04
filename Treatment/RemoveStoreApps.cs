@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Windows.ApplicationModel;
-using Windows.Management.Deployment;
 using Windows.Foundation;
-using System.Threading;
+using Windows.Management.Deployment;
 
 namespace Chemo.Treatment
 {

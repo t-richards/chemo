@@ -1,5 +1,7 @@
 # Chemo
 
+[![Build status](https://ci.appveyor.com/api/projects/status/pr8btfa4knxwsfgc?svg=true)](https://ci.appveyor.com/project/t-richards/chemo)
+
 > I want to bring my computer to the brink of death using an overdose of chemo,
 > only to have it maybe survive and be a normal computer
 

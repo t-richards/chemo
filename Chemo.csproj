@@ -2,14 +2,14 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{82683839-7977-4813-B69C-E9E7F72B0207}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <AssemblyName>Chemo</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <MinimumVisualStudioVersion>15</MinimumVisualStudioVersion>
+    <TargetPlatformVersion>10</TargetPlatformVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -76,9 +76,6 @@
     <Reference Include="Windows.Foundation" />
     <Reference Include="Windows.Management" />
     <Reference Include="Windows.Storage" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
