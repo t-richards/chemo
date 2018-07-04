@@ -50,29 +50,51 @@ namespace Chemo.Treatment
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 "OneDrive"
             );
-            Directory.Delete(userData, true);
+            try
+            {
+                Directory.Delete(userData, true);
+            }
+            catch (Exception ex)
+            {
+                logger.Log("Could not delete {0}: {1}", userData, ex.Message);
+            }
 
             // %LOCALAPPDATA%\Microsoft\OneDrive
             string localAppData = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "Local", "Microsoft", "OneDrive"
             );
-            Directory.Delete(localAppData, true);
+            try
+            {
+                Directory.Delete(localAppData, true);
+            }
+            catch (Exception ex)
+            {
+                logger.Log("Could not delete {0}: {1}", localAppData, ex.Message);
+            }
 
             // %PROGRAMDATA%\Microsoft OneDrive
             string programData = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Microsoft OneDrive"
             );
+            try
+            {
+                Directory.Delete(programData, true);
+            }
+            catch (Exception ex)
+            {
+                logger.Log("Could not delete {0}: {1}", programData, ex.Message);
+            }
         }
 
         public void PerformTreatment()
         {
             try
             {
-                logger.Log("Killing any running OneDrive processes...");
+                logger.Log("Terminating any running OneDrive processes...");
                 KillProcesses();
-                logger.Log("Successfully killed running OneDrive processes");
+                logger.Log("Completed termination of running OneDrive processes");
             }
             catch (Exception ex)
             {
@@ -83,7 +105,7 @@ namespace Chemo.Treatment
             {
                 logger.Log("Removing OneDrive keys from registry...");
                 DeleteRegistryKeys();
-                logger.Log("Successfully removed OneDrive keys from registry");
+                logger.Log("Completed removal of OneDrive keys from registry");
             }
             catch (Exception ex)
             {
@@ -94,11 +116,11 @@ namespace Chemo.Treatment
             {
                 logger.Log("Deleting OneDrive folders completely...");
                 DeleteFolders();
-                logger.Log("Successfully deleted OneDrive folders.");
+                logger.Log("Completed removal of OneDrive folders.");
             }
             catch (Exception ex)
             {
-                logger.Log("Could not delete OneDrive folder: {0}", ex.Message);
+                logger.Log("Could not delete OneDrive folders: {0}", ex.Message);
             }
         }
     }

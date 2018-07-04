@@ -75,12 +75,14 @@
             // chkOneDrive
             // 
             this.chkOneDrive.AutoSize = true;
-            this.chkOneDrive.Location = new System.Drawing.Point(6, 106);
+            this.chkOneDrive.Checked = true;
+            this.chkOneDrive.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkOneDrive.Location = new System.Drawing.Point(6, 65);
             this.chkOneDrive.Name = "chkOneDrive";
-            this.chkOneDrive.Size = new System.Drawing.Size(114, 17);
+            this.chkOneDrive.Size = new System.Drawing.Size(250, 17);
             this.chkOneDrive.TabIndex = 1;
             this.chkOneDrive.Tag = "OneDrive";
-            this.chkOneDrive.Text = "Remove OneDrive";
+            this.chkOneDrive.Text = "Remove OneDrive (including all OneDrive data)";
             this.chkOneDrive.UseVisualStyleBackColor = true;
             // 
             // chkWindowsStoreApps
