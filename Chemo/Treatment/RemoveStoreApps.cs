@@ -19,6 +19,7 @@ namespace Chemo.Treatment
             { "Microsoft.3DBuilder", true },
             { "Microsoft.BingNews", true },
             { "Microsoft.BingWeather", true },
+            { "Microsoft.FreshPaint", true },
             { "Microsoft.GetHelp", true },
             { "Microsoft.Getstarted", true },
             { "Microsoft.Messaging", true },
