@@ -17,21 +17,24 @@ namespace Chemo.Treatment
             using (DismSession session = DismApi.OpenOnlineSession())
             {
                 DismFeatureInfo info = DismApi.GetFeatureInfo(session, IEFeatureName);
-                if (info.FeatureState == DismPackageFeatureState.NotPresent)
+                if (info.FeatureState == DismPackageFeatureState.NotPresent || info.FeatureState == DismPackageFeatureState.Removed)
                 {
-                    logger.Log("Internet Explorer is not present on the system.");
+                    logger.Log("Internet Explorer 11 is not present on the system.");
                     return;
                 }
                 
                 try
                 {
-                    logger.Log("Disabling Internet Explorer...");
+                    logger.Log("Disabling Internet Explorer 11...");
                     DismApi.DisableFeature(session, IEFeatureName, null, true);
                 }
                 catch (DismRebootRequiredException ex)
                 {
-                    logger.Log("Successfully disabled Internet Explorer. {0}", ex.Message);
+                    logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
+                    return;
                 }
+
+                logger.Log("Successfully disabled Internet Explorer 11.");
             }
         }
     }

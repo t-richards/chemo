@@ -43,6 +43,26 @@ namespace Chemo.Treatment
             }
         }
 
+        public bool MaybeDelete(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                return false;
+            }
+
+            try
+            {
+                Directory.Delete(path, true);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Log("Could not delete {0}: {1}", path, ex.Message);
+            }
+
+            return false;
+        }
+
         public void DeleteFolders()
         {
             // %USERPROFILE%\OneDrive
@@ -50,42 +70,21 @@ namespace Chemo.Treatment
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
                 "OneDrive"
             );
-            try
-            {
-                Directory.Delete(userData, true);
-            }
-            catch (Exception ex)
-            {
-                logger.Log("Could not delete {0}: {1}", userData, ex.Message);
-            }
+            MaybeDelete(userData);
 
             // %LOCALAPPDATA%\Microsoft\OneDrive
             string localAppData = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "Local", "Microsoft", "OneDrive"
             );
-            try
-            {
-                Directory.Delete(localAppData, true);
-            }
-            catch (Exception ex)
-            {
-                logger.Log("Could not delete {0}: {1}", localAppData, ex.Message);
-            }
+            MaybeDelete(localAppData);
 
             // %PROGRAMDATA%\Microsoft OneDrive
             string programData = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Microsoft OneDrive"
             );
-            try
-            {
-                Directory.Delete(programData, true);
-            }
-            catch (Exception ex)
-            {
-                logger.Log("Could not delete {0}: {1}", programData, ex.Message);
-            }
+            MaybeDelete(programData);
         }
 
         public void PerformTreatment()

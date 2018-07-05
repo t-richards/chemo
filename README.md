@@ -33,7 +33,11 @@ installed when a new user is created, or when a feature update is applied.
 
 ### Remove OneDrive
 
-This treatment completely removes OneDrive and ALL OF YOUR ONEDRIVE DATA.
+This treatment completely removes OneDrive and ALL ONEDRIVE DATA.
+
+## Disable Internet Explorer
+
+Turns off the Windows feature, "Internet Explorer 11".
 
 ## Contributing
 
