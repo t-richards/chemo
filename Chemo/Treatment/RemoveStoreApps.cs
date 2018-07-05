@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;

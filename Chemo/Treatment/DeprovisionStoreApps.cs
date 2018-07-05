@@ -1,4 +1,4 @@
-﻿using Microsoft.Dism;
+using Microsoft.Dism;
 
 namespace Chemo.Treatment
 {

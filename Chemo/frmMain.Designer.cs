@@ -1,4 +1,4 @@
-﻿namespace Chemo
+namespace Chemo
 {
     partial class frmMain
     {

@@ -1,4 +1,4 @@
-﻿using Chemo.Treatment;
+using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿namespace Chemo.Treatment
+namespace Chemo.Treatment
 {
     public interface ITreatment
     {

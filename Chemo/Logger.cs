@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -8,8 +8,6 @@ namespace Chemo
         private static Logger instance = null;
         private static readonly object padlock = new object();
         private static TextBox target = null;
-
-        delegate void LogCallback(string format, params object[] args);
 
         public void SetTarget(TextBox textBox)
         {

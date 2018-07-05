@@ -1,4 +1,4 @@
-﻿using Microsoft.Dism;
+using Microsoft.Dism;
 using System;
 using System.Collections.Generic;
 using System.Linq;
