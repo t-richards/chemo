@@ -22,7 +22,7 @@ namespace Chemo.Treatment
                     logger.Log("Internet Explorer 11 is not present on the system.");
                     return;
                 }
-                
+
                 try
                 {
                     logger.Log("Disabling Internet Explorer 11...");

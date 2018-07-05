@@ -83,7 +83,7 @@ namespace Chemo.Treatment
 
         private static void RemovePackage(Package package)
         {
-            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation = 
+            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
                 packageManager.RemovePackageAsync(package.Id.FullName);
 
             deploymentOperation.Completed = (result, progress) => {
