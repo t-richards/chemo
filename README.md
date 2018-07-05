@@ -13,10 +13,12 @@ another round of treatment, if you desire.
 
  - Windows 10
 
-Note: This program is designed strictly for Windows 10. Use on other versions
+Note: This program is designed strictly for Windows 10. Use on other versions of
 Microsoft Windows is not supported.
 
 ## Available Treatments
+
+![image](https://user-images.githubusercontent.com/3905798/42298275-08aaffba-7fd3-11e8-81b0-3dbef79aa966.png)
 
 ### `Remove Installed Windows Store Apps`
 
