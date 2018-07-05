@@ -78,6 +78,8 @@ namespace Chemo
             // chkDeprovisionStoreApps
             // 
             this.chkDeprovisionStoreApps.AutoSize = true;
+            this.chkDeprovisionStoreApps.Checked = true;
+            this.chkDeprovisionStoreApps.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkDeprovisionStoreApps.Location = new System.Drawing.Point(6, 42);
             this.chkDeprovisionStoreApps.Name = "chkDeprovisionStoreApps";
             this.chkDeprovisionStoreApps.Size = new System.Drawing.Size(184, 17);
