@@ -18,24 +18,24 @@ Microsoft Windows is not supported.
 
 ## Available Treatments
 
-### Remove Installed Windows Store Apps
+### `Remove Installed Windows Store Apps`
 
 This treatment removes a select subset of pre-installed Windows Store apps. For
 the complete list of removals, please see:
 
 https://github.com/t-richards/chemo/blob/master/Treatment/RemoveStoreApps.cs#L15-L44
 
-### Deprovision Windows Store Apps
+### `Deprovision Windows Store Apps`
 
 Uninstalling store apps using the above treatment will only apply to the current
 user. The "Deprovision" treatment prevents store apps from being automatically
 installed when a new user is created, or when a feature update is applied.
 
-### Remove OneDrive
+### `Remove OneDrive`
 
 This treatment completely removes OneDrive and ALL ONEDRIVE DATA.
 
-## Disable Internet Explorer
+### `Disable Internet Explorer`
 
 Turns off the Windows feature, "Internet Explorer 11".
 
