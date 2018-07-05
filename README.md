@@ -9,6 +9,10 @@ Chemo rids your Windows 10 machine of the pre-installed junk you don't want. We
 can't guarantee that it will stay gone forever, but you may always come back for
 another round of treatment, if you desire.
 
+## Download
+
+The latest development build can be [downloaded directly from AppVeyor](https://ci.appveyor.com/project/t-richards/chemo/build/artifacts).
+
 ## System Requirements
 
  - Windows 10
