@@ -64,14 +64,15 @@ namespace Chemo.Treatment
                 }
 
                 AppsToRemove.TryGetValue(package.Id.Name, out bool shouldRemove);
-
-                logger.Log("Should remove? {0}", shouldRemove);
-                logger.Log("Name: {0}", package.Id.Name);
-                logger.Log("Full Name: {0}", package.Id.FullName);
-                logger.Log("");
-
-                RemovePackage(package);
-                packageCount += 1;
+                if (shouldRemove)
+                {
+                    RemovePackage(package);
+                    packageCount += 1;
+                }
+                else
+                {
+                    logger.Log("Not removing {0}", package.Id.Name);
+                }
             }
 
             if (packageCount < 1)
@@ -86,7 +87,7 @@ namespace Chemo.Treatment
                 packageManager.RemovePackageAsync(package.Id.FullName);
 
             deploymentOperation.Completed = (result, progress) => {
-                logger.Log("Removal operation completed: {0} Status: {1}", package.Id.FullName, result.Status);
+                logger.Log("Removal operation {1}: {0}", package.Id.FullName, result.Status);
             };
         }
     }

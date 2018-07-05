@@ -9,6 +9,11 @@ Chemo rids your Windows 10 machine of the pre-installed junk you don't want. We
 can't guarantee that it will stay gone forever, but you may always come back for
 another round of treatment, if you desire.
 
+## :warning: Warning :warning:
+
+Chemo can and will eat your lunch. Before using this tool, please make a
+snapshot, system restore point, or other backup of some kind.
+
 ## Download
 
 The latest development build can be [downloaded directly from AppVeyor](https://ci.appveyor.com/project/t-richards/chemo/build/artifacts).
