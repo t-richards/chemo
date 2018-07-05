@@ -25,7 +25,7 @@ Microsoft Windows is not supported.
 This treatment removes a select subset of pre-installed Windows Store apps. For
 the complete list of removals, please see:
 
-https://github.com/t-richards/chemo/blob/master/Treatment/RemoveStoreApps.cs#L15-L44
+https://github.com/t-richards/chemo/blob/master/Chemo/Treatment/RemoveStoreApps.cs#L15-L44
 
 ### `Deprovision Windows Store Apps`
 
