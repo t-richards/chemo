@@ -3,6 +3,7 @@ using Microsoft.Dism;
 using System;
 using System.Linq;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Chemo
 {
@@ -30,9 +31,14 @@ namespace Chemo
                 {
                     logger.Log("\r");
                     logger.Log("== Applying Treatment: {0} ==", c.Text);
+
+                    // Create treatment instance based on checkbox tag
                     Type componentType = Type.GetType("Chemo.Treatment." + c.Tag.ToString());
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
-                    tr.PerformTreatment();
+
+                    // Perform work in the background to not lock up the UI
+                    Thread treatmentThread = new Thread(tr.PerformTreatment);
+                    treatmentThread.Start();
                 }
             }
         }

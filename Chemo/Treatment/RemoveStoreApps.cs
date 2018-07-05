@@ -12,17 +12,25 @@ namespace Chemo.Treatment
 
         public readonly IDictionary<string, bool> AppsToRemove = new Dictionary<string, bool>
         {
+            { "46928bounde.EclipseManager", true },
+            { "ActiproSoftwareLLC.562882FEEB491", true },
+            { "AdobeSystemsIncorporated.AdobePhotoshopExpress", true },
+            { "D5EA27B7.Duolingo-LearnLanguagesforFree", true},
             { "Microsoft.3DBuilder", true },
+            { "Microsoft.BingNews", true },
             { "Microsoft.BingWeather", true },
             { "Microsoft.GetHelp", true },
             { "Microsoft.Getstarted", true },
             { "Microsoft.Messaging", true },
             { "Microsoft.Microsoft3DViewer", true },
             { "Microsoft.MicrosoftOfficeHub", true },
+            { "Microsoft.MicrosoftPowerBIForWindows", true },
             { "Microsoft.MicrosoftSolitaireCollection", true },
             { "Microsoft.MicrosoftStickyNotes", true },
             { "Microsoft.MSPaint", true },
+            { "Microsoft.NetworkSpeedTest", true },
             { "Microsoft.Office.OneNote", true },
+            { "Microsoft.Office.Sway", true },
             { "Microsoft.OneConnect", true },
             { "Microsoft.People", true },
             { "Microsoft.Print3D", true },
@@ -42,6 +50,7 @@ namespace Chemo.Treatment
             { "Microsoft.XboxSpeechToTextOverlay", true },
             { "Microsoft.ZuneMusic", true },
             { "Microsoft.ZuneVideo", true },
+            { "PandoraMediaInc.29680B314EFC2", true },
         };
 
         public void PerformTreatment()
@@ -87,7 +96,13 @@ namespace Chemo.Treatment
                 packageManager.RemovePackageAsync(package.Id.FullName);
 
             deploymentOperation.Completed = (result, progress) => {
-                logger.Log("Removal operation {1}: {0}", package.Id.FullName, result.Status);
+                logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
+                if (result.Status == AsyncStatus.Error)
+                {
+                    DeploymentResult deploymentResult = deploymentOperation.GetResults();
+                    logger.Log("Error code: {0}", deploymentOperation.ErrorCode);
+                    logger.Log("Error text: {0}", deploymentResult.ErrorText);
+                }
             };
         }
     }
