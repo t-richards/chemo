@@ -14,15 +14,15 @@ build_script:
 
 after_build:
   - ps: >-
-      cd bin\Release
+      cd Chemo\bin\Release
 
       Get-ChildItem * -Include *.xml -Recurse | Remove-Item
 
       Get-ChildItem * -Include *.pdb -Recurse | Remove-Item
 
-      cd ..\..\
+      cd ..\..\..\
 
-      7z a ChemoDevBuild.zip .\bin\Release\*
+      7z a ChemoDevBuild.zip .\Chemo\bin\Release\*
       
 artifacts:
   - path: ChemoDevBuild.zip
