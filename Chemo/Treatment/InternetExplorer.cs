@@ -23,6 +23,12 @@ namespace Chemo.Treatment
                     return;
                 }
 
+                if (info.FeatureState == DismPackageFeatureState.UninstallPending)
+                {
+                    logger.Log("Internet Explorer 11 is already pending uninstall.");
+                    return;
+                }
+
                 try
                 {
                     logger.Log("Disabling Internet Explorer 11...");

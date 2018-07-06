@@ -16,6 +16,7 @@ namespace Chemo
             InitializeComponent();
 
             // Other init stuff here
+            treeViewTreatments.ExpandAll();
             logger.SetTarget(txtResults);
             DismApi.Initialize(DismLogLevel.LogErrors);
         }
@@ -25,20 +26,53 @@ namespace Chemo
             txtResults.Clear();
             txtResults.Refresh();
 
-            foreach (CheckBox c in grpTreatments.Controls.OfType<CheckBox>())
+            // Recursively walk the tree and apply treatments as we come to them
+            WalkNodes(treeViewTreatments.Nodes);
+        }
+
+        private void WalkNodes(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode treeNode in nodes)
             {
-                if (c.Checked && c.Tag != null)
+                if (treeNode.Checked && treeNode.Tag != null)
                 {
+                    string tag = treeNode.Tag.ToString();
                     logger.Log("\r");
-                    logger.Log("== Applying Treatment: {0} ==", c.Text);
+                    logger.Log("== Applying Treatment: {0} ==", treeNode.Text);
 
                     // Create treatment instance based on checkbox tag
-                    Type componentType = Type.GetType("Chemo.Treatment." + c.Tag.ToString());
+                    string typeStr = "Chemo.Treatment." + tag;
+                    Type componentType = Type.GetType(typeStr);
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
 
                     // Perform work in the background to not lock up the UI
                     Thread treatmentThread = new Thread(tr.PerformTreatment);
                     treatmentThread.Start();
+                }
+
+                WalkNodes(treeNode.Nodes);
+            }
+        }
+
+        private void treeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            if (e.Action == TreeViewAction.Unknown)
+            {
+                return;
+            }
+
+            CheckTreeViewNodes(e.Node, e.Node.Checked);
+        }
+
+        private void CheckTreeViewNodes(TreeNode node, bool isChecked)
+        {
+            foreach (TreeNode child in node.Nodes)
+            {
+                child.Checked = isChecked;
+
+                if (child.Nodes.Count > 0)
+                {
+                    CheckTreeViewNodes(child, isChecked);
                 }
             }
         }
