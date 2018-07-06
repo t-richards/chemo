@@ -30,12 +30,13 @@ namespace Chemo
         {
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
+            this.chkWindowsUpdateReboot = new System.Windows.Forms.CheckBox();
             this.chkRemoveStoreApps = new System.Windows.Forms.CheckBox();
             this.chkDeprovisionStoreApps = new System.Windows.Forms.CheckBox();
             this.chkOneDrive = new System.Windows.Forms.CheckBox();
             this.chkInternetExplorer = new System.Windows.Forms.CheckBox();
             this.txtResults = new System.Windows.Forms.TextBox();
-            this.chkWindowsUpdateReboot = new System.Windows.Forms.CheckBox();
+            this.chkDisableCortana = new System.Windows.Forms.CheckBox();
             this.grpTreatments.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +53,7 @@ namespace Chemo
             // 
             // grpTreatments
             // 
+            this.grpTreatments.Controls.Add(this.chkDisableCortana);
             this.grpTreatments.Controls.Add(this.chkWindowsUpdateReboot);
             this.grpTreatments.Controls.Add(this.chkRemoveStoreApps);
             this.grpTreatments.Controls.Add(this.chkDeprovisionStoreApps);
@@ -63,6 +65,19 @@ namespace Chemo
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
+            // 
+            // chkWindowsUpdateReboot
+            // 
+            this.chkWindowsUpdateReboot.AutoSize = true;
+            this.chkWindowsUpdateReboot.Checked = true;
+            this.chkWindowsUpdateReboot.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWindowsUpdateReboot.Location = new System.Drawing.Point(6, 111);
+            this.chkWindowsUpdateReboot.Name = "chkWindowsUpdateReboot";
+            this.chkWindowsUpdateReboot.Size = new System.Drawing.Size(209, 17);
+            this.chkWindowsUpdateReboot.TabIndex = 4;
+            this.chkWindowsUpdateReboot.Tag = "WindowsUpdateReboot";
+            this.chkWindowsUpdateReboot.Text = "Disable Windows Update Auto-Reboot";
+            this.chkWindowsUpdateReboot.UseVisualStyleBackColor = true;
             // 
             // chkRemoveStoreApps
             // 
@@ -130,18 +145,18 @@ namespace Chemo
             this.txtResults.Size = new System.Drawing.Size(796, 308);
             this.txtResults.TabIndex = 3;
             // 
-            // chkWindowsUpdateReboot
+            // chkDisableCortana
             // 
-            this.chkWindowsUpdateReboot.AutoSize = true;
-            this.chkWindowsUpdateReboot.Checked = true;
-            this.chkWindowsUpdateReboot.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkWindowsUpdateReboot.Location = new System.Drawing.Point(6, 111);
-            this.chkWindowsUpdateReboot.Name = "chkWindowsUpdateReboot";
-            this.chkWindowsUpdateReboot.Size = new System.Drawing.Size(209, 17);
-            this.chkWindowsUpdateReboot.TabIndex = 4;
-            this.chkWindowsUpdateReboot.Tag = "WindowsUpdateReboot";
-            this.chkWindowsUpdateReboot.Text = "Disable Windows Update Auto-Reboot";
-            this.chkWindowsUpdateReboot.UseVisualStyleBackColor = true;
+            this.chkDisableCortana.AutoSize = true;
+            this.chkDisableCortana.Checked = true;
+            this.chkDisableCortana.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDisableCortana.Location = new System.Drawing.Point(6, 134);
+            this.chkDisableCortana.Name = "chkDisableCortana";
+            this.chkDisableCortana.Size = new System.Drawing.Size(101, 17);
+            this.chkDisableCortana.TabIndex = 5;
+            this.chkDisableCortana.Tag = "DisableCortana";
+            this.chkDisableCortana.Text = "Disable Cortana";
+            this.chkDisableCortana.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -169,5 +184,6 @@ namespace Chemo
         private System.Windows.Forms.CheckBox chkDeprovisionStoreApps;
         private System.Windows.Forms.CheckBox chkInternetExplorer;
         private System.Windows.Forms.CheckBox chkWindowsUpdateReboot;
+        private System.Windows.Forms.CheckBox chkDisableCortana;
     }
 }

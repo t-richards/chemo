@@ -15,8 +15,16 @@ namespace Chemo.Treatment
                 DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
                 foreach (var package in dismAppxPackages)
                 {
-                    logger.Log("Deprovisioning package: {0}", package.DisplayName);
-                    DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                    try
+                    {
+                        DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                        logger.Log("Successfully deprovisioned {0}", package.DisplayName);
+                    }
+                    catch (DismRebootRequiredException ex)
+                    {
+                        logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                    }
+
                     packageCount += 1;
                 }
             }
