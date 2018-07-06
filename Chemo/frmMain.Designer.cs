@@ -35,6 +35,7 @@ namespace Chemo
             this.chkOneDrive = new System.Windows.Forms.CheckBox();
             this.chkInternetExplorer = new System.Windows.Forms.CheckBox();
             this.txtResults = new System.Windows.Forms.TextBox();
+            this.chkWindowsUpdateReboot = new System.Windows.Forms.CheckBox();
             this.grpTreatments.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +44,7 @@ namespace Chemo
             this.btnInitiateTreatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnInitiateTreatment.Location = new System.Drawing.Point(393, 12);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
-            this.btnInitiateTreatment.Size = new System.Drawing.Size(369, 121);
+            this.btnInitiateTreatment.Size = new System.Drawing.Size(280, 105);
             this.btnInitiateTreatment.TabIndex = 1;
             this.btnInitiateTreatment.Text = "Initiate Treatment";
             this.btnInitiateTreatment.UseVisualStyleBackColor = true;
@@ -51,13 +52,14 @@ namespace Chemo
             // 
             // grpTreatments
             // 
+            this.grpTreatments.Controls.Add(this.chkWindowsUpdateReboot);
             this.grpTreatments.Controls.Add(this.chkRemoveStoreApps);
             this.grpTreatments.Controls.Add(this.chkDeprovisionStoreApps);
             this.grpTreatments.Controls.Add(this.chkOneDrive);
             this.grpTreatments.Controls.Add(this.chkInternetExplorer);
             this.grpTreatments.Location = new System.Drawing.Point(12, 12);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(375, 121);
+            this.grpTreatments.Size = new System.Drawing.Size(375, 201);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -120,19 +122,32 @@ namespace Chemo
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtResults.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResults.Location = new System.Drawing.Point(12, 139);
+            this.txtResults.Location = new System.Drawing.Point(12, 219);
             this.txtResults.MaxLength = 65535;
             this.txtResults.Multiline = true;
             this.txtResults.Name = "txtResults";
             this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResults.Size = new System.Drawing.Size(750, 280);
+            this.txtResults.Size = new System.Drawing.Size(796, 308);
             this.txtResults.TabIndex = 3;
+            // 
+            // chkWindowsUpdateReboot
+            // 
+            this.chkWindowsUpdateReboot.AutoSize = true;
+            this.chkWindowsUpdateReboot.Checked = true;
+            this.chkWindowsUpdateReboot.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkWindowsUpdateReboot.Location = new System.Drawing.Point(6, 111);
+            this.chkWindowsUpdateReboot.Name = "chkWindowsUpdateReboot";
+            this.chkWindowsUpdateReboot.Size = new System.Drawing.Size(209, 17);
+            this.chkWindowsUpdateReboot.TabIndex = 4;
+            this.chkWindowsUpdateReboot.Tag = "WindowsUpdateReboot";
+            this.chkWindowsUpdateReboot.Text = "Disable Windows Update Auto-Reboot";
+            this.chkWindowsUpdateReboot.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 431);
+            this.ClientSize = new System.Drawing.Size(820, 539);
             this.Controls.Add(this.txtResults);
             this.Controls.Add(this.grpTreatments);
             this.Controls.Add(this.btnInitiateTreatment);
@@ -153,5 +168,6 @@ namespace Chemo
         private System.Windows.Forms.TextBox txtResults;
         private System.Windows.Forms.CheckBox chkDeprovisionStoreApps;
         private System.Windows.Forms.CheckBox chkInternetExplorer;
+        private System.Windows.Forms.CheckBox chkWindowsUpdateReboot;
     }
 }
