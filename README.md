@@ -27,7 +27,7 @@ Microsoft Windows is not supported.
 
 ## Available Treatments
 
-![screenshot](https://user-images.githubusercontent.com/3905798/42413286-6b9f3e64-81eb-11e8-83c8-5430654c2e59.png)
+![screenshot](https://user-images.githubusercontent.com/3905798/42413333-cf818f54-81eb-11e8-937e-a392eec35cba.png)
 
 While using Chemo, hover over any treatment in the tree to display a brief
 description of what the treatment does.

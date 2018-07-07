@@ -28,24 +28,24 @@ namespace Chemo
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Remove Windows Store Apps");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Deprovision Windows Store Packages");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Remove OneDrive");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Disable Cortana");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Apps", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Login");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Privacy");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Remove Windows Store Apps");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Deprovision Windows Store Packages");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Remove OneDrive");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Disable Cortana");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Apps", new System.Windows.Forms.TreeNode[] {
+            treeNode12,
+            treeNode13,
+            treeNode14,
+            treeNode15});
+            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
+            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Login");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
+            treeNode17,
+            treeNode18});
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Privacy");
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
@@ -57,7 +57,7 @@ namespace Chemo
             // 
             this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInitiateTreatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(686, 472);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(596, 472);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(246, 77);
             this.btnInitiateTreatment.TabIndex = 1;
@@ -83,59 +83,59 @@ namespace Chemo
             this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
             this.treeViewTreatments.Name = "treeViewTreatments";
-            treeNode1.Checked = true;
-            treeNode1.Name = "Node3";
-            treeNode1.Tag = "RemoveStoreApps";
-            treeNode1.Text = "Remove Windows Store Apps";
-            treeNode1.ToolTipText = "Removes most junk Windows Store Apps.";
-            treeNode2.Checked = true;
-            treeNode2.Name = "Node4";
-            treeNode2.Tag = "DeprovisionStoreApps";
-            treeNode2.Text = "Deprovision Windows Store Packages";
-            treeNode2.ToolTipText = "Deprovisions all packages. This prevents Windows Store application from re-appear" +
+            treeNode12.Checked = true;
+            treeNode12.Name = "Node3";
+            treeNode12.Tag = "RemoveStoreApps";
+            treeNode12.Text = "Remove Windows Store Apps";
+            treeNode12.ToolTipText = "Removes most junk Windows Store Apps.";
+            treeNode13.Checked = true;
+            treeNode13.Name = "Node4";
+            treeNode13.Tag = "DeprovisionStoreApps";
+            treeNode13.Text = "Deprovision Windows Store Packages";
+            treeNode13.ToolTipText = "Deprovisions all packages. This prevents Windows Store application from re-appear" +
     "ing when a new user is created, or when a feature update is applied.";
-            treeNode3.Checked = true;
-            treeNode3.Name = "Node5";
-            treeNode3.Tag = "OneDrive";
-            treeNode3.Text = "Remove OneDrive";
-            treeNode3.ToolTipText = "Removes OneDrive including ALL USER DATA.";
-            treeNode4.Checked = true;
-            treeNode4.Name = "Node7";
-            treeNode4.Tag = "DisableCortana";
-            treeNode4.Text = "Disable Cortana";
-            treeNode4.ToolTipText = "Disables Cortana. A sign out is required to complete this operation.";
-            treeNode5.Checked = true;
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "Apps";
-            treeNode6.Checked = true;
-            treeNode6.Name = "Node8";
-            treeNode6.Tag = "WindowsUpdateReboot";
-            treeNode6.Text = "Disable Force-Reboot After Windows Update";
-            treeNode6.ToolTipText = "Prevents automatic rebooting after applying Windows Updates.";
-            treeNode7.Checked = true;
-            treeNode7.Name = "Node9";
-            treeNode7.Tag = "RequireCtrlAltDel";
-            treeNode7.Text = "Require Ctrl+Alt+Del At Login";
-            treeNode7.ToolTipText = "Requires Ctrl+Alt+Del to be pressed at the sign in screen.";
-            treeNode8.Checked = true;
-            treeNode8.Name = "Node1";
-            treeNode8.Text = "Config";
-            treeNode9.Checked = true;
-            treeNode9.Name = "Node6";
-            treeNode9.Tag = "InternetExplorer";
-            treeNode9.Text = "Disable Internet Explorer";
-            treeNode9.ToolTipText = "Disables Internet Explorer 11.";
-            treeNode10.Checked = true;
-            treeNode10.Name = "Node0";
-            treeNode10.Text = "Features";
-            treeNode11.Checked = true;
-            treeNode11.Name = "Node2";
-            treeNode11.Text = "Privacy";
+            treeNode14.Checked = true;
+            treeNode14.Name = "Node5";
+            treeNode14.Tag = "OneDrive";
+            treeNode14.Text = "Remove OneDrive";
+            treeNode14.ToolTipText = "Removes OneDrive including ALL USER DATA.";
+            treeNode15.Checked = true;
+            treeNode15.Name = "Node7";
+            treeNode15.Tag = "DisableCortana";
+            treeNode15.Text = "Disable Cortana";
+            treeNode15.ToolTipText = "Disables Cortana. A sign out is required to complete this operation.";
+            treeNode16.Checked = true;
+            treeNode16.Name = "Node0";
+            treeNode16.Text = "Apps";
+            treeNode17.Checked = true;
+            treeNode17.Name = "Node8";
+            treeNode17.Tag = "WindowsUpdateReboot";
+            treeNode17.Text = "Disable Force-Reboot After Windows Update";
+            treeNode17.ToolTipText = "Prevents automatic rebooting after applying Windows Updates.";
+            treeNode18.Checked = true;
+            treeNode18.Name = "Node9";
+            treeNode18.Tag = "RequireCtrlAltDel";
+            treeNode18.Text = "Require Ctrl+Alt+Del At Login";
+            treeNode18.ToolTipText = "Requires Ctrl+Alt+Del to be pressed at the sign in screen.";
+            treeNode19.Checked = true;
+            treeNode19.Name = "Node1";
+            treeNode19.Text = "Config";
+            treeNode20.Checked = true;
+            treeNode20.Name = "Node6";
+            treeNode20.Tag = "InternetExplorer";
+            treeNode20.Text = "Disable Internet Explorer";
+            treeNode20.ToolTipText = "Disables Internet Explorer 11.";
+            treeNode21.Checked = true;
+            treeNode21.Name = "Node0";
+            treeNode21.Text = "Features";
+            treeNode22.Checked = true;
+            treeNode22.Name = "Node2";
+            treeNode22.Text = "Privacy";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode8,
-            treeNode10,
-            treeNode11});
+            treeNode16,
+            treeNode19,
+            treeNode21,
+            treeNode22});
             this.treeViewTreatments.ShowNodeToolTips = true;
             this.treeViewTreatments.Size = new System.Drawing.Size(294, 518);
             this.treeViewTreatments.TabIndex = 0;
@@ -152,14 +152,14 @@ namespace Chemo
             this.txtResults.Multiline = true;
             this.txtResults.Name = "txtResults";
             this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResults.Size = new System.Drawing.Size(614, 454);
+            this.txtResults.Size = new System.Drawing.Size(524, 454);
             this.txtResults.TabIndex = 3;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 561);
+            this.ClientSize = new System.Drawing.Size(854, 561);
             this.Controls.Add(this.txtResults);
             this.Controls.Add(this.grpTreatments);
             this.Controls.Add(this.btnInitiateTreatment);
