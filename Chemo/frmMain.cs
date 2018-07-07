@@ -61,7 +61,14 @@ namespace Chemo
                 return;
             }
 
-            CheckTreeViewNodes(e.Node, e.Node.Checked);
+            try
+            {
+                CheckTreeViewNodes(e.Node, e.Node.Checked);
+            }
+            finally
+            {
+                e.Node.TreeView.EndUpdate();
+            }
         }
 
         private void CheckTreeViewNodes(TreeNode node, bool isChecked)
