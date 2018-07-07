@@ -55,8 +55,9 @@ namespace Chemo
             // 
             // btnInitiateTreatment
             // 
+            this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInitiateTreatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(562, 450);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(686, 472);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(246, 77);
             this.btnInitiateTreatment.TabIndex = 1;
@@ -66,10 +67,12 @@ namespace Chemo
             // 
             // grpTreatments
             // 
+            this.grpTreatments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.grpTreatments.Controls.Add(this.treeViewTreatments);
             this.grpTreatments.Location = new System.Drawing.Point(12, 12);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(289, 515);
+            this.grpTreatments.Size = new System.Drawing.Size(300, 537);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -109,6 +112,7 @@ namespace Chemo
             treeNode6.Tag = "WindowsUpdateReboot";
             treeNode6.Text = "Disable Force-Reboot After Windows Update";
             treeNode6.ToolTipText = "Prevents automatic rebooting after applying Windows Updates.";
+            treeNode7.Checked = true;
             treeNode7.Name = "Node9";
             treeNode7.Tag = "RequireCtrlAltDel";
             treeNode7.Text = "Require Ctrl+Alt+Del At Login";
@@ -133,7 +137,7 @@ namespace Chemo
             treeNode10,
             treeNode11});
             this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(283, 496);
+            this.treeViewTreatments.Size = new System.Drawing.Size(294, 518);
             this.treeViewTreatments.TabIndex = 0;
             this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTreatments_AfterCheck);
             // 
@@ -143,19 +147,19 @@ namespace Chemo
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtResults.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResults.Location = new System.Drawing.Point(307, 12);
+            this.txtResults.Location = new System.Drawing.Point(318, 12);
             this.txtResults.MaxLength = 65535;
             this.txtResults.Multiline = true;
             this.txtResults.Name = "txtResults";
             this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResults.Size = new System.Drawing.Size(501, 432);
+            this.txtResults.Size = new System.Drawing.Size(614, 454);
             this.txtResults.TabIndex = 3;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 539);
+            this.ClientSize = new System.Drawing.Size(944, 561);
             this.Controls.Add(this.txtResults);
             this.Controls.Add(this.grpTreatments);
             this.Controls.Add(this.btnInitiateTreatment);
