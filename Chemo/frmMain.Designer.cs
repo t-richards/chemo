@@ -108,11 +108,13 @@ namespace Chemo
             treeNode5.Checked = true;
             treeNode5.Name = "Node0";
             treeNode5.Text = "Apps";
+            treeNode5.ToolTipText = "Treatments related to store apps or other apps.";
             treeNode6.Checked = true;
             treeNode6.Name = "Node8";
             treeNode6.Tag = "WindowsUpdateReboot";
             treeNode6.Text = "Disable Force-Reboot After Windows Update";
             treeNode6.ToolTipText = "Prevents Windows from automatically rebooting after applying updates.";
+            treeNode7.Checked = true;
             treeNode7.Name = "Node9";
             treeNode7.Tag = "RequireCtrlAltDel";
             treeNode7.Text = "Require Ctrl+Alt+Del At Sign In";
@@ -121,17 +123,21 @@ namespace Chemo
             treeNode8.Checked = true;
             treeNode8.Name = "Node1";
             treeNode8.Text = "Config";
+            treeNode8.ToolTipText = "Opinionated configuration changes.";
             treeNode9.Checked = true;
             treeNode9.Name = "Node6";
             treeNode9.Tag = "InternetExplorer";
             treeNode9.Text = "Disable Internet Explorer";
-            treeNode9.ToolTipText = "Disables Internet Explorer 11.";
+            treeNode9.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
+    "tion.";
             treeNode10.Checked = true;
             treeNode10.Name = "Node0";
             treeNode10.Text = "Features";
+            treeNode10.ToolTipText = "Windows Feature toggles.";
             treeNode11.Checked = true;
             treeNode11.Name = "Node2";
             treeNode11.Text = "Privacy";
+            treeNode11.ToolTipText = "Regain control of your privacy.";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
             treeNode8,
