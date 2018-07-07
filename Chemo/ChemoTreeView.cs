@@ -4,10 +4,16 @@ namespace Chemo
 {
     class ChemoTreeView : TreeView
     {
+        // https://docs.microsoft.com/en-us/windows/desktop/inputdev/wm-lbuttondblclk
+        private const int WM_LBUTTONDBLCLK = 0x0203;
+
         protected override void WndProc(ref Message m)
         {
-            // Filter WM_LBUTTONDBLCLK
-            if (m.Msg != 0x203) base.WndProc(ref m);
+            // Filter double-click event
+            if (m.Msg != WM_LBUTTONDBLCLK)
+            {
+                base.WndProc(ref m);
+            }
         }
     }
 }
