@@ -1,9 +1,9 @@
 using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
-using System.Linq;
-using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Chemo
 {
@@ -30,7 +30,7 @@ namespace Chemo
             WalkNodes(treeViewTreatments.Nodes);
         }
 
-        private void WalkNodes(TreeNodeCollection nodes)
+        private async void WalkNodes(TreeNodeCollection nodes)
         {
             foreach (TreeNode treeNode in nodes)
             {
@@ -45,9 +45,11 @@ namespace Chemo
                     Type componentType = Type.GetType(typeStr);
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
 
-                    // Perform work in the background to not lock up the UI
-                    Thread treatmentThread = new Thread(tr.PerformTreatment);
-                    treatmentThread.Start();
+                    // Perform treatment work in the background to not lock up the UI
+                    // Only run one task at a time because funny things happen when they run in parallel
+                    await Task.Run(() =>
+                        tr.PerformTreatment()
+                    );
                 }
 
                 WalkNodes(treeNode.Nodes);

@@ -86,7 +86,7 @@ namespace Chemo.Treatment
                 }
             }
 
-            if (packageCount < 1)
+            if (packageCount <= 0)
             {
                 logger.Log("No Windows Store applications were uninstalled.");
             }
