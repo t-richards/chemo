@@ -45,17 +45,17 @@ https://github.com/t-richards/chemo/blob/master/Chemo/Treatment/RemoveStoreApps.
 
 #### `Deprovision Windows Store Packages`
 
-Removing store apps will only remove them from the current user account. The
-"Deprovision" treatment prevents store apps from being automatically installed
-when a new user is created, or when a feature update is applied.
+Deprovisions all packages. This prevents Windows Store applications from
+re-appearing when a new user is created, or when a feature update is applied.
 
 #### `Remove OneDrive`
 
-This treatment completely removes OneDrive and ALL ONEDRIVE DATA.
+Completely removes OneDrive and ALL ONEDRIVE DATA.
 
 #### `Disable Cortana`
 
-Prevents Cortana from appearing in the taskbar.
+Prevents Cortana from appearing in the taskbar. A sign out is required to
+complete this operation.
 
 ### Config
 
@@ -63,7 +63,7 @@ Opinionated configuration changes.
 
 #### `Disable Force-Reboot After Windows Update`
 
-Prevents Windows from automatically rebooting after applying Window sUpdates
+Prevents Windows from automatically rebooting after applying Windows Updates
 
 #### `Require Ctrl+Alt+Del At Sign In`
 
@@ -75,7 +75,8 @@ Windows Feature toggles.
 
 ### `Disable Internet Explorer`
 
-Turns off the Windows feature, "Internet Explorer 11".
+Turns off the Windows feature, "Internet Explorer 11". A system reboot is
+required to complete this operation.
 
 ### Privacy
 
