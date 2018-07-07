@@ -39,7 +39,6 @@
     <Reference Include="Windows.Storage" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Chemo.manifest">
       <SubType>Designer</SubType>
     </None>
