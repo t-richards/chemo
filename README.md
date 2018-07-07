@@ -61,7 +61,7 @@ Prevents Cortana from appearing in the taskbar.
 
 Opinionated configuration changes.
 
-#### `Disable Force-Reboot After Windows Update
+#### `Disable Force-Reboot After Windows Update`
 
 Prevents Windows from automatically rebooting after applying Window sUpdates
 
@@ -76,6 +76,10 @@ Windows Feature toggles.
 ### `Disable Internet Explorer`
 
 Turns off the Windows feature, "Internet Explorer 11".
+
+### Privacy
+
+Re-gain control of your privacy. (TBD)
 
 ## Contributing
 
