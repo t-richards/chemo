@@ -86,5 +86,11 @@ namespace Chemo
                 }
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form aboutForm = new frmAbout();
+            aboutForm.ShowDialog();
+        }
     }
 }

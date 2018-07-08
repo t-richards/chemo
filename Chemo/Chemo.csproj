@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,6 +56,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Treatment\DeprovisionStoreApps.cs" />
     <Compile Include="Treatment\DisableCortana.cs" />
+    <Compile Include="Treatment\frmAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Treatment\frmAbout.Designer.cs">
+      <DependentUpon>frmAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Treatment\InternetExplorer.cs" />
     <Compile Include="Treatment\ITreatment.cs" />
     <Compile Include="Treatment\OneDrive.cs" />
@@ -69,6 +75,9 @@
   <ItemGroup>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Treatment\frmAbout.resx">
+      <DependentUpon>frmAbout.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
