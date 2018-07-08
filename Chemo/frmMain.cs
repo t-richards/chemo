@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 namespace Chemo
 {
+    // Size: 870x600
     public partial class frmMain : Form
     {
         private static readonly Logger logger = Logger.Instance;

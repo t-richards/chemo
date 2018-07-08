@@ -50,14 +50,19 @@ namespace Chemo
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.txtResults = new System.Windows.Forms.TextBox();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.grpTreatments.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnInitiateTreatment
             // 
             this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnInitiateTreatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(596, 472);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(288, 457);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(246, 77);
             this.btnInitiateTreatment.TabIndex = 1;
@@ -67,12 +72,11 @@ namespace Chemo
             // 
             // grpTreatments
             // 
-            this.grpTreatments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.grpTreatments.Controls.Add(this.treeViewTreatments);
-            this.grpTreatments.Location = new System.Drawing.Point(12, 12);
+            this.grpTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grpTreatments.Location = new System.Drawing.Point(0, 0);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(300, 537);
+            this.grpTreatments.Size = new System.Drawing.Size(289, 537);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -144,7 +148,7 @@ namespace Chemo
             treeNode10,
             treeNode11});
             this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(294, 518);
+            this.treeViewTreatments.Size = new System.Drawing.Size(283, 518);
             this.treeViewTreatments.TabIndex = 0;
             this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTreatments_AfterCheck);
             // 
@@ -153,28 +157,52 @@ namespace Chemo
             this.txtResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtResults.BackColor = System.Drawing.SystemColors.Window;
             this.txtResults.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtResults.Location = new System.Drawing.Point(318, 12);
+            this.txtResults.Location = new System.Drawing.Point(3, 3);
             this.txtResults.MaxLength = 65535;
             this.txtResults.Multiline = true;
             this.txtResults.Name = "txtResults";
+            this.txtResults.ReadOnly = true;
             this.txtResults.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResults.Size = new System.Drawing.Size(524, 454);
+            this.txtResults.Size = new System.Drawing.Size(531, 448);
             this.txtResults.TabIndex = 3;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Location = new System.Drawing.Point(12, 12);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.grpTreatments);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.txtResults);
+            this.splitContainer1.Panel2.Controls.Add(this.btnInitiateTreatment);
+            this.splitContainer1.Size = new System.Drawing.Size(830, 537);
+            this.splitContainer1.SplitterDistance = 289;
+            this.splitContainer1.TabIndex = 4;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(854, 561);
-            this.Controls.Add(this.txtResults);
-            this.Controls.Add(this.grpTreatments);
-            this.Controls.Add(this.btnInitiateTreatment);
+            this.Controls.Add(this.splitContainer1);
             this.Name = "frmMain";
             this.Text = "Chemo";
             this.grpTreatments.ResumeLayout(false);
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -183,5 +211,6 @@ namespace Chemo
         private System.Windows.Forms.GroupBox grpTreatments;
         private System.Windows.Forms.TextBox txtResults;
         private ChemoTreeView treeViewTreatments;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
