@@ -6,13 +6,13 @@ branches:
   - master
 image: Visual Studio 2017
 configuration: Release
-version: 1.0.{build}
+version: '0.1.{build}'
 assembly_info:
   patch: true
   file: AssemblyInfo.*
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-  assembly_informational_version: "{commitId}"
+  assembly_informational_version: $(APPVEYOR_REPO_COMMIT)
 build_script:
   - cmd: >-
       nuget restore
