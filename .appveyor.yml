@@ -4,7 +4,13 @@ skip_branch_with_pr: true
 branches:
   only:
   - master
+
 image: Visual Studio 2017
+
+init:
+- ps: >-
+    $env:ABBREV_COMMIT = $env:APPVEYOR_REPO_COMMIT.substring(0,8)
+
 configuration: Release
 version: '0.1.{build}'
 assembly_info:
@@ -12,7 +18,8 @@ assembly_info:
   file: AssemblyInfo.*
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-  assembly_informational_version: $(APPVEYOR_REPO_COMMIT)
+  assembly_informational_version: "{version}-$(ABBREV_COMMIT)"
+
 build_script:
   - cmd: >-
       nuget restore
