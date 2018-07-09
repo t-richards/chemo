@@ -1,4 +1,5 @@
 using Microsoft.Dism;
+using System;
 
 namespace Chemo.Treatment
 {
@@ -10,23 +11,30 @@ namespace Chemo.Treatment
         {
             int packageCount = 0;
 
-            using (DismSession session = DismApi.OpenOnlineSession())
+            try
             {
-                DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                foreach (var package in dismAppxPackages)
+                using (DismSession session = DismApi.OpenOnlineSession())
                 {
-                    try
+                    DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
+                    foreach (var package in dismAppxPackages)
                     {
-                        DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
-                        logger.Log("Successfully deprovisioned {0}", package.DisplayName);
-                    }
-                    catch (DismRebootRequiredException ex)
-                    {
-                        logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
-                    }
+                        try
+                        {
+                            DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                            logger.Log("Successfully deprovisioned {0}", package.DisplayName);
+                        }
+                        catch (DismRebootRequiredException ex)
+                        {
+                            logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                        }
 
-                    packageCount += 1;
+                        packageCount += 1;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
             }
 
             if (packageCount <= 0)

@@ -1,9 +1,5 @@
 using Microsoft.Dism;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chemo.Treatment
 {
@@ -14,33 +10,43 @@ namespace Chemo.Treatment
 
         public void PerformTreatment()
         {
-            using (DismSession session = DismApi.OpenOnlineSession())
+            try
             {
-                DismFeatureInfo info = DismApi.GetFeatureInfo(session, IEFeatureName);
-                if (info.FeatureState == DismPackageFeatureState.NotPresent || info.FeatureState == DismPackageFeatureState.Removed)
+                using (DismSession session = DismApi.OpenOnlineSession())
                 {
-                    logger.Log("Internet Explorer 11 is not present on the system.");
-                    return;
-                }
+                    DismFeatureInfo info = DismApi.GetFeatureInfo(session, IEFeatureName);
+                    if (
+                        info.FeatureState == DismPackageFeatureState.NotPresent ||
+                        info.FeatureState == DismPackageFeatureState.Removed ||
+                        info.FeatureState == DismPackageFeatureState.Staged)
+                    {
+                        logger.Log("Internet Explorer 11 is not present on the system.");
+                        return;
+                    }
 
-                if (info.FeatureState == DismPackageFeatureState.UninstallPending)
-                {
-                    logger.Log("Internet Explorer 11 is already pending uninstall.");
-                    return;
-                }
+                    if (info.FeatureState == DismPackageFeatureState.UninstallPending)
+                    {
+                        logger.Log("Internet Explorer 11 is already pending uninstall.");
+                        return;
+                    }
 
-                try
-                {
-                    logger.Log("Disabling Internet Explorer 11...");
-                    DismApi.DisableFeature(session, IEFeatureName, null, true);
-                }
-                catch (DismRebootRequiredException ex)
-                {
-                    logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
-                    return;
-                }
+                    try
+                    {
+                        logger.Log("Disabling Internet Explorer 11...");
+                        DismApi.DisableFeature(session, IEFeatureName, null, true);
+                    }
+                    catch (DismRebootRequiredException ex)
+                    {
+                        logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
+                        return;
+                    }
 
-                logger.Log("Successfully disabled Internet Explorer 11.");
+                    logger.Log("Successfully disabled Internet Explorer 11.");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Log("An error occurred while disabling Internet Explorer: {0}", ex.Message);
             }
         }
     }

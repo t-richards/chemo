@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;
@@ -17,7 +19,12 @@ namespace Chemo.Treatment
             { "AdobeSystemsIncorporated.AdobePhotoshopExpress", true },
             { "D5EA27B7.Duolingo-LearnLanguagesforFree", true},
             { "Microsoft.3DBuilder", true },
+            { "Microsoft.BingFinance", true },
+            { "Microsoft.BingFoodAndDrink", true },
+            { "Microsoft.BingHealthAndFitness", true },
             { "Microsoft.BingNews", true },
+            { "Microsoft.BingSports", true },
+            { "Microsoft.BingTravel", true },
             { "Microsoft.BingWeather", true },
             { "Microsoft.DesktopAppInstaller", true },
             { "Microsoft.FreshPaint", true },
@@ -90,12 +97,15 @@ namespace Chemo.Treatment
             {
                 logger.Log("No Windows Store applications were uninstalled.");
             }
+            logger.Log("");
         }
 
         private static void RemovePackage(Package package)
         {
             IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
                 packageManager.RemovePackageAsync(package.Id.FullName);
+
+            ManualResetEvent opCompletedEvent = new ManualResetEvent(false);
 
             deploymentOperation.Completed = (result, progress) => {
                 logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
@@ -105,7 +115,10 @@ namespace Chemo.Treatment
                     logger.Log("Error code: {0}", deploymentOperation.ErrorCode);
                     logger.Log("Error text: {0}", deploymentResult.ErrorText);
                 }
+                opCompletedEvent.Set();
             };
+
+            opCompletedEvent.WaitOne();
         }
     }
 }

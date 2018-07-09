@@ -1,7 +1,6 @@
 using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,7 +18,7 @@ namespace Chemo
             // Other init stuff here
             treeViewTreatments.ExpandAll();
             logger.SetTarget(txtResults);
-            DismApi.Initialize(DismLogLevel.LogErrors);
+            DismApi.InitializeEx(DismLogLevel.LogErrors);
         }
 
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
@@ -38,8 +37,6 @@ namespace Chemo
                 if (treeNode.Checked && treeNode.Tag != null)
                 {
                     string tag = treeNode.Tag.ToString();
-                    logger.Log("\r");
-                    logger.Log("== Applying Treatment: {0} ==", treeNode.Text);
 
                     // Create treatment instance based on checkbox tag
                     string typeStr = "Chemo.Treatment." + tag;
@@ -48,9 +45,11 @@ namespace Chemo
 
                     // Perform treatment work in the background to not lock up the UI
                     // Only run one task at a time because funny things happen when they run in parallel
+                    logger.Log("=== Applying Treatment: {0} ===", treeNode.Text);
                     await Task.Run(() =>
                         tr.PerformTreatment()
                     );
+                    logger.Log("");
                 }
 
                 WalkNodes(treeNode.Nodes);

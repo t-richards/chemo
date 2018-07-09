@@ -10,7 +10,7 @@ namespace Chemo.Treatment
             InitializeComponent();
         }
 
-        private void frmAbout_Load(object sender, System.EventArgs e)
+        private void OnLoad(object sender, System.EventArgs e)
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -19,6 +19,11 @@ namespace Chemo.Treatment
                 assembly.GetName().Version.ToString(),
                 assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
             );
+        }
+
+        private void OnGithubLabelClick(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/t-richards/chemo");
         }
     }
 }

@@ -28,24 +28,24 @@ namespace Chemo
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Remove Windows Store Apps");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Deprovision Windows Store Packages");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Remove OneDrive");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Disable Cortana");
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Apps", new System.Windows.Forms.TreeNode[] {
-            treeNode23,
-            treeNode24,
-            treeNode25,
-            treeNode26});
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Sign In");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
-            treeNode28,
-            treeNode29});
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
-            treeNode31});
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Privacy");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Remove Windows Store Apps");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Deprovision Windows Store Packages");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Remove OneDrive");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Disable Cortana");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Apps", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Sign In");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Privacy");
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
@@ -91,66 +91,66 @@ namespace Chemo
             this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
             this.treeViewTreatments.Name = "treeViewTreatments";
-            treeNode23.Checked = true;
-            treeNode23.Name = "Node3";
-            treeNode23.Tag = "RemoveStoreApps";
-            treeNode23.Text = "Remove Windows Store Apps";
-            treeNode23.ToolTipText = "Removes most pre-installed Windows Store apps.";
-            treeNode24.Checked = true;
-            treeNode24.Name = "Node4";
-            treeNode24.Tag = "DeprovisionStoreApps";
-            treeNode24.Text = "Deprovision Windows Store Packages";
-            treeNode24.ToolTipText = "Deprovisions all packages. This prevents Windows Store application from re-appear" +
+            treeNode1.Checked = true;
+            treeNode1.Name = "Node3";
+            treeNode1.Tag = "RemoveStoreApps";
+            treeNode1.Text = "Remove Windows Store Apps";
+            treeNode1.ToolTipText = "Removes most pre-installed Windows Store apps.";
+            treeNode2.Checked = true;
+            treeNode2.Name = "Node4";
+            treeNode2.Tag = "DeprovisionStoreApps";
+            treeNode2.Text = "Deprovision Windows Store Packages";
+            treeNode2.ToolTipText = "Deprovisions all packages. This prevents Windows Store application from re-appear" +
     "ing when a new user is created, or when a feature update is applied.";
-            treeNode25.Checked = true;
-            treeNode25.Name = "Node5";
-            treeNode25.Tag = "OneDrive";
-            treeNode25.Text = "Remove OneDrive";
-            treeNode25.ToolTipText = "Completely removes OneDrive including ALL ONEDRIVE DATA.";
-            treeNode26.Checked = true;
-            treeNode26.Name = "Node7";
-            treeNode26.Tag = "DisableCortana";
-            treeNode26.Text = "Disable Cortana";
-            treeNode26.ToolTipText = "Prevents Cortana from appearing in the taskbar. A sign out is required to complet" +
+            treeNode3.Checked = true;
+            treeNode3.Name = "Node5";
+            treeNode3.Tag = "OneDrive";
+            treeNode3.Text = "Remove OneDrive";
+            treeNode3.ToolTipText = "Completely removes OneDrive including ALL ONEDRIVE DATA.";
+            treeNode4.Checked = true;
+            treeNode4.Name = "Node7";
+            treeNode4.Tag = "DisableCortana";
+            treeNode4.Text = "Disable Cortana";
+            treeNode4.ToolTipText = "Prevents Cortana from appearing in the taskbar. A sign out is required to complet" +
     "e this operation.";
-            treeNode27.Checked = true;
-            treeNode27.Name = "Node0";
-            treeNode27.Text = "Apps";
-            treeNode27.ToolTipText = "Treatments related to store apps or other apps.";
-            treeNode28.Checked = true;
-            treeNode28.Name = "Node8";
-            treeNode28.Tag = "WindowsUpdateReboot";
-            treeNode28.Text = "Disable Force-Reboot After Windows Update";
-            treeNode28.ToolTipText = "Prevents Windows from automatically rebooting after applying updates.";
-            treeNode29.Checked = true;
-            treeNode29.Name = "Node9";
-            treeNode29.Tag = "RequireCtrlAltDel";
-            treeNode29.Text = "Require Ctrl+Alt+Del At Sign In";
-            treeNode29.ToolTipText = "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reason" +
+            treeNode5.Checked = true;
+            treeNode5.Name = "Node0";
+            treeNode5.Text = "Apps";
+            treeNode5.ToolTipText = "Treatments related to store apps or other apps.";
+            treeNode6.Checked = true;
+            treeNode6.Name = "Node8";
+            treeNode6.Tag = "WindowsUpdateReboot";
+            treeNode6.Text = "Disable Force-Reboot After Windows Update";
+            treeNode6.ToolTipText = "Prevents Windows from automatically rebooting after applying updates.";
+            treeNode7.Checked = true;
+            treeNode7.Name = "Node9";
+            treeNode7.Tag = "RequireCtrlAltDel";
+            treeNode7.Text = "Require Ctrl+Alt+Del At Sign In";
+            treeNode7.ToolTipText = "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reason" +
     "s.";
-            treeNode30.Checked = true;
-            treeNode30.Name = "Node1";
-            treeNode30.Text = "Config";
-            treeNode30.ToolTipText = "Opinionated configuration changes.";
-            treeNode31.Checked = true;
-            treeNode31.Name = "Node6";
-            treeNode31.Tag = "InternetExplorer";
-            treeNode31.Text = "Disable Internet Explorer";
-            treeNode31.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
+            treeNode8.Checked = true;
+            treeNode8.Name = "Node1";
+            treeNode8.Text = "Config";
+            treeNode8.ToolTipText = "Opinionated configuration changes.";
+            treeNode9.Checked = true;
+            treeNode9.Name = "Node6";
+            treeNode9.Tag = "InternetExplorer";
+            treeNode9.Text = "Disable Internet Explorer";
+            treeNode9.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
     "tion.";
-            treeNode32.Checked = true;
-            treeNode32.Name = "Node0";
-            treeNode32.Text = "Features";
-            treeNode32.ToolTipText = "Windows Feature toggles.";
-            treeNode33.Checked = true;
-            treeNode33.Name = "Node2";
-            treeNode33.Text = "Privacy";
-            treeNode33.ToolTipText = "Regain control of your privacy.";
+            treeNode10.Checked = true;
+            treeNode10.Name = "Node0";
+            treeNode10.Text = "Features";
+            treeNode10.ToolTipText = "Windows Feature toggles.";
+            treeNode11.Checked = true;
+            treeNode11.Name = "Node2";
+            treeNode11.Text = "Privacy";
+            treeNode11.ToolTipText = "Regain control of your privacy.";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode27,
-            treeNode30,
-            treeNode32,
-            treeNode33});
+            treeNode5,
+            treeNode8,
+            treeNode10,
+            treeNode11});
             this.treeViewTreatments.ShowNodeToolTips = true;
             this.treeViewTreatments.Size = new System.Drawing.Size(283, 503);
             this.treeViewTreatments.TabIndex = 0;
@@ -213,7 +213,7 @@ namespace Chemo
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

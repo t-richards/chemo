@@ -6,7 +6,7 @@ namespace Chemo
     public sealed class Logger
     {
         private static Logger instance = null;
-        private static readonly object padlock = new object();
+        private static readonly object instanceLock = new object();
         private static TextBox target = null;
 
         public void SetTarget(TextBox textBox)
@@ -39,7 +39,7 @@ namespace Chemo
         {
             get
             {
-                lock (padlock)
+                lock (instanceLock)
                 {
                     if (instance == null)
                     {
