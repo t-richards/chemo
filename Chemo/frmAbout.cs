@@ -17,7 +17,7 @@ namespace Chemo.Treatment
             lblVersion.Text = string.Format(
                 "Version {0} ({1})",
                 assembly.GetName().Version.ToString(),
-                assembly.GetCustomAttribute<AssemblyGitCommit>().CommitHash
+                assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
             );
         }
 

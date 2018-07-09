@@ -12,14 +12,13 @@ init:
     $env:ABBREV_COMMIT = $env:APPVEYOR_REPO_COMMIT.substring(0,8)
 
 configuration: Release
-version: '0.1.{build}'
+version: '0.1.{build}.0'
 assembly_info:
   patch: true
   file: AssemblyInfo.*
   assembly_version: "{version}"
   assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
-  assembly_git_commit: $(ABBREV_COMMIT)
+  assembly_informational_version: "{version}-$(ABBREV_COMMIT)"
 
 build_script:
   - cmd: >-
