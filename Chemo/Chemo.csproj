@@ -45,6 +45,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyGitCommit.cs" />
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>

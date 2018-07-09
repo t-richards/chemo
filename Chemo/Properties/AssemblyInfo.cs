@@ -1,3 +1,4 @@
+using Chemo;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
@@ -31,6 +32,7 @@ using System.Runtime.InteropServices;
 //
 [assembly: AssemblyVersion("0.1.0.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("unknown")]
+[assembly: AssemblyInformationalVersion("0.1.0.0")]
+[assembly: AssemblyGitCommit("unknown")]
 [assembly: NeutralResourcesLanguage("en-US")]
 
