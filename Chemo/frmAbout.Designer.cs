@@ -31,7 +31,7 @@
             this.lblChemo = new System.Windows.Forms.Label();
             this.lnkGithub = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblVersion = new System.Windows.Forms.Label();
+            this.txtVersion = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.lblChemo, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lnkGithub, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblVersion, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.txtVersion, 0, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -76,16 +76,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(280, 177);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
-            // lblVersion
+            // txtVersion
             // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVersion.Location = new System.Drawing.Point(3, 59);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(274, 59);
-            this.lblVersion.TabIndex = 2;
-            this.lblVersion.Text = "Version ...";
-            this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.txtVersion.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtVersion.BackColor = System.Drawing.SystemColors.Control;
+            this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtVersion.Location = new System.Drawing.Point(22, 82);
+            this.txtVersion.Name = "txtVersion";
+            this.txtVersion.ReadOnly = true;
+            this.txtVersion.Size = new System.Drawing.Size(235, 13);
+            this.txtVersion.TabIndex = 2;
+            this.txtVersion.Text = "Version: custom build";
+            this.txtVersion.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // frmAbout
             // 
@@ -110,6 +112,6 @@
         private System.Windows.Forms.Label lblChemo;
         private System.Windows.Forms.LinkLabel lnkGithub;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label lblVersion;
+        private System.Windows.Forms.TextBox txtVersion;
     }
 }

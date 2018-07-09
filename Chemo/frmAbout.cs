@@ -14,9 +14,8 @@ namespace Chemo.Treatment
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            lblVersion.Text = string.Format(
-                "Version {0} ({1})",
-                assembly.GetName().Version.ToString(),
+            txtVersion.Text = string.Format(
+                "Version: {0}",
                 assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
             );
         }
