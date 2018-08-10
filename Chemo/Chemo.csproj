@@ -62,6 +62,7 @@
     <Compile Include="frmAbout.Designer.cs">
       <DependentUpon>frmAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Treatment\DisableInternetSearchResults.cs" />
     <Compile Include="Treatment\InternetExplorer.cs" />
     <Compile Include="Treatment\ITreatment.cs" />
     <Compile Include="Treatment\OneDrive.cs" />

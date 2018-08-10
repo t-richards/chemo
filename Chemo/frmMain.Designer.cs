@@ -39,13 +39,15 @@ namespace Chemo
             treeNode4});
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Sign In");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Disable Internet Search Results In Start Menu");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
             treeNode6,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Privacy");
+            treeNode7,
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Privacy");
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
@@ -129,28 +131,32 @@ namespace Chemo
             treeNode7.ToolTipText = "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reason" +
     "s.";
             treeNode8.Checked = true;
-            treeNode8.Name = "Node1";
-            treeNode8.Text = "Config";
-            treeNode8.ToolTipText = "Opinionated configuration changes.";
+            treeNode8.Name = "Node0";
+            treeNode8.Tag = "DisableInternetSearchResults";
+            treeNode8.Text = "Disable Internet Search Results In Start Menu";
             treeNode9.Checked = true;
-            treeNode9.Name = "Node6";
-            treeNode9.Tag = "InternetExplorer";
-            treeNode9.Text = "Disable Internet Explorer";
-            treeNode9.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
-    "tion.";
+            treeNode9.Name = "Node1";
+            treeNode9.Text = "Config";
+            treeNode9.ToolTipText = "Opinionated configuration changes.";
             treeNode10.Checked = true;
-            treeNode10.Name = "Node0";
-            treeNode10.Text = "Features";
-            treeNode10.ToolTipText = "Windows Feature toggles.";
+            treeNode10.Name = "Node6";
+            treeNode10.Tag = "InternetExplorer";
+            treeNode10.Text = "Disable Internet Explorer";
+            treeNode10.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
+    "tion.";
             treeNode11.Checked = true;
-            treeNode11.Name = "Node2";
-            treeNode11.Text = "Privacy";
-            treeNode11.ToolTipText = "Regain control of your privacy.";
+            treeNode11.Name = "Node0";
+            treeNode11.Text = "Features";
+            treeNode11.ToolTipText = "Windows Feature toggles.";
+            treeNode12.Checked = true;
+            treeNode12.Name = "Node2";
+            treeNode12.Text = "Privacy";
+            treeNode12.ToolTipText = "Regain control of your privacy.";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
-            treeNode8,
-            treeNode10,
-            treeNode11});
+            treeNode9,
+            treeNode11,
+            treeNode12});
             this.treeViewTreatments.ShowNodeToolTips = true;
             this.treeViewTreatments.Size = new System.Drawing.Size(283, 503);
             this.treeViewTreatments.TabIndex = 0;
