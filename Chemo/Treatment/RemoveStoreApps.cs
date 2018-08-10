@@ -15,9 +15,12 @@ namespace Chemo.Treatment
         public readonly IDictionary<string, bool> AppsToRemove = new Dictionary<string, bool>
         {
             { "46928bounde.EclipseManager", true },
+            { "A278AB0D.DragonManiaLegends", true },
             { "ActiproSoftwareLLC.562882FEEB491", true },
             { "AdobeSystemsIncorporated.AdobePhotoshopExpress", true },
             { "D5EA27B7.Duolingo-LearnLanguagesforFree", true},
+            { "king.com.BubbleWitch3Saga", true },
+            { "king.com.CandyCrushSodaSaga", true },
             { "Microsoft.3DBuilder", true },
             { "Microsoft.BingFinance", true },
             { "Microsoft.BingFoodAndDrink", true },
