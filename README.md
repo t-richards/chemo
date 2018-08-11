@@ -73,7 +73,7 @@ Requires the user to press Ctrl+Alt+Del at the sign-in screen for security reaso
 
 Prevents internet junk from appearing when searching apps, files, etc. in the start menu.
 
-#### Set System Clock to UTC
+#### `Set System Clock to UTC`
 
 Sets the system's hardware clock to Coordinated Universal Time (UTC). The Windows default is localtime.
 
