@@ -68,6 +68,7 @@
     <Compile Include="Treatment\OneDrive.cs" />
     <Compile Include="Treatment\RemoveStoreApps.cs" />
     <Compile Include="Treatment\RequireCtrlAltDel.cs" />
+    <Compile Include="Treatment\SetClockUTC.cs" />
     <Compile Include="Treatment\WindowsUpdateReboot.cs" />
     <Compile Include="ChemoTreeView.cs">
       <SubType>Component</SubType>
@@ -106,6 +107,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>

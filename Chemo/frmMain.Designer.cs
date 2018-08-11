@@ -38,16 +38,18 @@ namespace Chemo
             treeNode3,
             treeNode4});
             System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Disable Force-Reboot After Windows Update");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del At Sign In");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Disable Internet Search Results In Start Menu");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del at Sign In");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Disable Internet Search Results in Start Menu");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Set System Clock to UTC");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
             treeNode6,
             treeNode7,
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Privacy");
+            treeNode8,
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Privacy");
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
@@ -127,36 +129,44 @@ namespace Chemo
             treeNode7.Checked = true;
             treeNode7.Name = "Node9";
             treeNode7.Tag = "RequireCtrlAltDel";
-            treeNode7.Text = "Require Ctrl+Alt+Del At Sign In";
+            treeNode7.Text = "Require Ctrl+Alt+Del at Sign In";
             treeNode7.ToolTipText = "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reason" +
     "s.";
             treeNode8.Checked = true;
             treeNode8.Name = "Node0";
             treeNode8.Tag = "DisableInternetSearchResults";
-            treeNode8.Text = "Disable Internet Search Results In Start Menu";
+            treeNode8.Text = "Disable Internet Search Results in Start Menu";
+            treeNode8.ToolTipText = "Prevents internet junk from appearing when searching apps, files, etc. in the sta" +
+    "rt menu.";
             treeNode9.Checked = true;
-            treeNode9.Name = "Node1";
-            treeNode9.Text = "Config";
-            treeNode9.ToolTipText = "Opinionated configuration changes.";
+            treeNode9.Name = "Node0";
+            treeNode9.Tag = "SetClockUTC";
+            treeNode9.Text = "Set System Clock to UTC";
+            treeNode9.ToolTipText = "Sets the system\'s hardware clock to Coordinated Universal Time (UTC). The Windows" +
+    " default is localtime.";
             treeNode10.Checked = true;
-            treeNode10.Name = "Node6";
-            treeNode10.Tag = "InternetExplorer";
-            treeNode10.Text = "Disable Internet Explorer";
-            treeNode10.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
-    "tion.";
+            treeNode10.Name = "Node1";
+            treeNode10.Text = "Config";
+            treeNode10.ToolTipText = "Opinionated configuration changes.";
             treeNode11.Checked = true;
-            treeNode11.Name = "Node0";
-            treeNode11.Text = "Features";
-            treeNode11.ToolTipText = "Windows Feature toggles.";
+            treeNode11.Name = "Node6";
+            treeNode11.Tag = "InternetExplorer";
+            treeNode11.Text = "Disable Internet Explorer";
+            treeNode11.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
+    "tion.";
             treeNode12.Checked = true;
-            treeNode12.Name = "Node2";
-            treeNode12.Text = "Privacy";
-            treeNode12.ToolTipText = "Regain control of your privacy.";
+            treeNode12.Name = "Node0";
+            treeNode12.Text = "Features";
+            treeNode12.ToolTipText = "Windows Feature toggles.";
+            treeNode13.Checked = true;
+            treeNode13.Name = "Node2";
+            treeNode13.Text = "Privacy";
+            treeNode13.ToolTipText = "Regain control of your privacy.";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
-            treeNode9,
-            treeNode11,
-            treeNode12});
+            treeNode10,
+            treeNode12,
+            treeNode13});
             this.treeViewTreatments.ShowNodeToolTips = true;
             this.treeViewTreatments.Size = new System.Drawing.Size(283, 503);
             this.treeViewTreatments.TabIndex = 0;

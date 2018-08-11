@@ -69,6 +69,14 @@ Prevents Windows from automatically rebooting after applying Windows Updates
 
 Requires the user to press Ctrl+Alt+Del at the sign-in screen for security reasons.
 
+#### `Disable Internet Search Results in Start Menu`
+
+Prevents internet junk from appearing when searching apps, files, etc. in the start menu.
+
+#### Set System Clock to UTC
+
+Sets the system's hardware clock to Coordinated Universal Time (UTC). The Windows default is localtime.
+
 ### Features
 
 Windows Feature toggles.
