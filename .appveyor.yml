@@ -7,9 +7,6 @@ branches:
 
 image: Visual Studio 2017
 
-platform:
-  - x64
-
 init:
 - ps: >-
     $env:ABBREV_COMMIT = $env:APPVEYOR_REPO_COMMIT.substring(0,8)
