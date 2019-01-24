@@ -1,4 +1,4 @@
-using System;
+using Chemo.Data;
 using System.Collections.Generic;
 using System.Threading;
 using Windows.ApplicationModel;
@@ -11,63 +11,6 @@ namespace Chemo.Treatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
-
-        public readonly IDictionary<string, bool> AppsToRemove = new Dictionary<string, bool>
-        {
-            { "46928bounde.EclipseManager", true },
-            { "828B5831.HiddenCityMysteryofShadows", true },
-            { "A278AB0D.DragonManiaLegends", true },
-            { "ActiproSoftwareLLC.562882FEEB491", true },
-            { "AdobeSystemsIncorporated.AdobePhotoshopExpress", true },
-            { "D5EA27B7.Duolingo-LearnLanguagesforFree", true},
-            { "king.com.BubbleWitch3Saga", true },
-            { "king.com.CandyCrushSaga", true },
-            { "king.com.CandyCrushSodaSaga", true },
-            { "Microsoft.3DBuilder", true },
-            { "Microsoft.BingFinance", true },
-            { "Microsoft.BingFoodAndDrink", true },
-            { "Microsoft.BingHealthAndFitness", true },
-            { "Microsoft.BingNews", true },
-            { "Microsoft.BingSports", true },
-            { "Microsoft.BingTravel", true },
-            { "Microsoft.BingWeather", true },
-            { "Microsoft.DesktopAppInstaller", true },
-            { "Microsoft.FreshPaint", true },
-            { "Microsoft.GetHelp", true },
-            { "Microsoft.Getstarted", true },
-            { "Microsoft.Messaging", true },
-            { "Microsoft.Microsoft3DViewer", true },
-            { "Microsoft.MicrosoftOfficeHub", true },
-            { "Microsoft.MicrosoftPowerBIForWindows", true },
-            { "Microsoft.MicrosoftSolitaireCollection", true },
-            { "Microsoft.MicrosoftStickyNotes", true },
-            { "Microsoft.MinecraftUWP", true },
-            { "Microsoft.MSPaint", true },
-            { "Microsoft.NetworkSpeedTest", true },
-            { "Microsoft.Office.OneNote", true },
-            { "Microsoft.Office.Sway", true },
-            { "Microsoft.OneConnect", true },
-            { "Microsoft.People", true },
-            { "Microsoft.Print3D", true },
-            { "Microsoft.SkypeApp", true },
-            { "Microsoft.Wallet", true },
-            { "Microsoft.WindowsAlarms", true },
-            { "Microsoft.WindowsCamera", true },
-            { "microsoft.windowscommunicationsapps", true },
-            { "Microsoft.WindowsFeedbackHub", true },
-            { "Microsoft.WindowsMaps", true },
-            { "Microsoft.WindowsSoundRecorder", true },
-            { "Microsoft.Xbox.TCUI", true },
-            { "Microsoft.XboxApp", true },
-            { "Microsoft.XboxGameOverlay", true },
-            { "Microsoft.XboxGamingOverlay", true },
-            { "Microsoft.XboxIdentityProvider", true },
-            { "Microsoft.XboxSpeechToTextOverlay", true },
-            { "Microsoft.ZuneMusic", true },
-            { "Microsoft.ZuneVideo", true },
-            { "Nordcurrent.CookingFever", true },
-            { "PandoraMediaInc.29680B314EFC2", true },
-        };
 
         public void PerformTreatment()
         {
@@ -88,8 +31,7 @@ namespace Chemo.Treatment
                     continue;
                 }
 
-                AppsToRemove.TryGetValue(package.Id.Name, out bool shouldRemove);
-                if (shouldRemove)
+                if (StoreApps.shouldRemove(package.Id.Name))
                 {
                     RemovePackage(package);
                     packageCount += 1;
@@ -114,7 +56,8 @@ namespace Chemo.Treatment
 
             ManualResetEvent opCompletedEvent = new ManualResetEvent(false);
 
-            deploymentOperation.Completed = (result, progress) => {
+            deploymentOperation.Completed = (result, progress) =>
+            {
                 logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
                 if (result.Status == AsyncStatus.Error)
                 {

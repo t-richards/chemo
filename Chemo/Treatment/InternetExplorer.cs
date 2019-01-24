@@ -6,15 +6,26 @@ namespace Chemo.Treatment
     class InternetExplorer : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        public const string IEFeatureName = "Internet-Explorer-Optional-amd64";
+        public const string IE32BitName = "Internet-Explorer-Optional-x86";
+        public const string IE64BitName = "Internet-Explorer-Optional-amd64";
 
         public void PerformTreatment()
         {
+            string featureName;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                featureName = IE64BitName;
+            }
+            else
+            {
+                featureName = IE32BitName;
+            }
+
             try
             {
                 using (DismSession session = DismApi.OpenOnlineSession())
                 {
-                    DismFeatureInfo info = DismApi.GetFeatureInfo(session, IEFeatureName);
+                    DismFeatureInfo info = DismApi.GetFeatureInfo(session, featureName);
                     if (
                         info.FeatureState == DismPackageFeatureState.NotPresent ||
                         info.FeatureState == DismPackageFeatureState.Removed ||
@@ -33,7 +44,7 @@ namespace Chemo.Treatment
                     try
                     {
                         logger.Log("Disabling Internet Explorer 11...");
-                        DismApi.DisableFeature(session, IEFeatureName, null, true);
+                        DismApi.DisableFeature(session, featureName, null, true);
                     }
                     catch (DismRebootRequiredException ex)
                     {

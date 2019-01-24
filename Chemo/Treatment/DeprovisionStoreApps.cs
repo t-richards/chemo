@@ -1,3 +1,4 @@
+using Chemo.Data;
 using Microsoft.Dism;
 using System;
 
@@ -20,8 +21,15 @@ namespace Chemo.Treatment
                     {
                         try
                         {
-                            DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
-                            logger.Log("Successfully deprovisioned {0}", package.DisplayName);
+                            if (StoreApps.shouldRemove(package.DisplayName))
+                            {
+                                DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                                logger.Log("Successfully deprovisioned {0}", package.DisplayName);
+                            } else
+                            {
+                                logger.Log("Not deprovisioning {0}", package.DisplayName);
+                            }
+                            
                         }
                         catch (DismRebootRequiredException ex)
                         {
