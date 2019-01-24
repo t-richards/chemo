@@ -41,15 +41,19 @@ namespace Chemo
             System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Require Ctrl+Alt+Del at Sign In");
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Disable Internet Search Results in Start Menu");
             System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Set System Clock to UTC");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Turn Off App Recommendations");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Turn Off Game Bar");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Config", new System.Windows.Forms.TreeNode[] {
             treeNode6,
             treeNode7,
             treeNode8,
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
             treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Privacy");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Disable Internet Explorer");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Privacy");
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
@@ -96,77 +100,87 @@ namespace Chemo
             this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
             this.treeViewTreatments.Name = "treeViewTreatments";
             treeNode1.Checked = true;
-            treeNode1.Name = "Node3";
+            treeNode1.Name = "RemoveStoreApps";
             treeNode1.Tag = "RemoveStoreApps";
             treeNode1.Text = "Remove Windows Store Apps";
             treeNode1.ToolTipText = "Removes most pre-installed Windows Store apps.";
             treeNode2.Checked = true;
-            treeNode2.Name = "Node4";
+            treeNode2.Name = "DeprovisionStoreApps";
             treeNode2.Tag = "DeprovisionStoreApps";
             treeNode2.Text = "Deprovision Windows Store Packages";
             treeNode2.ToolTipText = "Deprovisions all packages. This prevents Windows Store application from re-appear" +
     "ing when a new user is created, or when a feature update is applied.";
             treeNode3.Checked = true;
-            treeNode3.Name = "Node5";
+            treeNode3.Name = "OneDrive";
             treeNode3.Tag = "OneDrive";
             treeNode3.Text = "Remove OneDrive";
             treeNode3.ToolTipText = "Completely removes OneDrive including ALL ONEDRIVE DATA.";
             treeNode4.Checked = true;
-            treeNode4.Name = "Node7";
+            treeNode4.Name = "DisableCortana";
             treeNode4.Tag = "DisableCortana";
             treeNode4.Text = "Disable Cortana";
             treeNode4.ToolTipText = "Prevents Cortana from appearing in the taskbar. A sign out is required to complet" +
     "e this operation.";
             treeNode5.Checked = true;
-            treeNode5.Name = "Node0";
+            treeNode5.Name = "Apps";
             treeNode5.Text = "Apps";
             treeNode5.ToolTipText = "Treatments related to store apps or other apps.";
             treeNode6.Checked = true;
-            treeNode6.Name = "Node8";
+            treeNode6.Name = "WindowsUpdateReboot";
             treeNode6.Tag = "WindowsUpdateReboot";
             treeNode6.Text = "Disable Force-Reboot After Windows Update";
             treeNode6.ToolTipText = "Prevents Windows from automatically rebooting after applying updates.";
             treeNode7.Checked = true;
-            treeNode7.Name = "Node9";
+            treeNode7.Name = "RequireCtrlAltDel";
             treeNode7.Tag = "RequireCtrlAltDel";
             treeNode7.Text = "Require Ctrl+Alt+Del at Sign In";
             treeNode7.ToolTipText = "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reason" +
     "s.";
             treeNode8.Checked = true;
-            treeNode8.Name = "Node0";
+            treeNode8.Name = "DisableInternetSearchResults";
             treeNode8.Tag = "DisableInternetSearchResults";
             treeNode8.Text = "Disable Internet Search Results in Start Menu";
             treeNode8.ToolTipText = "Prevents internet junk from appearing when searching apps, files, etc. in the sta" +
     "rt menu.";
             treeNode9.Checked = true;
-            treeNode9.Name = "Node0";
+            treeNode9.Name = "SetClockUTC";
             treeNode9.Tag = "SetClockUTC";
             treeNode9.Text = "Set System Clock to UTC";
             treeNode9.ToolTipText = "Sets the system\'s hardware clock to Coordinated Universal Time (UTC). The Windows" +
     " default is localtime.";
             treeNode10.Checked = true;
-            treeNode10.Name = "Node1";
-            treeNode10.Text = "Config";
-            treeNode10.ToolTipText = "Opinionated configuration changes.";
+            treeNode10.Name = "SuggestedApps";
+            treeNode10.Tag = "SuggestedApps";
+            treeNode10.Text = "Turn Off App Recommendations";
+            treeNode10.ToolTipText = "Prevents \"recommended\" applications from displaying on the start menu.";
             treeNode11.Checked = true;
-            treeNode11.Name = "Node6";
-            treeNode11.Tag = "InternetExplorer";
-            treeNode11.Text = "Disable Internet Explorer";
-            treeNode11.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
-    "tion.";
+            treeNode11.Name = "GameBar";
+            treeNode11.Tag = "GameBar";
+            treeNode11.Text = "Turn Off Game Bar";
+            treeNode11.ToolTipText = "Turns off the game bar for both apps and games.";
             treeNode12.Checked = true;
-            treeNode12.Name = "Node0";
-            treeNode12.Text = "Features";
-            treeNode12.ToolTipText = "Windows Feature toggles.";
+            treeNode12.Name = "Config";
+            treeNode12.Text = "Config";
+            treeNode12.ToolTipText = "Opinionated configuration changes.";
             treeNode13.Checked = true;
-            treeNode13.Name = "Node2";
-            treeNode13.Text = "Privacy";
-            treeNode13.ToolTipText = "Regain control of your privacy.";
+            treeNode13.Name = "InternetExplorer";
+            treeNode13.Tag = "InternetExplorer";
+            treeNode13.Text = "Disable Internet Explorer";
+            treeNode13.ToolTipText = "Disables Internet Explorer 11. A system reboot is required to complete this opera" +
+    "tion.";
+            treeNode14.Checked = true;
+            treeNode14.Name = "Features";
+            treeNode14.Text = "Features";
+            treeNode14.ToolTipText = "Windows Feature toggles.";
+            treeNode15.Checked = true;
+            treeNode15.Name = "Privacy";
+            treeNode15.Text = "Privacy";
+            treeNode15.ToolTipText = "Regain control of your privacy.";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
-            treeNode10,
             treeNode12,
-            treeNode13});
+            treeNode14,
+            treeNode15});
             this.treeViewTreatments.ShowNodeToolTips = true;
             this.treeViewTreatments.Size = new System.Drawing.Size(283, 503);
             this.treeViewTreatments.TabIndex = 0;

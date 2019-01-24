@@ -45,7 +45,7 @@ namespace Chemo
 
                     // Perform treatment work in the background to not lock up the UI
                     // Only run one task at a time because funny things happen when they run in parallel
-                    logger.Log("=== Applying Treatment: {0} ===", treeNode.Text);
+                    logger.Log("=== Applying: {0} ===", treeNode.Text);
                     await Task.Run(() =>
                         tr.PerformTreatment()
                     );
