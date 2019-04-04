@@ -45,7 +45,7 @@ Treatments related to store apps or other apps.
 This treatment removes most pre-installed Windows Store apps. For the complete
 list of removals, please see:
 
-https://github.com/t-richards/chemo/blob/master/Chemo/Data/StoreApps.cs#L13-L68
+https://github.com/t-richards/chemo/blob/master/Chemo/Data/StoreApps.cs#L9-L64
 
 #### `Deprovision Windows Store Packages`
 
