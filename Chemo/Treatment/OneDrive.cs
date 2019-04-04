@@ -87,8 +87,15 @@ namespace Chemo.Treatment
             MaybeDelete(programData);
         }
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
         {
+            return true;
+        }
+
+        public bool PerformTreatment()
+        {
+            bool retval = true;
+
             try
             {
                 logger.Log("Terminating any running OneDrive processes...");
@@ -98,6 +105,7 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("Could not kill running OneDrive processes: {0}", ex.Message);
+                retval = false;
             }
 
             try
@@ -109,6 +117,7 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
+                retval = false;
             }
 
             try
@@ -120,7 +129,10 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("Could not delete OneDrive folders: {0}", ex.Message);
+                retval = false;
             }
+
+            return retval;
         }
     }
 }

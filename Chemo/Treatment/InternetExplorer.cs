@@ -9,7 +9,12 @@ namespace Chemo.Treatment
         public const string IE32BitName = "Internet-Explorer-Optional-x86";
         public const string IE64BitName = "Internet-Explorer-Optional-amd64";
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
+        {
+            return true;
+        }
+
+        public bool PerformTreatment()
         {
             string featureName;
             if (Environment.Is64BitOperatingSystem)
@@ -32,13 +37,13 @@ namespace Chemo.Treatment
                         info.FeatureState == DismPackageFeatureState.Staged)
                     {
                         logger.Log("Internet Explorer 11 is not present on the system.");
-                        return;
+                        return true;
                     }
 
                     if (info.FeatureState == DismPackageFeatureState.UninstallPending)
                     {
                         logger.Log("Internet Explorer 11 is already pending uninstall.");
-                        return;
+                        return true;
                     }
 
                     try
@@ -49,16 +54,19 @@ namespace Chemo.Treatment
                     catch (DismRebootRequiredException ex)
                     {
                         logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
-                        return;
+                        return true;
                     }
 
                     logger.Log("Successfully disabled Internet Explorer 11.");
+                    return true;
                 }
             }
             catch (Exception ex)
             {
                 logger.Log("An error occurred while disabling Internet Explorer: {0}", ex.Message);
             }
+
+            return false;
         }
     }
 }

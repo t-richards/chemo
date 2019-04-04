@@ -8,7 +8,12 @@ namespace Chemo.Treatment
     {
         private static readonly Logger logger = Logger.Instance;
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
+        {
+            return true;
+        }
+
+        public bool PerformTreatment()
         {
             int removedPackageCount = 0;
 
@@ -44,12 +49,15 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
+                return false;
             }
 
             if (removedPackageCount <= 0)
             {
                 logger.Log("No Windows Store packages were deprovisioned.");
             }
+
+            return true;
         }
     }
 }

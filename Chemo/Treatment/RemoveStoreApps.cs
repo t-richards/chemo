@@ -12,7 +12,12 @@ namespace Chemo.Treatment
         private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
+        {
+            return true;
+        }
+
+        public bool PerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
@@ -47,6 +52,8 @@ namespace Chemo.Treatment
                 logger.Log("No Windows Store applications were uninstalled.");
             }
             logger.Log("");
+
+            return true;
         }
 
         private static void RemovePackage(Package package)
