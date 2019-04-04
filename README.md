@@ -14,6 +14,10 @@ another round of treatment, if you desire.
 Chemo can and will eat your lunch. Before using this tool, please make a
 snapshot, system restore point, or other backup of some kind.
 
+Chemo is currently in a pre-alpha state. You probably don't want to use Chemo on your primary machine. Unless you are comfortable with performing a fresh installation of Windows or restoring from a backup image, don't use this tool!
+
+Contributions and feedback are greatly appreciated!
+
 ## Download
 
 The latest development build can be [downloaded directly from AppVeyor](https://ci.appveyor.com/project/t-richards/chemo/build/artifacts).
@@ -45,8 +49,11 @@ https://github.com/t-richards/chemo/blob/master/Chemo/Data/StoreApps.cs#L13-L68
 
 #### `Deprovision Windows Store Packages`
 
-Deprovisions all packages. This prevents Windows Store applications from
-re-appearing when a new user is created, or when a feature update is applied.
+Deprovisions most pre-installed Windows Store apps (same list as above). After the treatment is applied, creating a new user or applying a feature update will no longer trigger the re-installation of these junk applications.
+
+> What is a provisioned Windows Store package?
+
+When a new Windows user is created, Windows _will_ automatically install all "provisioned" store packages for that user. When a feature update is applied, Windows _may_ re-install any missing "provisioned" store packages for all users.
 
 #### `Remove OneDrive`
 
