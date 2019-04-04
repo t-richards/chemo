@@ -27,7 +27,7 @@ Microsoft Windows is not supported.
 
 ## Available Treatments
 
-![screenshot](https://user-images.githubusercontent.com/3905798/42413333-cf818f54-81eb-11e8-937e-a392eec35cba.png)
+![chemo screenshot](https://user-images.githubusercontent.com/3905798/55529223-33629200-566e-11e9-9026-d9765557472c.png)
 
 While using Chemo, hover over any treatment in the tree to display a brief
 description of what the treatment does.
@@ -81,7 +81,7 @@ Sets the system's hardware clock to Coordinated Universal Time (UTC). The Window
 
 Windows Feature toggles.
 
-### `Disable Internet Explorer`
+#### `Disable Internet Explorer`
 
 Turns off the Windows feature, "Internet Explorer 11". A system reboot is
 required to complete this operation.
