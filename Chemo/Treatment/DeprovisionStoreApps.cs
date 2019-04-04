@@ -10,7 +10,7 @@ namespace Chemo.Treatment
 
         public void PerformTreatment()
         {
-            int packageCount = 0;
+            int removedPackageCount = 0;
 
             try
             {
@@ -25,18 +25,19 @@ namespace Chemo.Treatment
                             {
                                 DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
                                 logger.Log("Successfully deprovisioned {0}", package.DisplayName);
-                            } else
+                                removedPackageCount += 1;
+                            }
+                            else
                             {
                                 logger.Log("Not deprovisioning {0}", package.DisplayName);
                             }
-                            
+
                         }
                         catch (DismRebootRequiredException ex)
                         {
                             logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                            removedPackageCount += 1;
                         }
-
-                        packageCount += 1;
                     }
                 }
             }
@@ -45,7 +46,7 @@ namespace Chemo.Treatment
                 logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
             }
 
-            if (packageCount <= 0)
+            if (removedPackageCount <= 0)
             {
                 logger.Log("No Windows Store packages were deprovisioned.");
             }

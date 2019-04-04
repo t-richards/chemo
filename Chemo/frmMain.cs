@@ -1,7 +1,8 @@
+using Chemo.CoreExt;
 using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -10,6 +11,8 @@ namespace Chemo
     public partial class frmMain : Form
     {
         private static readonly Logger logger = Logger.Instance;
+        private int progressPercent = 0;
+        private int progressIncrement = 0;
 
         public frmMain()
         {
@@ -23,37 +26,75 @@ namespace Chemo
 
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
-            txtResults.Clear();
-            txtResults.Refresh();
-
-            // Recursively walk the tree and apply treatments as we come to them
-            WalkNodes(treeViewTreatments.Nodes);
+            Reset();
+            List<ITreatment> selectedTreatments = CollectTreatments();
+            ApplyTreatments(selectedTreatments);
         }
 
-        private async void WalkNodes(TreeNodeCollection nodes)
+        private void ApplyTreatments(List<ITreatment> treatments)
         {
-            foreach (TreeNode treeNode in nodes)
+            foreach (var treatment in treatments)
+            {
+                logger.Log("=== Applying: {0} ===", treatment.GetType().ToString());
+                treatment.PerformTreatment();
+                IncrementProgress();
+                logger.Log("");
+            }
+
+            SetProgress(100);
+        }
+
+        private List<ITreatment> CollectTreatments()
+        {
+            List<ITreatment> selectedTreatments = new List<ITreatment>();
+
+            foreach (var treeNode in treeViewTreatments.Nodes.All())
             {
                 if (treeNode.Checked && treeNode.Tag != null)
                 {
                     string tag = treeNode.Tag.ToString();
-
-                    // Create treatment instance based on checkbox tag
                     string typeStr = "Chemo.Treatment." + tag;
                     Type componentType = Type.GetType(typeStr);
+
+                    // Create treatment instance based on checkbox tag
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
 
-                    // Perform treatment work in the background to not lock up the UI
-                    // Only run one task at a time because funny things happen when they run in parallel
-                    logger.Log("=== Applying: {0} ===", treeNode.Text);
-                    await Task.Run(() =>
-                        tr.PerformTreatment()
-                    );
-                    logger.Log("");
+                    selectedTreatments.Add(tr);
                 }
-
-                WalkNodes(treeNode.Nodes);
             }
+
+            progressIncrement = (int)Math.Floor(100.0f / selectedTreatments.Count);
+
+            return selectedTreatments;
+        }
+
+        private void Reset()
+        {
+            // State
+            progressPercent = 0;
+            progressIncrement = 0;
+
+            // Components
+            txtResults.Clear();
+            txtResults.Refresh();
+            lblProgressPercent.Text = "";
+            lblProgressPercent.Refresh();
+        }
+
+        private void IncrementProgress()
+        {
+            progressPercent += progressIncrement;
+            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Refresh();
+            prgTreatmentApplication.Value = progressPercent;
+        }
+
+        private void SetProgress(int value)
+        {
+            progressPercent = value;
+            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Refresh();
+            prgTreatmentApplication.Value = progressPercent;
         }
 
         private void treeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
