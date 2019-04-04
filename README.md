@@ -14,9 +14,9 @@ another round of treatment, if you desire.
 Chemo can and will eat your lunch. Before using this tool, please make a
 snapshot, system restore point, or other backup of some kind.
 
-Chemo is currently in a pre-alpha state. You probably don't want to use Chemo on your primary machine. Unless you are comfortable with performing a fresh installation of Windows or restoring from a backup image, don't use this tool!
+You probably don't want to use Chemo on your primary machine. Unless you are comfortable with performing a fresh installation of Windows or restoring from a backup image, don't use this tool!
 
-Contributions and feedback are greatly appreciated!
+Chemo is currently in a pre-alpha state. Contributions and feedback are greatly appreciated!
 
 ## Download
 
