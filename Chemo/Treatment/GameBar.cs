@@ -12,15 +12,18 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            return true;
+            return !(
+                RegistryUtils.IntEquals(GameDVR, "AppCaptureEnabled", DesiredValue) &&
+                RegistryUtils.IntEquals(GameConfigStore, "GameDVR_Enabled", DesiredValue)
+            );
         }
 
         public bool PerformTreatment()
         {
             try
             {
-                Registry.SetValue(GameDVR, "AppCaptureEnabled", 0, RegistryValueKind.DWord);
-                Registry.SetValue(GameConfigStore, "GameDVR_Enabled", 0, RegistryValueKind.DWord);
+                Registry.SetValue(GameDVR, "AppCaptureEnabled", DesiredValue, RegistryValueKind.DWord);
+                Registry.SetValue(GameConfigStore, "GameDVR_Enabled", DesiredValue, RegistryValueKind.DWord);
                 logger.Log("Successfully turned off the game bar.");
                 return true;
             }

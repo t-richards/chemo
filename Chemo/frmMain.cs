@@ -29,8 +29,8 @@ namespace Chemo
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<ITreatment> selectedTreatments = CollectTreatments();
-            ApplyTreatments(selectedTreatments);
+            List<ITreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
+            ApplyTreatments(shouldPerformTreatments);
         }
 
         private void ApplyTreatments(List<ITreatment> treatments)
@@ -141,23 +141,19 @@ namespace Chemo
             Reset();
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            List<ITreatment> selectedTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
+            List<ITreatment> selectedTreatments = CollectTreatments();
+            List<ITreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
             stopWatch.Stop();
+
             logger.Log("Analysis Complete: {0}", stopWatch.Elapsed);
-
-            if (selectedTreatments.Count <= 0)
-            {
-                logger.Log("No treatments to apply.");
-                return;
-            }
-
+            logger.Log("Selected {0} treatments.", selectedTreatments.Count);
+            logger.Log("{0} treatments need to be applied.", performTreatments.Count);
+            logger.Log("{0} treatments already applied.", selectedTreatments.Count - performTreatments.Count);
+            logger.Log("");
             logger.Log("Details of treatments to be applied:");
-            foreach (var treatment in selectedTreatments)
+            foreach (var treatment in performTreatments)
             {
-                if (treatment.ShouldPerformTreatment())
-                {
-                    logger.Log(" - {0}", treatment.GetType().ToString());
-                }
+                logger.Log(" - {0}", treatment.GetType().ToString());
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            return RegistryUtils.IntEquals(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue);
+            return !RegistryUtils.IntEquals(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue);
         }
 
         public bool PerformTreatment()

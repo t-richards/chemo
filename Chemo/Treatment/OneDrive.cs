@@ -43,7 +43,7 @@ namespace Chemo.Treatment
             }
         }
 
-        public bool MaybeDelete(string path)
+        private bool MaybeDelete(string path)
         {
             if (!Directory.Exists(path))
             {
@@ -52,6 +52,8 @@ namespace Chemo.Treatment
 
             try
             {
+                var di = new DirectoryInfo(path);
+                di.Attributes &= ~FileAttributes.ReadOnly;
                 Directory.Delete(path, true);
                 return true;
             }
@@ -63,7 +65,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public void DeleteFolders()
+        private void DeleteFolders()
         {
             // %USERPROFILE%\OneDrive
             string userData = Path.Combine(
@@ -85,6 +87,11 @@ namespace Chemo.Treatment
                 "Microsoft OneDrive"
             );
             MaybeDelete(programData);
+        }
+
+        private void UnpinFolder()
+        {
+            Registry.SetValue("HKEY_CLASSES_ROOT\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}", "AUOptions", 0, RegistryValueKind.DWord);
         }
 
         public bool ShouldPerformTreatment()
@@ -117,6 +124,18 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
+                retval = false;
+            }
+
+            try
+            {
+                logger.Log("Un-pinning OneDrive folder from File Explorer");
+                UnpinFolder();
+                logger.Log("Completed un-pinning OneDrive folder from File Explorer");
+            }
+            catch (Exception _ex)
+            {
+                logger.Log("Could not un-pin OneDrive folder from File Explorer");
                 retval = false;
             }
 

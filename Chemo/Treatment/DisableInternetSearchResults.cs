@@ -11,16 +11,11 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            if (!(
+            return !(
                 RegistryUtils.IntEquals(SearchKey, "BingSearchEnabled", 0) &&
                 RegistryUtils.IntEquals(SearchKey, "AllowSearchToUseLocation", 0) &&
                 RegistryUtils.IntEquals(SearchKey, "CortanaConsent", 0)
-            ))
-            {
-                return true;
-            }
-
-            return false;
+            );
         }
 
         public bool PerformTreatment()
