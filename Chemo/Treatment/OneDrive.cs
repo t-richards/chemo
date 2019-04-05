@@ -8,6 +8,40 @@ namespace Chemo.Treatment
     class OneDrive : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
+        private static readonly string Clsid = "{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
+        private static readonly string AutoRunKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
+        private static readonly string ClassKey = @"HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
+
+        private string UserDataPath;
+        private string LocalAppDataPath;
+        private string ProgramDataPath;
+
+        public OneDrive()
+        {
+            // %USERPROFILE%\OneDrive
+            UserDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "OneDrive"
+            );
+
+            // %LOCALAPPDATA%\Microsoft\OneDrive
+            LocalAppDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Local", "Microsoft", "OneDrive"
+            );
+
+            // %PROGRAMDATA%\Microsoft OneDrive
+            ProgramDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                "Microsoft OneDrive"
+            );
+        }
+        #region Processes
+        private bool ProcessesRunning()
+        {
+            Process[] procs = Process.GetProcessesByName("OneDrive");
+            return (procs.Length > 0);
+        }
 
         private void KillProcesses()
         {
@@ -20,29 +54,74 @@ namespace Chemo.Treatment
                 }
             }
         }
+        #endregion
 
-        private void DeleteRegistryKeys()
+        #region Registry Keys
+        private bool RegistryKeysExist()
         {
-            RegistryKey reg;
-            Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", "OneDrive", "");
+            if (!RegistryUtils.StringEquals(AutoRunKey, "OneDrive", ""))
+            {
+                return true;
+            }
+
+            if (!RegistryUtils.IntEquals(ClassKey, "System.IsPinnedToNameSpaceTree", 0))
+            {
+                return true;
+            }
 
             if (Environment.Is64BitOperatingSystem)
             {
-                reg = Registry.ClassesRoot.OpenSubKey("Wow6432Node\\CLSID", true);
-                if (reg != null)
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\", true))
                 {
-                    reg.DeleteSubKeyTree("{018D5C66-4533-4307-9B53-224DE2ED1FE6}");
+                    if (regKey.OpenSubKey(Clsid) != null)
+                    {
+                        return true;
+                    }
                 }
-                return;
+            }
+            else
+            {
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID", true))
+                {
+                    if (regKey.OpenSubKey(Clsid) != null)
+                    {
+                        return true;
+                    }
+                }
             }
 
-            reg = Registry.ClassesRoot.OpenSubKey("CLSID", true);
-            if (reg != null)
-            {
-                reg.DeleteSubKeyTree("{018D5C66-4533-4307-9B53-224DE2ED1FE6}");
-            }
+            return false;
         }
 
+        private void DeleteRegistryKeys()
+        {
+            Registry.SetValue(ClassKey, "System.IsPinnedToNameSpaceTree", 0, RegistryValueKind.DWord);
+            Registry.SetValue(AutoRunKey, "OneDrive", "", RegistryValueKind.String);
+
+            if (Environment.Is64BitOperatingSystem)
+            {
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\", true))
+                {
+                    if (regKey.OpenSubKey(Clsid) != null)
+                    {
+                        regKey.DeleteSubKeyTree(Clsid);
+                    }
+                }
+            }
+            else
+            {
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID", true))
+                {
+                    if (regKey.OpenSubKey(Clsid) != null)
+                    {
+                        regKey.DeleteSubKeyTree(Clsid);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Folders
         private bool MaybeDelete(string path)
         {
             if (!Directory.Exists(path))
@@ -65,38 +144,32 @@ namespace Chemo.Treatment
             return false;
         }
 
+        private bool FoldersExist()
+        {
+            return (
+                Directory.Exists(UserDataPath) ||
+                Directory.Exists(LocalAppDataPath) ||
+                Directory.Exists(ProgramDataPath)
+            );
+        }
+
         private void DeleteFolders()
         {
-            // %USERPROFILE%\OneDrive
-            string userData = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                "OneDrive"
-            );
-            MaybeDelete(userData);
-
-            // %LOCALAPPDATA%\Microsoft\OneDrive
-            string localAppData = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Local", "Microsoft", "OneDrive"
-            );
-            MaybeDelete(localAppData);
-
-            // %PROGRAMDATA%\Microsoft OneDrive
-            string programData = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
-                "Microsoft OneDrive"
-            );
-            MaybeDelete(programData);
+            
+            MaybeDelete(UserDataPath);
+            MaybeDelete(LocalAppDataPath);
+            MaybeDelete(ProgramDataPath);
         }
-
-        private void UnpinFolder()
-        {
-            Registry.SetValue("HKEY_CLASSES_ROOT\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}", "AUOptions", 0, RegistryValueKind.DWord);
-        }
+        #endregion
 
         public bool ShouldPerformTreatment()
         {
-            return true;
+            // TODO(tom): Add delete folders
+            return (
+                ProcessesRunning() ||
+                RegistryKeysExist() ||
+                FoldersExist()
+            );
         }
 
         public bool PerformTreatment()
@@ -124,18 +197,6 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
-                retval = false;
-            }
-
-            try
-            {
-                logger.Log("Un-pinning OneDrive folder from File Explorer");
-                UnpinFolder();
-                logger.Log("Completed un-pinning OneDrive folder from File Explorer");
-            }
-            catch (Exception _ex)
-            {
-                logger.Log("Could not un-pin OneDrive folder from File Explorer");
                 retval = false;
             }
 

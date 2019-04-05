@@ -150,11 +150,20 @@ namespace Chemo
             logger.Log("{0} treatments need to be applied.", performTreatments.Count);
             logger.Log("{0} treatments already applied.", selectedTreatments.Count - performTreatments.Count);
             logger.Log("");
-            logger.Log("Details of treatments to be applied:");
-            foreach (var treatment in performTreatments)
+
+            if (performTreatments.Count > 0)
             {
-                logger.Log(" - {0}", treatment.GetType().ToString());
+                logger.Log("Details of treatments to be applied:");
+                foreach (var treatment in performTreatments)
+                {
+                    logger.Log(" - {0}", treatment.GetType().ToString());
+                }
             }
+            else
+            {
+                logger.Log("No treatments need to be applied!");
+            }
+
         }
     }
 }

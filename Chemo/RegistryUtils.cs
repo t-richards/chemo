@@ -14,5 +14,16 @@ namespace Chemo
 
             return true;
         }
+
+        public static bool StringEquals(string keyName, string valueName, string expectedValue)
+        {
+            var value = Registry.GetValue(keyName, valueName, null);
+            if (value == null || (string)value != expectedValue)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
