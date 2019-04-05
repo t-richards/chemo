@@ -14,7 +14,32 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            return true;
+            int packageCount = 0;
+            IEnumerable<Package> packages = packageManager.FindPackages();
+
+            foreach (var package in packages)
+            {
+                // Don't remove frameworks or system packages
+                if (
+                    package.IsFramework ||
+                    package.SignatureKind == PackageSignatureKind.System
+                )
+                {
+                    continue;
+                }
+
+                if (StoreApps.shouldRemove(package.Id.Name))
+                {
+                    packageCount += 1;
+                }
+            }
+
+            if (packageCount > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool PerformTreatment()
@@ -24,14 +49,11 @@ namespace Chemo.Treatment
 
             foreach (var package in packages)
             {
-                // Don't remove frameworks
-                if (package.IsFramework)
-                {
-                    continue;
-                }
-
-                // Don't remove system packages
-                if (package.SignatureKind == PackageSignatureKind.System)
+                // Don't remove frameworks or system packages
+                if (
+                    package.IsFramework ||
+                    package.SignatureKind == PackageSignatureKind.System
+                )
                 {
                     continue;
                 }
