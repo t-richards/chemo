@@ -3,6 +3,8 @@ using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -79,6 +81,7 @@ namespace Chemo
             txtResults.Refresh();
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
+            prgTreatmentApplication.Value = 0;
         }
 
         private void IncrementProgress()
@@ -131,6 +134,31 @@ namespace Chemo
         {
             Form aboutForm = new frmAbout();
             aboutForm.ShowDialog();
+        }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            Reset();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            List<ITreatment> selectedTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
+            stopWatch.Stop();
+            logger.Log("Analysis Complete: {0}", stopWatch.Elapsed);
+
+            if (selectedTreatments.Count <= 0)
+            {
+                logger.Log("No treatments to apply.");
+                return;
+            }
+
+            logger.Log("Details of treatments to be applied:");
+            foreach (var treatment in selectedTreatments)
+            {
+                if (treatment.ShouldPerformTreatment())
+                {
+                    logger.Log(" - {0}", treatment.GetType().ToString());
+                }
+            }
         }
     }
 }
