@@ -6,7 +6,7 @@ namespace Chemo.Treatment
     class DisableInternetSearchResults : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string SearchKey = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Search";
+        private static readonly string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
         private static readonly int DesiredValue = 0;
 
         public bool ShouldPerformTreatment()

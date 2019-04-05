@@ -6,7 +6,7 @@ namespace Chemo.Treatment
     class RequireCtrlAltDel : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string WinLogon = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Winlogon";
+        private static readonly string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
         private static readonly int DesiredValue = 0;
 
         public bool ShouldPerformTreatment()

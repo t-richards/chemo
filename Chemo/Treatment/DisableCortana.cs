@@ -6,7 +6,7 @@ namespace Chemo.Treatment
     class DisableCortana : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string CortanaKey = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search";
+        private static readonly string CortanaKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search";
         private static readonly int DesiredValue = 0;
 
         public bool ShouldPerformTreatment()

@@ -6,8 +6,8 @@ namespace Chemo.Treatment
     class GameBar : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string GameDVR = "HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR";
-        private static readonly string GameConfigStore = "HKEY_CURRENT_USER\\System\\GameConfigStore";
+        private static readonly string GameDVR = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR";
+        private static readonly string GameConfigStore = @"HKEY_CURRENT_USER\System\GameConfigStore";
         private static readonly int DesiredValue = 0;
 
         public bool ShouldPerformTreatment()

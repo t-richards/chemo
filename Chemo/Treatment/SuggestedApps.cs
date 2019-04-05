@@ -6,7 +6,7 @@ namespace Chemo.Treatment
     class SuggestedApps : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string CloudContent = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\Cloud Content";
+        private static readonly string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
         private static readonly int DesiredValue = 1;
 
         public bool ShouldPerformTreatment()

@@ -6,7 +6,7 @@ namespace Chemo.Treatment
     class SetClockUTC : ITreatment
     {
         private static readonly Logger logger = Logger.Instance;
-        private static readonly string TimezoneKey = "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation";
+        private static readonly string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
         private static readonly int DesiredValue = 1;
 
         public bool ShouldPerformTreatment()
