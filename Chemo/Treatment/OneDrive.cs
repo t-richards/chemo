@@ -155,7 +155,6 @@ namespace Chemo.Treatment
 
         private void DeleteFolders()
         {
-            
             MaybeDelete(UserDataPath);
             MaybeDelete(LocalAppDataPath);
             MaybeDelete(ProgramDataPath);
@@ -164,7 +163,6 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            // TODO(tom): Add delete folders
             return (
                 ProcessesRunning() ||
                 RegistryKeysExist() ||
