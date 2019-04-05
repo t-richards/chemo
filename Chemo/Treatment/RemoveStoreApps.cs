@@ -12,21 +12,48 @@ namespace Chemo.Treatment
         private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
 
             foreach (var package in packages)
             {
-                // Don't remove frameworks
-                if (package.IsFramework)
+                // Don't remove frameworks or system packages
+                if (
+                    package.IsFramework ||
+                    package.SignatureKind == PackageSignatureKind.System
+                )
                 {
                     continue;
                 }
 
-                // Don't remove system packages
-                if (package.SignatureKind == PackageSignatureKind.System)
+                if (StoreApps.shouldRemove(package.Id.Name))
+                {
+                    packageCount += 1;
+                }
+            }
+
+            if (packageCount > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool PerformTreatment()
+        {
+            int packageCount = 0;
+            IEnumerable<Package> packages = packageManager.FindPackages();
+
+            foreach (var package in packages)
+            {
+                // Don't remove frameworks or system packages
+                if (
+                    package.IsFramework ||
+                    package.SignatureKind == PackageSignatureKind.System
+                )
                 {
                     continue;
                 }
@@ -47,6 +74,8 @@ namespace Chemo.Treatment
                 logger.Log("No Windows Store applications were uninstalled.");
             }
             logger.Log("");
+
+            return true;
         }
 
         private static void RemovePackage(Package package)

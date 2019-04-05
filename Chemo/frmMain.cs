@@ -3,6 +3,8 @@ using Chemo.Treatment;
 using Microsoft.Dism;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -27,8 +29,8 @@ namespace Chemo
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<ITreatment> selectedTreatments = CollectTreatments();
-            ApplyTreatments(selectedTreatments);
+            List<ITreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
+            ApplyTreatments(shouldPerformTreatments);
         }
 
         private void ApplyTreatments(List<ITreatment> treatments)
@@ -79,6 +81,7 @@ namespace Chemo
             txtResults.Refresh();
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
+            prgTreatmentApplication.Value = 0;
         }
 
         private void IncrementProgress()
@@ -131,6 +134,36 @@ namespace Chemo
         {
             Form aboutForm = new frmAbout();
             aboutForm.ShowDialog();
+        }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            Reset();
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+            List<ITreatment> selectedTreatments = CollectTreatments();
+            List<ITreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
+            stopWatch.Stop();
+
+            logger.Log("Analysis Complete: {0}", stopWatch.Elapsed);
+            logger.Log("Selected {0} treatments.", selectedTreatments.Count);
+            logger.Log("{0} treatments need to be applied.", performTreatments.Count);
+            logger.Log("{0} treatments already applied.", selectedTreatments.Count - performTreatments.Count);
+            logger.Log("");
+
+            if (performTreatments.Count > 0)
+            {
+                logger.Log("Details of treatments to be applied:");
+                foreach (var treatment in performTreatments)
+                {
+                    logger.Log(" - {0}", treatment.GetType().ToString());
+                }
+            }
+            else
+            {
+                logger.Log("No treatments need to be applied!");
+            }
+
         }
     }
 }

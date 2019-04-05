@@ -8,7 +8,37 @@ namespace Chemo.Treatment
     {
         private static readonly Logger logger = Logger.Instance;
 
-        public void PerformTreatment()
+        public bool ShouldPerformTreatment()
+        {
+            int packageCount = 0;
+            try
+            {
+                using (DismSession session = DismApi.OpenOnlineSession())
+                {
+                    DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
+                    foreach (var package in dismAppxPackages)
+                    {
+                        if (StoreApps.shouldRemove(package.DisplayName))
+                        {
+                            packageCount += 1;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (packageCount > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool PerformTreatment()
         {
             int removedPackageCount = 0;
 
@@ -44,12 +74,15 @@ namespace Chemo.Treatment
             catch (Exception ex)
             {
                 logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
+                return false;
             }
 
             if (removedPackageCount <= 0)
             {
                 logger.Log("No Windows Store packages were deprovisioned.");
             }
+
+            return true;
         }
     }
 }
