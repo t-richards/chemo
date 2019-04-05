@@ -10,7 +10,32 @@ namespace Chemo.Treatment
 
         public bool ShouldPerformTreatment()
         {
-            return true;
+            int packageCount = 0;
+            try
+            {
+                using (DismSession session = DismApi.OpenOnlineSession())
+                {
+                    DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
+                    foreach (var package in dismAppxPackages)
+                    {
+                        if (StoreApps.shouldRemove(package.DisplayName))
+                        {
+                            packageCount += 1;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (packageCount > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool PerformTreatment()
