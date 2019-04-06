@@ -180,8 +180,6 @@ namespace Chemo
             tooltip.AppendFormat("{0} treatments already applied.\r\n", selectedTreatments.Count - performTreatments.Count);
             analysis.ToolTipText = tooltip.ToString();
 
-            
-
             lstResults.Items.Add(analysis);
 
             if (performTreatments.Count > 0)
