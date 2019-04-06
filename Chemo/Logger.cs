@@ -1,53 +1,31 @@
 using System;
-using System.Windows.Forms;
+using System.Text;
 
 namespace Chemo
 {
     public sealed class Logger
     {
-        private static Logger instance = null;
-        private static readonly object instanceLock = new object();
-        private static TextBox target = null;
+        private static StringBuilder data;
 
-        public void SetTarget(TextBox textBox)
+        public Logger()
         {
-            target = textBox;
+            data = new StringBuilder();
         }
 
         /// <summary>
-        /// Logs a message to the log target (text box).
+        /// Logs a message to the log target (memory buffer).
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="args">An object array that contains zero or more objects to format.</param>
         public void Log(string format, params object[] args)
         {
             format += "\r\n";
-
-            if (target.InvokeRequired)
-            {
-                target.Invoke(new Action(() =>
-                    target.AppendText(string.Format(format, args))
-                ));
-            }
-            else
-            {
-                target.AppendText(string.Format(format, args));
-            }
+            data.AppendFormat(format, args);
         }
 
         public static Logger Instance
         {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Logger();
-                    }
-                    return instance;
-                }
-            }
+            get { return new Logger(); }
         }
     }
 }

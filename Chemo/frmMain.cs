@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -23,15 +24,15 @@ namespace Chemo
 
             // Other init stuff here
             treeViewTreatments.ExpandAll();
-            logger.SetTarget(txtResults);
             DismApi.InitializeEx(DismLogLevel.LogErrors);
 
             // Icons
-            treeViewTreatments.ImageList = TreeIcons;
+            treeViewTreatments.ImageList = StateIcons;
             treeViewTreatments.ImageKey = "NotStarted";
+            lstResults.SmallImageList = StateIcons;
         }
 
-        public static ImageList TreeIcons
+        public static ImageList StateIcons
         {
             get
             {
@@ -52,11 +53,11 @@ namespace Chemo
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<ITreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
+            List<BaseTreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
             ApplyTreatments(shouldPerformTreatments);
         }
 
-        private void ApplyTreatments(List<ITreatment> treatments)
+        private void ApplyTreatments(List<BaseTreatment> treatments)
         {
             foreach (var treatment in treatments)
             {
@@ -69,9 +70,9 @@ namespace Chemo
             SetProgress(100);
         }
 
-        private List<ITreatment> CollectTreatments()
+        private List<BaseTreatment> CollectTreatments()
         {
-            List<ITreatment> selectedTreatments = new List<ITreatment>();
+            List<BaseTreatment> selectedTreatments = new List<BaseTreatment>();
 
             foreach (var treeNode in treeViewTreatments.Nodes.All())
             {
@@ -82,7 +83,7 @@ namespace Chemo
                     Type componentType = Type.GetType(typeStr);
 
                     // Create treatment instance based on checkbox tag
-                    ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
+                    BaseTreatment tr = (BaseTreatment)Activator.CreateInstance(componentType);
 
                     selectedTreatments.Add(tr);
                     treeNode.ImageKey = "Ok";
@@ -101,8 +102,8 @@ namespace Chemo
             progressIncrement = 0;
 
             // Components
-            txtResults.Clear();
-            txtResults.Refresh();
+            lstResults.Items.Clear();
+            lstResults.Refresh();
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = 0;
@@ -165,15 +166,23 @@ namespace Chemo
             Reset();
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            List<ITreatment> selectedTreatments = CollectTreatments();
-            List<ITreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
+            List<BaseTreatment> selectedTreatments = CollectTreatments();
+            List<BaseTreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
             stopWatch.Stop();
 
-            logger.Log("Analysis Complete: {0}", stopWatch.Elapsed);
-            logger.Log("Selected {0} treatments.", selectedTreatments.Count);
-            logger.Log("{0} treatments need to be applied.", performTreatments.Count);
-            logger.Log("{0} treatments already applied.", selectedTreatments.Count - performTreatments.Count);
-            logger.Log("");
+            // Analysis top item
+            var analysis = new ListViewItem("Analysis Complete", "OK");
+            analysis.SubItems.Add(new ListViewItem.ListViewSubItem(analysis, stopWatch.Elapsed.ToString()));
+
+            var tooltip = new StringBuilder();
+            tooltip.AppendFormat("Selected {0} treatments.\r\n", selectedTreatments.Count);
+            tooltip.AppendFormat("{0} treatments need to be applied.\r\n", performTreatments.Count);
+            tooltip.AppendFormat("{0} treatments already applied.\r\n", selectedTreatments.Count - performTreatments.Count);
+            analysis.ToolTipText = tooltip.ToString();
+
+            
+
+            lstResults.Items.Add(analysis);
 
             if (performTreatments.Count > 0)
             {

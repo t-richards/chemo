@@ -7,12 +7,12 @@ using Windows.Management.Deployment;
 
 namespace Chemo.Treatment
 {
-    class RemoveStoreApps : ITreatment
+    class RemoveStoreApps : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
@@ -42,7 +42,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();

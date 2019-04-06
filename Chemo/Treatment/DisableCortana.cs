@@ -3,13 +3,13 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class DisableCortana : ITreatment
+    class DisableCortana : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string CortanaKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search";
         private static readonly int DesiredValue = 0;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             var value = Registry.GetValue(CortanaKey, "AllowCortana", 0);
             if (value == null || (int)value != DesiredValue)
@@ -20,7 +20,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {

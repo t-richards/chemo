@@ -4,11 +4,11 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class DeprovisionStoreApps : ITreatment
+    class DeprovisionStoreApps : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
             try
@@ -38,7 +38,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             int removedPackageCount = 0;
 

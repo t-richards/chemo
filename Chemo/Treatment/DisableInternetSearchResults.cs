@@ -3,13 +3,13 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class DisableInternetSearchResults : ITreatment
+    class DisableInternetSearchResults : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
         private static readonly int DesiredValue = 0;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             return !(
                 RegistryUtils.IntEquals(SearchKey, "BingSearchEnabled", 0) &&
@@ -18,7 +18,7 @@ namespace Chemo.Treatment
             );
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {

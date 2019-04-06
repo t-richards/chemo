@@ -3,7 +3,7 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class InternetExplorer : ITreatment
+    class InternetExplorer : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         public static readonly string IE32BitName = "Internet-Explorer-Optional-x86";
@@ -22,7 +22,7 @@ namespace Chemo.Treatment
             }
         }
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             try
             {
@@ -47,7 +47,7 @@ namespace Chemo.Treatment
             return true;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {

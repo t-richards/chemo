@@ -73,7 +73,7 @@
     <Compile Include="Treatment\DisableInternetSearchResults.cs" />
     <Compile Include="Treatment\GameBar.cs" />
     <Compile Include="Treatment\InternetExplorer.cs" />
-    <Compile Include="Treatment\ITreatment.cs" />
+    <Compile Include="Treatment\BaseTreatment.cs" />
     <Compile Include="Treatment\OneDrive.cs" />
     <Compile Include="Treatment\RemoveStoreApps.cs" />
     <Compile Include="Treatment\RequireCtrlAltDel.cs" />

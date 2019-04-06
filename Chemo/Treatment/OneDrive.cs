@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Chemo.Treatment
 {
-    class OneDrive : ITreatment
+    class OneDrive : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string Clsid = "{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
@@ -161,7 +161,7 @@ namespace Chemo.Treatment
         }
         #endregion
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             return (
                 ProcessesRunning() ||
@@ -170,7 +170,7 @@ namespace Chemo.Treatment
             );
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             bool retval = true;
 

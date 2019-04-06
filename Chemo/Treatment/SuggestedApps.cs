@@ -3,18 +3,18 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class SuggestedApps : ITreatment
+    class SuggestedApps : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
         private static readonly int DesiredValue = 1;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             return !RegistryUtils.IntEquals(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue);
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {

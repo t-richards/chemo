@@ -3,13 +3,13 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class WindowsUpdateReboot : ITreatment
+    class WindowsUpdateReboot : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
         private static readonly int DesiredValue = 2;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             var value = Registry.GetValue(AutoUpdateKey, "AUOptions", 0);
             if (value == null || (int)value != DesiredValue)
@@ -20,7 +20,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {

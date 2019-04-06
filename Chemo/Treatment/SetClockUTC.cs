@@ -3,13 +3,13 @@ using System;
 
 namespace Chemo.Treatment
 {
-    class SetClockUTC : ITreatment
+    class SetClockUTC : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
         private static readonly int DesiredValue = 1;
 
-        public bool ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             var value = Registry.GetValue(TimezoneKey, "RealTimeIsUniversal", 0);
             if (value == null || (int)value != DesiredValue)
@@ -20,7 +20,7 @@ namespace Chemo.Treatment
             return false;
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {
