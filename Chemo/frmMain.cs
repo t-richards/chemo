@@ -13,6 +13,7 @@ namespace Chemo
     public partial class frmMain : Form
     {
         private static readonly Logger logger = Logger.Instance;
+        private static ImageList imageList;
         private int progressPercent = 0;
         private int progressIncrement = 0;
 
@@ -24,6 +25,28 @@ namespace Chemo
             treeViewTreatments.ExpandAll();
             logger.SetTarget(txtResults);
             DismApi.InitializeEx(DismLogLevel.LogErrors);
+
+            // Icons
+            treeViewTreatments.ImageList = TreeIcons;
+            treeViewTreatments.ImageKey = "NotStarted";
+        }
+
+        public static ImageList TreeIcons
+        {
+            get
+            {
+                if (imageList == null)
+                {
+                    imageList = new ImageList();
+                    imageList.Images.Add("NotStarted", Properties.Resources.StatusNotStarted_16x);
+                    imageList.Images.Add("Ok", Properties.Resources.StatusOK_16x);
+                    imageList.Images.Add("Info", Properties.Resources.StatusInformation_16x);
+                    imageList.Images.Add("Warning", Properties.Resources.StatusWarning_16x);
+                    imageList.Images.Add("Error", Properties.Resources.StatusCriticalError_16x);
+                }
+
+                return imageList;
+            }
         }
 
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
@@ -38,7 +61,7 @@ namespace Chemo
             foreach (var treatment in treatments)
             {
                 logger.Log("=== Applying: {0} ===", treatment.GetType().ToString());
-                treatment.PerformTreatment();
+                var result = treatment.PerformTreatment();
                 IncrementProgress();
                 logger.Log("");
             }
@@ -62,6 +85,7 @@ namespace Chemo
                     ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
 
                     selectedTreatments.Add(tr);
+                    treeNode.ImageKey = "Ok";
                 }
             }
 
