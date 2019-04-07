@@ -78,10 +78,9 @@ namespace Chemo
             // btnInitiateTreatment
             // 
             this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInitiateTreatment.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(289, 442);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(405, 482);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
-            this.btnInitiateTreatment.Size = new System.Drawing.Size(221, 77);
+            this.btnInitiateTreatment.Size = new System.Drawing.Size(120, 40);
             this.btnInitiateTreatment.TabIndex = 1;
             this.btnInitiateTreatment.Text = "Initiate Treatment";
             this.btnInitiateTreatment.UseVisualStyleBackColor = true;
@@ -93,7 +92,7 @@ namespace Chemo
             this.grpTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpTreatments.Location = new System.Drawing.Point(0, 0);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(313, 522);
+            this.grpTreatments.Size = new System.Drawing.Size(322, 525);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -117,19 +116,22 @@ namespace Chemo
             this.splitContainer1.Panel2.Controls.Add(this.lblProgressPercent);
             this.splitContainer1.Panel2.Controls.Add(this.prgTreatmentApplication);
             this.splitContainer1.Panel2.Controls.Add(this.btnInitiateTreatment);
-            this.splitContainer1.Size = new System.Drawing.Size(830, 522);
-            this.splitContainer1.SplitterDistance = 313;
+            this.splitContainer1.Size = new System.Drawing.Size(854, 525);
+            this.splitContainer1.SplitterDistance = 322;
             this.splitContainer1.TabIndex = 4;
             // 
             // lstResults
             // 
+            this.lstResults.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnResultItem,
             this.columnTimeTaken});
             this.lstResults.Location = new System.Drawing.Point(3, 45);
             this.lstResults.Name = "lstResults";
             this.lstResults.ShowItemToolTips = true;
-            this.lstResults.Size = new System.Drawing.Size(531, 391);
+            this.lstResults.Size = new System.Drawing.Size(522, 431);
             this.lstResults.TabIndex = 7;
             this.lstResults.UseCompatibleStateImageBehavior = false;
             this.lstResults.View = System.Windows.Forms.View.Details;
@@ -137,10 +139,9 @@ namespace Chemo
             // btnAnalyze
             // 
             this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAnalyze.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAnalyze.Location = new System.Drawing.Point(3, 442);
+            this.btnAnalyze.Location = new System.Drawing.Point(3, 482);
             this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Size = new System.Drawing.Size(221, 77);
+            this.btnAnalyze.Size = new System.Drawing.Size(120, 40);
             this.btnAnalyze.TabIndex = 6;
             this.btnAnalyze.Text = "Analyze";
             this.btnAnalyze.UseVisualStyleBackColor = true;
@@ -150,7 +151,7 @@ namespace Chemo
             // 
             this.lblProgressPercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgressPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgressPercent.Location = new System.Drawing.Point(440, 3);
+            this.lblProgressPercent.Location = new System.Drawing.Point(455, 3);
             this.lblProgressPercent.Name = "lblProgressPercent";
             this.lblProgressPercent.Size = new System.Drawing.Size(70, 36);
             this.lblProgressPercent.TabIndex = 5;
@@ -162,7 +163,7 @@ namespace Chemo
             | System.Windows.Forms.AnchorStyles.Right)));
             this.prgTreatmentApplication.Location = new System.Drawing.Point(3, 3);
             this.prgTreatmentApplication.Name = "prgTreatmentApplication";
-            this.prgTreatmentApplication.Size = new System.Drawing.Size(431, 36);
+            this.prgTreatmentApplication.Size = new System.Drawing.Size(446, 36);
             this.prgTreatmentApplication.TabIndex = 4;
             // 
             // menuStrip1
@@ -171,7 +172,7 @@ namespace Chemo
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(854, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(878, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -289,7 +290,7 @@ namespace Chemo
             treeNode14,
             treeNode15});
             this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(307, 503);
+            this.treeViewTreatments.Size = new System.Drawing.Size(316, 506);
             this.treeViewTreatments.TabIndex = 0;
             this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTreatments_AfterCheck);
             // 
@@ -297,7 +298,7 @@ namespace Chemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(854, 561);
+            this.ClientSize = new System.Drawing.Size(878, 564);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
