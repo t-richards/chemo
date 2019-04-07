@@ -23,13 +23,36 @@ namespace Chemo
             InitializeComponent();
 
             // Other init stuff here
-            treeViewTreatments.ExpandAll();
             DismApi.InitializeEx(DismLogLevel.LogErrors);
+
+            // Treatments
+            InitTreatments();
 
             // Icons
             treeViewTreatments.ImageList = StateIcons;
             treeViewTreatments.ImageKey = "NotStarted";
             lstResults.SmallImageList = StateIcons;
+        }
+
+        public void InitTreatments()
+        {
+            treeViewTreatments.Nodes.Clear();
+            treeViewTreatments.Nodes.AddRange(new TreeNode[]{
+                // Root
+                new TreeNode("All Treatments", new TreeNode[]{
+                    // Apps group
+                    new TreeNode("Apps", new TreeNode[] {
+                        new TreatmentNode(RemoveStoreApps.Name, new RemoveStoreApps()),
+                        new TreatmentNode(DeprovisionStoreApps.Name, new DeprovisionStoreApps())
+                    }),
+                    new TreeNode("Config", new TreeNode[]
+                    {
+                        new TreatmentNode(WindowsUpdateReboot.Name, new WindowsUpdateReboot())
+                    })
+                })
+            });
+
+            treeViewTreatments.ExpandAll();
         }
 
         public static ImageList StateIcons
@@ -117,7 +140,7 @@ namespace Chemo
         private void IncrementProgress()
         {
             progressPercent += progressIncrement;
-            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Text = string.Format("{0}%", progressPercent);
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
         }
@@ -125,12 +148,12 @@ namespace Chemo
         private void SetProgress(int value)
         {
             progressPercent = value;
-            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Text = string.Format("{0}%", progressPercent);
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
         }
 
-        private void treeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
+        private void TreeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.Unknown)
             {
@@ -160,13 +183,13 @@ namespace Chemo
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form aboutForm = new frmAbout();
             aboutForm.ShowDialog();
         }
 
-        private void btnAnalyze_Click(object sender, EventArgs e)
+        private void BtnAnalyze_Click(object sender, EventArgs e)
         {
             Reset();
             Stopwatch stopWatch = new Stopwatch();

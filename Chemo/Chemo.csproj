@@ -45,6 +45,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TreatmentNode.cs" />
     <Compile Include="CoreExt\TreeNodeExt.cs" />
     <Compile Include="Data\StoreApps.cs" />
     <Compile Include="frmMain.cs">

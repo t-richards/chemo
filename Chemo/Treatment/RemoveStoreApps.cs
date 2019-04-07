@@ -12,6 +12,8 @@ namespace Chemo.Treatment
         private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
 
+        public new static string Name { get => "Remove Windows Store Apps"; }
+
         public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;

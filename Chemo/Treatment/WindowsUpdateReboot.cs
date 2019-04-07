@@ -9,6 +9,8 @@ namespace Chemo.Treatment
         private static readonly string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
         private static readonly int DesiredValue = 2;
 
+        public new static string Name { get => "Disable Force-Reboot After Windows Update";  }
+
         public override bool ShouldPerformTreatment()
         {
             var value = Registry.GetValue(AutoUpdateKey, "AUOptions", 0);

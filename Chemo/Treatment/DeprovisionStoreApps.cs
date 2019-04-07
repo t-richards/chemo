@@ -7,6 +7,8 @@ namespace Chemo.Treatment
     class DeprovisionStoreApps : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
+        
+        public new static string Name { get => "Deprovision Windows Store Apps";  }
 
         public override bool ShouldPerformTreatment()
         {

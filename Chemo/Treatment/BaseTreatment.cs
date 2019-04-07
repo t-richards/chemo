@@ -4,6 +4,9 @@ namespace Chemo.Treatment
     {
         private readonly Logger logger = Logger.Instance;
 
+        public static string Name { get; }
+        public static string Description { get; }
+
         /// <summary>
         /// Determines whether this treatment should be applied. This operation should be idempotent.
         /// </summary>
