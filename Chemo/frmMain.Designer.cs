@@ -54,6 +54,11 @@ namespace Chemo
             System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Features", new System.Windows.Forms.TreeNode[] {
             treeNode13});
             System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Privacy");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("All Treatments", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode12,
+            treeNode14,
+            treeNode15});
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -78,7 +83,7 @@ namespace Chemo
             // btnInitiateTreatment
             // 
             this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(405, 482);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(395, 482);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(120, 40);
             this.btnInitiateTreatment.TabIndex = 1;
@@ -92,7 +97,7 @@ namespace Chemo
             this.grpTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpTreatments.Location = new System.Drawing.Point(0, 0);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(322, 525);
+            this.grpTreatments.Size = new System.Drawing.Size(332, 525);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -117,7 +122,7 @@ namespace Chemo
             this.splitContainer1.Panel2.Controls.Add(this.prgTreatmentApplication);
             this.splitContainer1.Panel2.Controls.Add(this.btnInitiateTreatment);
             this.splitContainer1.Size = new System.Drawing.Size(854, 525);
-            this.splitContainer1.SplitterDistance = 322;
+            this.splitContainer1.SplitterDistance = 332;
             this.splitContainer1.TabIndex = 4;
             // 
             // lstResults
@@ -131,7 +136,7 @@ namespace Chemo
             this.lstResults.Location = new System.Drawing.Point(3, 45);
             this.lstResults.Name = "lstResults";
             this.lstResults.ShowItemToolTips = true;
-            this.lstResults.Size = new System.Drawing.Size(522, 431);
+            this.lstResults.Size = new System.Drawing.Size(512, 431);
             this.lstResults.TabIndex = 7;
             this.lstResults.UseCompatibleStateImageBehavior = false;
             this.lstResults.View = System.Windows.Forms.View.Details;
@@ -151,7 +156,7 @@ namespace Chemo
             // 
             this.lblProgressPercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgressPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgressPercent.Location = new System.Drawing.Point(455, 3);
+            this.lblProgressPercent.Location = new System.Drawing.Point(445, 3);
             this.lblProgressPercent.Name = "lblProgressPercent";
             this.lblProgressPercent.Size = new System.Drawing.Size(70, 36);
             this.lblProgressPercent.TabIndex = 5;
@@ -163,7 +168,7 @@ namespace Chemo
             | System.Windows.Forms.AnchorStyles.Right)));
             this.prgTreatmentApplication.Location = new System.Drawing.Point(3, 3);
             this.prgTreatmentApplication.Name = "prgTreatmentApplication";
-            this.prgTreatmentApplication.Size = new System.Drawing.Size(446, 36);
+            this.prgTreatmentApplication.Size = new System.Drawing.Size(436, 36);
             this.prgTreatmentApplication.TabIndex = 4;
             // 
             // menuStrip1
@@ -284,13 +289,13 @@ namespace Chemo
             treeNode15.Name = "Privacy";
             treeNode15.Text = "Privacy";
             treeNode15.ToolTipText = "Regain control of your privacy.";
+            treeNode16.Checked = true;
+            treeNode16.Name = "Node0";
+            treeNode16.Text = "All Treatments";
             this.treeViewTreatments.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode12,
-            treeNode14,
-            treeNode15});
+            treeNode16});
             this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(316, 506);
+            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
             this.treeViewTreatments.TabIndex = 0;
             this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewTreatments_AfterCheck);
             // 

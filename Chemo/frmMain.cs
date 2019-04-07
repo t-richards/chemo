@@ -107,6 +107,11 @@ namespace Chemo
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = 0;
+
+            foreach (var treeNode in treeViewTreatments.Nodes.All())
+            {
+                treeNode.ImageKey = "NotStarted";
+            }
         }
 
         private void IncrementProgress()
