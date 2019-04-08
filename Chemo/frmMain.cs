@@ -42,12 +42,23 @@ namespace Chemo
                 new TreeNode("All Treatments", new TreeNode[]{
                     // Apps group
                     new TreeNode("Apps", new TreeNode[] {
-                        new TreatmentNode(RemoveStoreApps.Name, new RemoveStoreApps()),
-                        new TreatmentNode(DeprovisionStoreApps.Name, new DeprovisionStoreApps())
+                        new TreatmentNode(typeof(Treatment.Apps.RemoveStoreApps)),
+                        new TreatmentNode(typeof(Treatment.Apps.DeprovisionStoreApps)),
+                        new TreatmentNode(typeof(Treatment.Apps.OneDrive)),
+                        new TreatmentNode(typeof(Treatment.Apps.DisableCortana)),
                     }),
                     new TreeNode("Config", new TreeNode[]
                     {
-                        new TreatmentNode(WindowsUpdateReboot.Name, new WindowsUpdateReboot())
+                        new TreatmentNode(typeof(Treatment.Config.WindowsUpdateReboot)),
+                        new TreatmentNode(typeof(Treatment.Config.RequireCtrlAltDel)),
+                        new TreatmentNode(typeof(Treatment.Config.DisableInternetSearchResults)),
+                        new TreatmentNode(typeof(Treatment.Config.SetClockUTC)),
+                        new TreatmentNode(typeof(Treatment.Config.SuggestedApps)),
+                        new TreatmentNode(typeof(Treatment.Config.GameBar)),
+                    }),
+                    new TreeNode("Features", new TreeNode[]
+                    {
+                        new TreatmentNode(typeof(Treatment.Features.InternetExplorer))
                     })
                 })
             });

@@ -1,4 +1,5 @@
 ﻿using Chemo.Treatment;
+using System;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -7,9 +8,11 @@ namespace Chemo
     {
         public BaseTreatment Treatment { get; }
 
-        public TreatmentNode(string text, BaseTreatment treatment) : base(text)
+        public TreatmentNode(Type treatmentType)
         {
-            Treatment = treatment;
+            BaseTreatment treatment = (BaseTreatment)Activator.CreateInstance(treatmentType);
+            Text = treatment.Name();
+            ToolTipText = treatment.Tooltip();
             ImageKey = "NotStarted";
         }
     }

@@ -1,13 +1,23 @@
 using Microsoft.Win32;
 using System;
 
-namespace Chemo.Treatment
+namespace Chemo.Treatment.Config
 {
     class SuggestedApps : BaseTreatment
     {
         private static readonly Logger logger = Logger.Instance;
         private static readonly string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
         private static readonly int DesiredValue = 1;
+
+        public override string Name()
+        {
+            return "Turn Off App Recommendations";
+        }
+
+        public override string Tooltip()
+        {
+            return @"Prevents 'recommended' applications from displaying on the start menu.";
+        }
 
         public override bool ShouldPerformTreatment()
         {
