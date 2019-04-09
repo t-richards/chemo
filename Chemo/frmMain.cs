@@ -37,31 +37,47 @@ namespace Chemo
         public void InitTreatments()
         {
             treeViewTreatments.Nodes.Clear();
-            treeViewTreatments.Nodes.AddRange(new TreeNode[]{
-                // Root
-                new TreeNode("All Treatments", new TreeNode[]{
-                    // Apps group
-                    new TreeNode("Apps", new TreeNode[] {
-                        new TreatmentNode(typeof(Treatment.Apps.RemoveStoreApps)),
-                        new TreatmentNode(typeof(Treatment.Apps.DeprovisionStoreApps)),
-                        new TreatmentNode(typeof(Treatment.Apps.OneDrive)),
-                        new TreatmentNode(typeof(Treatment.Apps.DisableCortana)),
-                    }),
-                    new TreeNode("Config", new TreeNode[]
-                    {
-                        new TreatmentNode(typeof(Treatment.Config.WindowsUpdateReboot)),
-                        new TreatmentNode(typeof(Treatment.Config.RequireCtrlAltDel)),
-                        new TreatmentNode(typeof(Treatment.Config.DisableInternetSearchResults)),
-                        new TreatmentNode(typeof(Treatment.Config.SetClockUTC)),
-                        new TreatmentNode(typeof(Treatment.Config.SuggestedApps)),
-                        new TreatmentNode(typeof(Treatment.Config.GameBar)),
-                    }),
-                    new TreeNode("Features", new TreeNode[]
-                    {
-                        new TreatmentNode(typeof(Treatment.Features.InternetExplorer))
-                    })
-                })
+
+            var root = new TreeNode("All Treatments");
+            root.Checked = true;
+
+            // apps
+            var apps = new TreeNode("Apps", new TreeNode[] {
+                new TreatmentNode(typeof(Treatment.Apps.RemoveStoreApps)),
+                new TreatmentNode(typeof(Treatment.Apps.DeprovisionStoreApps)),
+                new TreatmentNode(typeof(Treatment.Apps.OneDrive)),
+                new TreatmentNode(typeof(Treatment.Apps.DisableCortana)),
             });
+            apps.Checked = true;
+            apps.ToolTipText = "Treatments related to store apps or other apps.";
+
+            // config
+            var config = new TreeNode("Config", new TreeNode[] {
+                new TreatmentNode(typeof(Treatment.Config.WindowsUpdateReboot)),
+                new TreatmentNode(typeof(Treatment.Config.RequireCtrlAltDel)),
+                new TreatmentNode(typeof(Treatment.Config.DisableInternetSearchResults)),
+                new TreatmentNode(typeof(Treatment.Config.SetClockUTC)),
+                new TreatmentNode(typeof(Treatment.Config.SuggestedApps)),
+                new TreatmentNode(typeof(Treatment.Config.GameBar)),
+            });
+            config.Checked = true;
+            config.ToolTipText = "Opinionated configuration changes.";
+
+            // features
+            var features = new TreeNode("Features", new TreeNode[]{
+                new TreatmentNode(typeof(Treatment.Features.InternetExplorer))
+            });
+            features.Checked = true;
+            features.ToolTipText = "Windows Feature toggles.";
+
+            // root
+            root.Nodes.AddRange(new TreeNode[]
+            {
+                apps,
+                config,
+                features
+            });
+            treeViewTreatments.Nodes.Add(root);
 
             treeViewTreatments.ExpandAll();
         }
@@ -106,11 +122,11 @@ namespace Chemo
         {
             List<TreatmentNode> selectedTreatments = new List<TreatmentNode>();
 
-            foreach (TreatmentNode treeNode in treeViewTreatments.Nodes.All())
+            foreach (TreeNode treeNode in treeViewTreatments.Nodes.All())
             {
                 if (treeNode.Checked && treeNode.GetType() == typeof(TreatmentNode))
                 {
-                    selectedTreatments.Add(treeNode);
+                    selectedTreatments.Add((TreatmentNode)treeNode);
                     treeNode.ImageKey = "Ok";
                 }
             }

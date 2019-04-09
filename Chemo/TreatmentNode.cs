@@ -10,9 +10,10 @@ namespace Chemo
 
         public TreatmentNode(Type treatmentType)
         {
-            BaseTreatment treatment = (BaseTreatment)Activator.CreateInstance(treatmentType);
-            Text = treatment.Name();
-            ToolTipText = treatment.Tooltip();
+            Treatment = (BaseTreatment)Activator.CreateInstance(treatmentType);
+            Text = Treatment.Name();
+            ToolTipText = Treatment.Tooltip();
+            Checked = true;
             ImageKey = "NotStarted";
         }
     }
