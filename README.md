@@ -20,7 +20,7 @@ Chemo is currently in a pre-alpha state. Contributions and feedback are greatly 
 
 ## Download
 
-The latest development build can be [downloaded directly from AppVeyor](https://ci.appveyor.com/project/t-richards/chemo/build/artifacts).
+The latest "release" can be [downloaded from the releases section on GitHub](https://github.com/t-richards/chemo/releases).
 
 ## System Requirements
 
