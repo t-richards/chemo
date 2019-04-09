@@ -12,7 +12,7 @@ init:
     $env:ABBREV_COMMIT = $env:APPVEYOR_REPO_COMMIT.substring(0,8)
 
 configuration: Release
-version: '0.1.{build}.0'
+version: '0.2.{build}.0'
 assembly_info:
   patch: true
   file: AssemblyInfo.*
@@ -28,16 +28,26 @@ build_script:
 
 after_build:
   - ps: >-
-      cd Chemo\bin\Release
+      packages\ILRepack.2.0.16\tools\ILRepack.exe /out:build/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
 
-      Get-ChildItem * -Include *.xml -Recurse | Remove-Item
+      cp build\Chemo.exe Chemo.exe
 
-      Get-ChildItem * -Include *.pdb -Recurse | Remove-Item
-
-      cd ..\..\..\
-
-      7z a ChemoDevBuild.zip .\Chemo\bin\Release\*
-      
 artifacts:
-  - path: ChemoDevBuild.zip
-    name: ChemoDevBuild
+  - path: build
+    name: Dev_Resources
+
+  - path: Chemo.exe
+    name: Chemo.exe
+
+deploy:
+  release: v$(appveyor_build_version)
+  description: 'TODO(tom): Edit description'
+  provider: GitHub
+  auth_token:
+    secure: KoWxCnC3wBKG1iJEc19BP0s2SZZUi6MhLPiFDtqZkhaysS9ZFHhXxfGSfz2Xx/fR
+  artifact: /.*\.exe/
+  draft: false
+  prerelease: false
+  on:
+    branch: master
+    APPVEYOR_REPO_TAG: true

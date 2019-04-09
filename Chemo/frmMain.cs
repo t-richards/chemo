@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -12,7 +13,7 @@ namespace Chemo
     // Size: 870x600
     public partial class frmMain : Form
     {
-        private static readonly Logger logger = Logger.Instance;
+        private static ImageList imageList;
         private int progressPercent = 0;
         private int progressIncrement = 0;
 
@@ -21,47 +22,140 @@ namespace Chemo
             InitializeComponent();
 
             // Other init stuff here
-            treeViewTreatments.ExpandAll();
-            logger.SetTarget(txtResults);
             DismApi.InitializeEx(DismLogLevel.LogErrors);
+
+            // Treatments
+            InitTreatments();
+
+            // Icons
+            treeViewTreatments.ImageList = StateIcons;
+            treeViewTreatments.ImageKey = "NotStarted";
+            lstResults.SmallImageList = StateIcons;
+        }
+
+        public void InitTreatments()
+        {
+            treeViewTreatments.Nodes.Clear();
+
+            // root node
+            TreeNode root = new TreeNode("All Treatments")
+            {
+                Checked = true
+            };
+
+            // apps
+            TreeNode apps = new TreeNode("Apps", new TreeNode[] {
+                new TreatmentNode(typeof(Treatment.Apps.RemoveStoreApps)),
+                new TreatmentNode(typeof(Treatment.Apps.DeprovisionStoreApps)),
+                new TreatmentNode(typeof(Treatment.Apps.OneDrive)),
+                new TreatmentNode(typeof(Treatment.Apps.DisableCortana)),
+            })
+            {
+                Checked = true,
+                ToolTipText = "Treatments related to store apps or other apps."
+            };
+
+            // config
+            TreeNode config = new TreeNode("Config", new TreeNode[] {
+                new TreatmentNode(typeof(Treatment.Config.WindowsUpdateReboot)),
+                new TreatmentNode(typeof(Treatment.Config.RequireCtrlAltDel)),
+                new TreatmentNode(typeof(Treatment.Config.DisableInternetSearchResults)),
+                new TreatmentNode(typeof(Treatment.Config.SetClockUTC)),
+                new TreatmentNode(typeof(Treatment.Config.SuggestedApps)),
+                new TreatmentNode(typeof(Treatment.Config.GameBar)),
+            })
+            {
+                Checked = true,
+                ToolTipText = "Opinionated configuration changes."
+            };
+
+            // features
+            TreeNode features = new TreeNode("Features", new TreeNode[]{
+                new TreatmentNode(typeof(Treatment.Features.InternetExplorer))
+            })
+            {
+                Checked = true,
+                ToolTipText = "Windows Feature toggles."
+            };
+
+            // add root node children, and add node to tree
+            root.Nodes.AddRange(new TreeNode[]
+            {
+                apps,
+                config,
+                features
+            });
+            treeViewTreatments.Nodes.Add(root);
+
+            treeViewTreatments.ExpandAll();
+        }
+
+        public static ImageList StateIcons
+        {
+            get
+            {
+                if (imageList == null)
+                {
+                    imageList = new ImageList();
+                    imageList.Images.Add("NotStarted", Properties.Resources.StatusNotStarted_16x);
+                    imageList.Images.Add("Ok", Properties.Resources.StatusOK_16x);
+                    imageList.Images.Add("Info", Properties.Resources.StatusInformation_16x);
+                    imageList.Images.Add("Warning", Properties.Resources.StatusWarning_16x);
+                    imageList.Images.Add("Error", Properties.Resources.StatusCriticalError_16x);
+                }
+
+                return imageList;
+            }
         }
 
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<ITreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
-            ApplyTreatments(shouldPerformTreatments);
+            List<TreatmentNode> performNodes = CollectTreatments();
+            ApplyTreatments(performNodes);
         }
 
-        private void ApplyTreatments(List<ITreatment> treatments)
+        private void ApplyTreatments(List<TreatmentNode> treeNodes)
         {
-            foreach (var treatment in treatments)
+            foreach (TreatmentNode node in treeNodes)
             {
-                logger.Log("=== Applying: {0} ===", treatment.GetType().ToString());
-                treatment.PerformTreatment();
+                var treatment = node.Treatment;
+
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                var result = treatment.PerformTreatment();
+                stopWatch.Stop();
+
+                var listItem = new ListViewItem(treatment.Name());
+                if (result)
+                {
+                    listItem.ImageKey = "Ok";
+                    listItem.SubItems.Add("Successfully applied");
+                }
+                else
+                {
+                    listItem.ImageKey = "Error";
+                    listItem.SubItems.Add("Error, hover for detail");
+                }
+                listItem.SubItems.Add(stopWatch.Elapsed.ToString());
+                listItem.ToolTipText = treatment.logger.ToString();
+                lstResults.Items.Add(listItem);
                 IncrementProgress();
-                logger.Log("");
             }
 
             SetProgress(100);
         }
 
-        private List<ITreatment> CollectTreatments()
+        private List<TreatmentNode> CollectTreatments()
         {
-            List<ITreatment> selectedTreatments = new List<ITreatment>();
+            List<TreatmentNode> selectedTreatments = new List<TreatmentNode>();
 
-            foreach (var treeNode in treeViewTreatments.Nodes.All())
+            foreach (TreeNode treeNode in treeViewTreatments.Nodes.All())
             {
-                if (treeNode.Checked && treeNode.Tag != null)
+                if (treeNode.Checked && treeNode.GetType() == typeof(TreatmentNode))
                 {
-                    string tag = treeNode.Tag.ToString();
-                    string typeStr = "Chemo.Treatment." + tag;
-                    Type componentType = Type.GetType(typeStr);
-
-                    // Create treatment instance based on checkbox tag
-                    ITreatment tr = (ITreatment)Activator.CreateInstance(componentType);
-
-                    selectedTreatments.Add(tr);
+                    selectedTreatments.Add((TreatmentNode)treeNode);
+                    treeNode.ImageKey = "Ok";
                 }
             }
 
@@ -77,17 +171,22 @@ namespace Chemo
             progressIncrement = 0;
 
             // Components
-            txtResults.Clear();
-            txtResults.Refresh();
+            lstResults.Items.Clear();
+            lstResults.Refresh();
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = 0;
+
+            foreach (var treeNode in treeViewTreatments.Nodes.All())
+            {
+                treeNode.ImageKey = "NotStarted";
+            }
         }
 
         private void IncrementProgress()
         {
             progressPercent += progressIncrement;
-            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Text = string.Format("{0}%", progressPercent);
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
         }
@@ -95,12 +194,12 @@ namespace Chemo
         private void SetProgress(int value)
         {
             progressPercent = value;
-            lblProgressPercent.Text = String.Format("{0}%", progressPercent);
+            lblProgressPercent.Text = string.Format("{0}%", progressPercent);
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
         }
 
-        private void treeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
+        private void TreeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.Unknown)
             {
@@ -130,40 +229,61 @@ namespace Chemo
             }
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form aboutForm = new frmAbout();
             aboutForm.ShowDialog();
         }
 
-        private void btnAnalyze_Click(object sender, EventArgs e)
+        private void BtnAnalyze_Click(object sender, EventArgs e)
         {
             Reset();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
-            List<ITreatment> selectedTreatments = CollectTreatments();
-            List<ITreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
-            stopWatch.Stop();
 
-            logger.Log("Analysis Complete: {0}", stopWatch.Elapsed);
-            logger.Log("Selected {0} treatments.", selectedTreatments.Count);
-            logger.Log("{0} treatments need to be applied.", performTreatments.Count);
-            logger.Log("{0} treatments already applied.", selectedTreatments.Count - performTreatments.Count);
-            logger.Log("");
+            int performTreatmentCount = 0;
 
-            if (performTreatments.Count > 0)
+            Stopwatch overallAnalysisTime = new Stopwatch();
+            overallAnalysisTime.Start();
+
+            List<TreatmentNode> selectedTreatments = CollectTreatments();
+
+            foreach (TreatmentNode node in selectedTreatments)
             {
-                logger.Log("Details of treatments to be applied:");
-                foreach (var treatment in performTreatments)
+                var treatment = node.Treatment;
+                ListViewItem detail = new ListViewItem(treatment.Name());
+
+                Stopwatch itemTime = new Stopwatch();
+                itemTime.Start();
+
+                if (treatment.ShouldPerformTreatment())
                 {
-                    logger.Log(" - {0}", treatment.GetType().ToString());
+                    detail.ImageKey = "Ok";
+                    detail.SubItems.Add("Should be applied");
+                    performTreatmentCount += 1;
                 }
-            }
-            else
-            {
-                logger.Log("No treatments need to be applied!");
+                else
+                {
+                    detail.ImageKey = "Ok";
+                    detail.SubItems.Add("Already applied");
+                }
+
+                itemTime.Stop();
+                detail.SubItems.Add(itemTime.Elapsed.ToString());
+                lstResults.Items.Add(detail);
             }
 
+            overallAnalysisTime.Stop();
+
+            // Analysis top item
+            var analysis = new ListViewItem("Analysis Complete", "OK");
+            analysis.SubItems.Add("");
+            analysis.SubItems.Add(overallAnalysisTime.Elapsed.ToString());
+
+            var tooltip = new StringBuilder();
+            tooltip.AppendFormat("Selected {0} treatments.\r\n", selectedTreatments.Count);
+            tooltip.AppendFormat("{0} treatments need to be applied.\r\n", performTreatmentCount);
+            tooltip.AppendFormat("{0} treatments already applied.\r\n", selectedTreatments.Count - performTreatmentCount);
+            analysis.ToolTipText = tooltip.ToString();
+            lstResults.Items.Insert(0, analysis);
         }
     }
 }

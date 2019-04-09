@@ -1,16 +1,25 @@
 using Microsoft.Win32;
 using System;
 
-namespace Chemo.Treatment
+namespace Chemo.Treatment.Config
 {
-    class GameBar : ITreatment
+    class GameBar : BaseTreatment
     {
-        private static readonly Logger logger = Logger.Instance;
         private static readonly string GameDVR = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR";
         private static readonly string GameConfigStore = @"HKEY_CURRENT_USER\System\GameConfigStore";
         private static readonly int DesiredValue = 0;
 
-        public bool ShouldPerformTreatment()
+        public override string Name()
+        {
+            return "Turn Off Game Bar";
+        }
+
+        public override string Tooltip()
+        {
+            return "Turns off the game bar for both apps and games.";
+        }
+
+        public override bool ShouldPerformTreatment()
         {
             return !(
                 RegistryUtils.IntEquals(GameDVR, "AppCaptureEnabled", DesiredValue) &&
@@ -18,7 +27,7 @@ namespace Chemo.Treatment
             );
         }
 
-        public bool PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {
