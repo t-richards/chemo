@@ -31,5 +31,5 @@ after_build:
       packages\ILRepack.2.0.16\tools\ILRepack.exe /out:out/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
       
 artifacts:
-  - path: Chemo.exe
+  - path: out/Chemo.exe
     name: Chemo.exe
