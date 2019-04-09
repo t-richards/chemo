@@ -33,8 +33,8 @@ after_build:
       cp build\Chemo.exe Chemo.exe
 
 artifacts:
-  - path: Chemo.exe
-    name: Chemo.exe
-
   - path: build
     name: Dev_Resources
+
+  - path: Chemo.exe
+    name: Chemo.exe
