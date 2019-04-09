@@ -130,10 +130,12 @@ namespace Chemo
                 if (result)
                 {
                     listItem.ImageKey = "Ok";
+                    listItem.SubItems.Add("Successfully applied");
                 }
                 else
                 {
                     listItem.ImageKey = "Error";
+                    listItem.SubItems.Add("Error, hover for detail");
                 }
                 listItem.SubItems.Add(stopWatch.Elapsed.ToString());
                 listItem.ToolTipText = treatment.logger.ToString();
@@ -236,31 +238,52 @@ namespace Chemo
         private void BtnAnalyze_Click(object sender, EventArgs e)
         {
             Reset();
-            Stopwatch stopWatch = new Stopwatch();
-            stopWatch.Start();
+
+            int performTreatmentCount = 0;
+
+            Stopwatch overallAnalysisTime = new Stopwatch();
+            overallAnalysisTime.Start();
+
             List<TreatmentNode> selectedTreatments = CollectTreatments();
-            List<TreatmentNode> performTreatments = selectedTreatments.Where(tr => tr.Treatment.ShouldPerformTreatment()).ToList();
-            stopWatch.Stop();
 
-            // Analysis top item
-            var analysis = new ListViewItem("Analysis Complete", "OK");
-            analysis.SubItems.Add(new ListViewItem.ListViewSubItem(analysis, stopWatch.Elapsed.ToString()));
-
-            var tooltip = new StringBuilder();
-            tooltip.AppendFormat("Selected {0} treatments.\r\n", selectedTreatments.Count);
-            tooltip.AppendFormat("{0} treatments need to be applied.\r\n", performTreatments.Count);
-            tooltip.AppendFormat("{0} treatments already applied.\r\n", selectedTreatments.Count - performTreatments.Count);
-            analysis.ToolTipText = tooltip.ToString();
-
-            lstResults.Items.Add(analysis);
-
-            foreach (var node in selectedTreatments)
+            foreach (TreatmentNode node in selectedTreatments)
             {
                 var treatment = node.Treatment;
                 ListViewItem detail = new ListViewItem(treatment.Name());
-                detail.SubItems.Add("Should be applied");
+
+                Stopwatch itemTime = new Stopwatch();
+                itemTime.Start();
+
+                if (treatment.ShouldPerformTreatment())
+                {
+                    detail.ImageKey = "Ok";
+                    detail.SubItems.Add("Should be applied");
+                    performTreatmentCount += 1;
+                }
+                else
+                {
+                    detail.ImageKey = "Ok";
+                    detail.SubItems.Add("Already applied");
+                }
+
+                itemTime.Stop();
+                detail.SubItems.Add(itemTime.Elapsed.ToString());
                 lstResults.Items.Add(detail);
             }
+
+            overallAnalysisTime.Stop();
+
+            // Analysis top item
+            var analysis = new ListViewItem("Analysis Complete", "OK");
+            analysis.SubItems.Add("");
+            analysis.SubItems.Add(overallAnalysisTime.Elapsed.ToString());
+
+            var tooltip = new StringBuilder();
+            tooltip.AppendFormat("Selected {0} treatments.\r\n", selectedTreatments.Count);
+            tooltip.AppendFormat("{0} treatments need to be applied.\r\n", performTreatmentCount);
+            tooltip.AppendFormat("{0} treatments already applied.\r\n", selectedTreatments.Count - performTreatmentCount);
+            analysis.ToolTipText = tooltip.ToString();
+            lstResults.Items.Insert(0, analysis);
         }
     }
 }

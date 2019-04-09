@@ -64,7 +64,6 @@ namespace Chemo.Treatment.Features
                 {
                     try
                     {
-                        logger.Log("Disabling Internet Explorer 11...");
                         DismApi.DisableFeature(session, resolvedFeatureName, null, true);
                     }
                     catch (DismRebootRequiredException ex)
