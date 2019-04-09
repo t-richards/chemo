@@ -9,7 +9,6 @@ namespace Chemo.Treatment.Apps
 {
     class RemoveStoreApps : BaseTreatment
     {
-        private static readonly Logger logger = Logger.Instance;
         private static PackageManager packageManager = new PackageManager();
 
         public override string Name()
@@ -88,7 +87,7 @@ namespace Chemo.Treatment.Apps
             return true;
         }
 
-        private static void RemovePackage(Package package)
+        private void RemovePackage(Package package)
         {
             IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
                 packageManager.RemovePackageAsync(package.Id.FullName);

@@ -5,7 +5,6 @@ namespace Chemo.Treatment.Config
 {
     class WindowsUpdateReboot : BaseTreatment
     {
-        private static readonly Logger logger = Logger.Instance;
         private static readonly string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
         private static readonly int DesiredValue = 2;
 

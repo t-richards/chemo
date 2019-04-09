@@ -5,7 +5,6 @@ namespace Chemo.Treatment.Features
 {
     class InternetExplorer : BaseTreatment
     {
-        private static readonly Logger logger = Logger.Instance;
         public static readonly string IE32BitName = "Internet-Explorer-Optional-x86";
         public static readonly string IE64BitName = "Internet-Explorer-Optional-amd64";
         protected string resolvedFeatureName = "";

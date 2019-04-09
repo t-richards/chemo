@@ -5,7 +5,6 @@ namespace Chemo.Treatment.Apps
 {
     class DisableCortana : BaseTreatment
     {
-        private static readonly Logger logger = Logger.Instance;
         private static readonly string CortanaKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search";
         private static readonly int DesiredValue = 0;
 

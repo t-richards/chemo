@@ -38,39 +38,48 @@ namespace Chemo
         {
             treeViewTreatments.Nodes.Clear();
 
-            var root = new TreeNode("All Treatments");
-            root.Checked = true;
+            // root node
+            TreeNode root = new TreeNode("All Treatments")
+            {
+                Checked = true
+            };
 
             // apps
-            var apps = new TreeNode("Apps", new TreeNode[] {
+            TreeNode apps = new TreeNode("Apps", new TreeNode[] {
                 new TreatmentNode(typeof(Treatment.Apps.RemoveStoreApps)),
                 new TreatmentNode(typeof(Treatment.Apps.DeprovisionStoreApps)),
                 new TreatmentNode(typeof(Treatment.Apps.OneDrive)),
                 new TreatmentNode(typeof(Treatment.Apps.DisableCortana)),
-            });
-            apps.Checked = true;
-            apps.ToolTipText = "Treatments related to store apps or other apps.";
+            })
+            {
+                Checked = true,
+                ToolTipText = "Treatments related to store apps or other apps."
+            };
 
             // config
-            var config = new TreeNode("Config", new TreeNode[] {
+            TreeNode config = new TreeNode("Config", new TreeNode[] {
                 new TreatmentNode(typeof(Treatment.Config.WindowsUpdateReboot)),
                 new TreatmentNode(typeof(Treatment.Config.RequireCtrlAltDel)),
                 new TreatmentNode(typeof(Treatment.Config.DisableInternetSearchResults)),
                 new TreatmentNode(typeof(Treatment.Config.SetClockUTC)),
                 new TreatmentNode(typeof(Treatment.Config.SuggestedApps)),
                 new TreatmentNode(typeof(Treatment.Config.GameBar)),
-            });
-            config.Checked = true;
-            config.ToolTipText = "Opinionated configuration changes.";
+            })
+            {
+                Checked = true,
+                ToolTipText = "Opinionated configuration changes."
+            };
 
             // features
-            var features = new TreeNode("Features", new TreeNode[]{
+            TreeNode features = new TreeNode("Features", new TreeNode[]{
                 new TreatmentNode(typeof(Treatment.Features.InternetExplorer))
-            });
-            features.Checked = true;
-            features.ToolTipText = "Windows Feature toggles.";
+            })
+            {
+                Checked = true,
+                ToolTipText = "Windows Feature toggles."
+            };
 
-            // root
+            // add root node children, and add node to tree
             root.Nodes.AddRange(new TreeNode[]
             {
                 apps,
@@ -111,7 +120,23 @@ namespace Chemo
         {
             foreach (TreatmentNode node in treeNodes)
             {
-                var result = node.Treatment.PerformTreatment();
+                var treatment = node.Treatment;
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+                var result = treatment.PerformTreatment();
+                stopWatch.Stop();
+
+                var listItem = new ListViewItem(treatment.Name());
+                if (result)
+                {
+                    listItem.ImageKey = "Ok";
+                }
+                else
+                {
+                    listItem.ImageKey = "Error";
+                }
+                listItem.SubItems.Add(stopWatch.ToString());
+                listItem.ToolTipText = treatment.logger.ToString();
                 IncrementProgress();
             }
 
