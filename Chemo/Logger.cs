@@ -5,7 +5,7 @@ namespace Chemo
 {
     public sealed class Logger
     {
-        private static StringBuilder data;
+        private StringBuilder data;
 
         public Logger()
         {
@@ -23,9 +23,14 @@ namespace Chemo
             data.AppendFormat(format, args);
         }
 
+        public override string ToString()
+        {
+            return data.ToString();
+        }
+
         public static Logger Instance
         {
-            get { return new Logger(); }
+            get => new Logger();
         }
     }
 }

@@ -13,7 +13,6 @@ namespace Chemo
     // Size: 870x600
     public partial class frmMain : Form
     {
-        private static readonly Logger logger = Logger.Instance;
         private static ImageList imageList;
         private int progressPercent = 0;
         private int progressIncrement = 0;
@@ -121,6 +120,7 @@ namespace Chemo
             foreach (TreatmentNode node in treeNodes)
             {
                 var treatment = node.Treatment;
+
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
                 var result = treatment.PerformTreatment();
@@ -135,8 +135,9 @@ namespace Chemo
                 {
                     listItem.ImageKey = "Error";
                 }
-                listItem.SubItems.Add(stopWatch.ToString());
+                listItem.SubItems.Add(stopWatch.Elapsed.ToString());
                 listItem.ToolTipText = treatment.logger.ToString();
+                lstResults.Items.Add(listItem);
                 IncrementProgress();
             }
 
@@ -253,19 +254,13 @@ namespace Chemo
 
             lstResults.Items.Add(analysis);
 
-            if (performTreatments.Count > 0)
+            foreach (var node in selectedTreatments)
             {
-                logger.Log("Details of treatments to be applied:");
-                foreach (var treatment in performTreatments)
-                {
-                    logger.Log(" - {0}", treatment.GetType().ToString());
-                }
+                var treatment = node.Treatment;
+                ListViewItem detail = new ListViewItem(treatment.Name());
+                detail.SubItems.Add("Should be applied");
+                lstResults.Items.Add(detail);
             }
-            else
-            {
-                logger.Log("No treatments need to be applied!");
-            }
-
         }
     }
 }

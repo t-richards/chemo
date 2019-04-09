@@ -30,7 +30,6 @@ namespace Chemo
         {
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
-            this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstResults = new System.Windows.Forms.ListView();
             this.columnResultItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -41,6 +40,7 @@ namespace Chemo
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.grpTreatments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,17 +70,6 @@ namespace Chemo
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
-            // 
-            // treeViewTreatments
-            // 
-            this.treeViewTreatments.CheckBoxes = true;
-            this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
-            this.treeViewTreatments.Name = "treeViewTreatments";
-            this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
-            this.treeViewTreatments.TabIndex = 0;
-            this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewTreatments_AfterCheck);
             // 
             // splitContainer1
             // 
@@ -123,8 +112,8 @@ namespace Chemo
             // 
             // columnResultItem
             // 
-            this.columnResultItem.Text = "Result";
-            this.columnResultItem.Width = 137;
+            this.columnResultItem.Text = "Treatment";
+            this.columnResultItem.Width = 196;
             // 
             // columnTimeTaken
             // 
@@ -185,6 +174,17 @@ namespace Chemo
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            // 
+            // treeViewTreatments
+            // 
+            this.treeViewTreatments.CheckBoxes = true;
+            this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
+            this.treeViewTreatments.Name = "treeViewTreatments";
+            this.treeViewTreatments.ShowNodeToolTips = true;
+            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
+            this.treeViewTreatments.TabIndex = 0;
+            this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewTreatments_AfterCheck);
             // 
             // frmMain
             // 
