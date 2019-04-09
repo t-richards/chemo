@@ -29,7 +29,9 @@ build_script:
 after_build:
   - ps: >-
       packages\ILRepack.2.0.16\tools\ILRepack.exe /out:out/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
-      
+
+      cp out\Chemo.exe Chemo.exe
+
 artifacts:
-  - path: out/Chemo.exe
+  - path: Chemo.exe
     name: Chemo.exe
