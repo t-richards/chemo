@@ -37,4 +37,4 @@ artifacts:
     name: Chemo.exe
 
   - path: build
-    name: DevBuild.zip
+    name: Dev_Resources
