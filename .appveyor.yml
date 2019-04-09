@@ -28,16 +28,8 @@ build_script:
 
 after_build:
   - ps: >-
-      cd Chemo\bin\Release
-
-      Get-ChildItem * -Include *.xml -Recurse | Remove-Item
-
-      Get-ChildItem * -Include *.pdb -Recurse | Remove-Item
-
-      cd ..\..\..\
-
-      7z a ChemoDevBuild.zip .\Chemo\bin\Release\*
+      packages\ILRepack.2.0.16\tools\ILRepack.exe /out:out/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
       
 artifacts:
-  - path: ChemoDevBuild.zip
-    name: ChemoDevBuild
+  - path: Chemo.exe
+    name: Chemo.exe

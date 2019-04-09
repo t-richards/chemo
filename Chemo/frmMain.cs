@@ -87,39 +87,30 @@ namespace Chemo
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<BaseTreatment> shouldPerformTreatments = CollectTreatments().Where(tr => tr.ShouldPerformTreatment()).ToList();
-            ApplyTreatments(shouldPerformTreatments);
+            List<TreatmentNode> performNodes = CollectTreatments();
+            ApplyTreatments(performNodes);
         }
 
-        private void ApplyTreatments(List<BaseTreatment> treatments)
+        private void ApplyTreatments(List<TreatmentNode> treeNodes)
         {
-            foreach (var treatment in treatments)
+            foreach (TreatmentNode node in treeNodes)
             {
-                logger.Log("=== Applying: {0} ===", treatment.GetType().ToString());
-                var result = treatment.PerformTreatment();
+                var result = node.Treatment.PerformTreatment();
                 IncrementProgress();
-                logger.Log("");
             }
 
             SetProgress(100);
         }
 
-        private List<BaseTreatment> CollectTreatments()
+        private List<TreatmentNode> CollectTreatments()
         {
-            List<BaseTreatment> selectedTreatments = new List<BaseTreatment>();
+            List<TreatmentNode> selectedTreatments = new List<TreatmentNode>();
 
-            foreach (var treeNode in treeViewTreatments.Nodes.All())
+            foreach (TreatmentNode treeNode in treeViewTreatments.Nodes.All())
             {
-                if (treeNode.Checked && treeNode.Tag != null)
+                if (treeNode.Checked && treeNode.GetType() == typeof(TreatmentNode))
                 {
-                    string tag = treeNode.Tag.ToString();
-                    string typeStr = "Chemo.Treatment." + tag;
-                    Type componentType = Type.GetType(typeStr);
-
-                    // Create treatment instance based on checkbox tag
-                    BaseTreatment tr = (BaseTreatment)Activator.CreateInstance(componentType);
-
-                    selectedTreatments.Add(tr);
+                    selectedTreatments.Add(treeNode);
                     treeNode.ImageKey = "Ok";
                 }
             }
@@ -205,8 +196,8 @@ namespace Chemo
             Reset();
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
-            List<BaseTreatment> selectedTreatments = CollectTreatments();
-            List<BaseTreatment> performTreatments = selectedTreatments.Where(tr => tr.ShouldPerformTreatment()).ToList();
+            List<TreatmentNode> selectedTreatments = CollectTreatments();
+            List<TreatmentNode> performTreatments = selectedTreatments.Where(tr => tr.Treatment.ShouldPerformTreatment()).ToList();
             stopWatch.Stop();
 
             // Analysis top item
