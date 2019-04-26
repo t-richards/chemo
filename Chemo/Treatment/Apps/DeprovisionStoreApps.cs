@@ -26,7 +26,7 @@ namespace Chemo.Treatment.Apps
                     DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
                     foreach (var package in dismAppxPackages)
                     {
-                        if (StoreApps.shouldRemove(package.DisplayName))
+                        if (StoreApps.ShouldRemove(package.DisplayName))
                         {
                             packageCount += 1;
                         }
@@ -59,7 +59,7 @@ namespace Chemo.Treatment.Apps
                     {
                         try
                         {
-                            if (StoreApps.shouldRemove(package.DisplayName))
+                            if (StoreApps.ShouldRemove(package.DisplayName))
                             {
                                 DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
                                 logger.Log("Successfully deprovisioned {0}", package.DisplayName);

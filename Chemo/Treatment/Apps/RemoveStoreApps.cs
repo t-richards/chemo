@@ -37,7 +37,7 @@ namespace Chemo.Treatment.Apps
                     continue;
                 }
 
-                if (StoreApps.shouldRemove(package.Id.Name))
+                if (StoreApps.ShouldRemove(package.Id.Name))
                 {
                     packageCount += 1;
                 }
@@ -67,7 +67,7 @@ namespace Chemo.Treatment.Apps
                     continue;
                 }
 
-                if (StoreApps.shouldRemove(package.Id.Name))
+                if (StoreApps.ShouldRemove(package.Id.Name))
                 {
                     RemovePackage(package);
                     packageCount += 1;
