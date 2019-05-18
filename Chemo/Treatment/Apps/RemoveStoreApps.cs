@@ -41,6 +41,10 @@ namespace Chemo.Treatment.Apps
                 {
                     packageCount += 1;
                 }
+                else
+                {
+                    logger.Log("Not removing {0}", package.Id.Name);
+                }
             }
 
             if (packageCount > 0)

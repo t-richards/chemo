@@ -14,10 +14,7 @@ namespace Chemo.Treatment
         {
             var assembly = Assembly.GetExecutingAssembly();
 
-            txtVersion.Text = string.Format(
-                "Version: {0}",
-                assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion
-            );
+            txtVersion.Text = $"Version: {assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
         }
 
         private void OnGithubLabelClick(object sender, LinkLabelLinkClickedEventArgs e)

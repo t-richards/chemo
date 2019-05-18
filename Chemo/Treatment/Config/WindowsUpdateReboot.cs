@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class WindowsUpdateReboot : BaseTreatment
     {
-        private static readonly string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
-        private static readonly int DesiredValue = 2;
+        private const string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
+        private const int DesiredValue = 2;
 
         public override string Name()
         {

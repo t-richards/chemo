@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class RequireCtrlAltDel : BaseTreatment
     {
-        private static readonly string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
-        private static readonly int DesiredValue = 0;
+        private const string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {

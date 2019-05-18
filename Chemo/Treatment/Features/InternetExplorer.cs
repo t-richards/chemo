@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Features
 {
     class InternetExplorer : BaseTreatment
     {
-        public static readonly string IE32BitName = "Internet-Explorer-Optional-x86";
-        public static readonly string IE64BitName = "Internet-Explorer-Optional-amd64";
+        public const string IE32BitName = "Internet-Explorer-Optional-x86";
+        public const string IE64BitName = "Internet-Explorer-Optional-amd64";
         protected string resolvedFeatureName = "";
 
         public override string Name()

@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class SetClockUTC : BaseTreatment
     {
-        private static readonly string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
-        private static readonly int DesiredValue = 1;
+        private const string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
+        private const int DesiredValue = 1;
 
         public override string Name()
         {

@@ -28,6 +28,7 @@ namespace Chemo.Treatment.Apps
                     {
                         if (StoreApps.ShouldRemove(package.DisplayName))
                         {
+                            logger.Log("Would deprovision {0}", package.DisplayName);
                             packageCount += 1;
                         }
                     }

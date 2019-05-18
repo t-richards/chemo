@@ -7,9 +7,9 @@ namespace Chemo.Treatment.Apps
 {
     class OneDrive : BaseTreatment
     {
-        private static readonly string Clsid = "{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
-        private static readonly string AutoRunKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
-        private static readonly string ClassKey = @"HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
+        private const string Clsid = "{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
+        private const string AutoRunKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
+        private const string ClassKey = @"HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
 
         private readonly string UserDataPath;
         private readonly string LocalAppDataPath;

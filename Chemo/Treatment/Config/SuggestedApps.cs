@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class SuggestedApps : BaseTreatment
     {
-        private static readonly string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
-        private static readonly int DesiredValue = 1;
+        private const string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
+        private const int DesiredValue = 1;
 
         public override string Name()
         {

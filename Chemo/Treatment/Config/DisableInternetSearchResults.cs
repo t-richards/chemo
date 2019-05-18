@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class DisableInternetSearchResults : BaseTreatment
     {
-        private static readonly string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
-        private static readonly int DesiredValue = 0;
+        private const string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {
