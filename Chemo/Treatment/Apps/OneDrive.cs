@@ -147,7 +147,7 @@ namespace Chemo.Treatment.Apps
             }
             catch (Exception ex)
             {
-                logger.Log("Could not delete {0}: {1}", path, ex.Message);
+                Logger.Log("Could not delete {0}: {1}", path, ex.Message);
             }
 
             return false;
@@ -172,11 +172,26 @@ namespace Chemo.Treatment.Apps
 
         public override bool ShouldPerformTreatment()
         {
-            return (
-                ProcessesRunning() ||
-                RegistryKeysExist() ||
-                FoldersExist()
-            );
+            bool retval = false;
+            if (ProcessesRunning())
+            {
+                Logger.Log("Would kill one or more running OneDrive processes.");
+                retval = true;
+            }
+
+            if (RegistryKeysExist())
+            {
+                Logger.Log("Would remove one or more OneDrive registry keys.");
+                retval = true;
+            }
+
+            if (FoldersExist())
+            {
+                Logger.Log("Would delete one or more OneDrive folders.");
+                retval = true;
+            }
+
+            return retval;
         }
 
         public override bool PerformTreatment()
@@ -185,37 +200,37 @@ namespace Chemo.Treatment.Apps
 
             try
             {
-                logger.Log("Terminating any running OneDrive processes...");
+                Logger.Log("Terminating any running OneDrive processes...");
                 KillProcesses();
-                logger.Log("Completed termination of running OneDrive processes");
+                Logger.Log("Completed termination of running OneDrive processes");
             }
             catch (Exception ex)
             {
-                logger.Log("Could not kill running OneDrive processes: {0}", ex.Message);
+                Logger.Log("Could not kill running OneDrive processes: {0}", ex.Message);
                 retval = false;
             }
 
             try
             {
-                logger.Log("Removing OneDrive keys from registry...");
+                Logger.Log("Removing OneDrive keys from registry...");
                 DeleteRegistryKeys();
-                logger.Log("Completed removal of OneDrive keys from registry");
+                Logger.Log("Completed removal of OneDrive keys from registry");
             }
             catch (Exception ex)
             {
-                logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
+                Logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
                 retval = false;
             }
 
             try
             {
-                logger.Log("Deleting OneDrive folders completely...");
+                Logger.Log("Deleting OneDrive folders completely...");
                 DeleteFolders();
-                logger.Log("Completed removal of OneDrive folders.");
+                Logger.Log("Completed removal of OneDrive folders.");
             }
             catch (Exception ex)
             {
-                logger.Log("Could not delete OneDrive folders: {0}", ex.Message);
+                Logger.Log("Could not delete OneDrive folders: {0}", ex.Message);
                 retval = false;
             }
 

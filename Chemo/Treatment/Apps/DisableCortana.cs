@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Apps
             try
             {
                 Registry.SetValue(CortanaKey, "AllowCortana", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully disabled Cortana.");
+                Logger.Log("Successfully disabled Cortana.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not disable Cortana: {0}", ex.Message);
+                Logger.Log("Could not disable Cortana: {0}", ex.Message);
             }
 
             return false;

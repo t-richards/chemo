@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(TimezoneKey, "RealTimeIsUniversal", 1, RegistryValueKind.DWord);
-                logger.Log("Successfully set system clock to UTC.");
+                Logger.Log("Successfully set system clock to UTC.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not set system clock to UTC: {0}", ex.Message);
+                Logger.Log("Could not set system clock to UTC: {0}", ex.Message);
             }
 
             return false;

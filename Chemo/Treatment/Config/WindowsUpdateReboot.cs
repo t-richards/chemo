@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(AutoUpdateKey, "AUOptions", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully disabled automatic reboot for Windows Update.");
+                Logger.Log("Successfully disabled automatic reboot for Windows Update.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not disable automatic reboot for Windows Update: {0}", ex.Message);
+                Logger.Log("Could not disable automatic reboot for Windows Update: {0}", ex.Message);
             }
 
             return false;

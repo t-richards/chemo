@@ -28,12 +28,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(WinLogon, "DisableCAD", 0, RegistryValueKind.DWord);
-                logger.Log("Successfully required Ctrl-Alt-Delete for user login.");
+                Logger.Log("Successfully required Ctrl-Alt-Delete for user login.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not require Ctrl-Alt-Delete for user login: {0}", ex.Message);
+                Logger.Log("Could not require Ctrl-Alt-Delete for user login: {0}", ex.Message);
             }
 
             return false;

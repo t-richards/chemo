@@ -112,7 +112,7 @@ namespace Chemo
         private void BtnInitiateTreatment_Click(object sender, EventArgs e)
         {
             Reset();
-            List<TreatmentNode> performNodes = CollectTreatments();
+            List<TreatmentNode> performNodes = CollectTreatmentNodes();
             ApplyTreatments(performNodes);
         }
 
@@ -139,7 +139,7 @@ namespace Chemo
                     listItem.SubItems.Add("Error, hover for detail");
                 }
                 listItem.SubItems.Add(stopWatch.Elapsed.ToString());
-                listItem.ToolTipText = treatment.logger.ToString();
+                listItem.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(listItem);
                 IncrementProgress();
             }
@@ -147,7 +147,7 @@ namespace Chemo
             SetProgress(100);
         }
 
-        private List<TreatmentNode> CollectTreatments()
+        private List<TreatmentNode> CollectTreatmentNodes()
         {
             List<TreatmentNode> selectedTreatments = new List<TreatmentNode>();
 
@@ -156,7 +156,6 @@ namespace Chemo
                 if (treeNode.Checked && treeNode.GetType() == typeof(TreatmentNode))
                 {
                     selectedTreatments.Add((TreatmentNode)treeNode);
-                    treeNode.ImageKey = "Ok";
                 }
             }
 
@@ -181,6 +180,11 @@ namespace Chemo
             foreach (var treeNode in treeViewTreatments.Nodes.All())
             {
                 treeNode.ImageKey = "NotStarted";
+                if (treeNode.GetType() == typeof(TreatmentNode))
+                {
+                    var treatment = ((TreatmentNode)treeNode).Treatment;
+                    treatment.Logger.Reset();
+                }
             }
         }
 
@@ -245,7 +249,7 @@ namespace Chemo
             Stopwatch overallAnalysisTime = new Stopwatch();
             overallAnalysisTime.Start();
 
-            List<TreatmentNode> selectedTreatments = CollectTreatments();
+            List<TreatmentNode> selectedTreatments = CollectTreatmentNodes();
 
             foreach (TreatmentNode node in selectedTreatments)
             {
@@ -254,6 +258,8 @@ namespace Chemo
 
                 Stopwatch itemTime = new Stopwatch();
                 itemTime.Start();
+
+                node.ImageKey = "Ok";
 
                 if (treatment.ShouldPerformTreatment())
                 {
@@ -269,7 +275,7 @@ namespace Chemo
 
                 itemTime.Stop();
                 detail.SubItems.Add(itemTime.Elapsed.ToString());
-                detail.ToolTipText = treatment.logger.ToString();
+                detail.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(detail);
             }
 

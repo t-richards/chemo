@@ -33,12 +33,12 @@ namespace Chemo.Treatment.Config
             {
                 Registry.SetValue(GameDVR, "AppCaptureEnabled", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(GameConfigStore, "GameDVR_Enabled", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully turned off the game bar.");
+                Logger.Log("Successfully turned off the game bar.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not turn off the game bar: {0}", ex.Message);
+                Logger.Log("Could not turn off the game bar: {0}", ex.Message);
             }
 
             return false;

@@ -43,7 +43,7 @@ namespace Chemo.Treatment.Apps
                 }
                 else
                 {
-                    logger.Log("Not removing {0}", package.Id.Name);
+                    Logger.Log("Not removing {0}", package.Id.Name);
                 }
             }
 
@@ -78,15 +78,15 @@ namespace Chemo.Treatment.Apps
                 }
                 else
                 {
-                    logger.Log("Not removing {0}", package.Id.Name);
+                    Logger.Log("Not removing {0}", package.Id.Name);
                 }
             }
 
             if (packageCount <= 0)
             {
-                logger.Log("No Windows Store applications were uninstalled.");
+                Logger.Log("No Windows Store applications were uninstalled.");
             }
-            logger.Log("");
+            Logger.Log("");
 
             return true;
         }
@@ -100,12 +100,12 @@ namespace Chemo.Treatment.Apps
 
             deploymentOperation.Completed = (result, progress) =>
             {
-                logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
+                Logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
                 if (result.Status == AsyncStatus.Error)
                 {
                     DeploymentResult deploymentResult = deploymentOperation.GetResults();
-                    logger.Log("Error code: {0}", deploymentOperation.ErrorCode);
-                    logger.Log("Error text: {0}", deploymentResult.ErrorText);
+                    Logger.Log("Error code: {0}", deploymentOperation.ErrorCode);
+                    Logger.Log("Error text: {0}", deploymentResult.ErrorText);
                 }
                 opCompletedEvent.Set();
             };

@@ -28,12 +28,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully turned off suggested apps.");
+                Logger.Log("Successfully turned off suggested apps.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not turn off suggested apps: {0}", ex.Message);
+                Logger.Log("Could not turn off suggested apps: {0}", ex.Message);
             }
 
             return false;
