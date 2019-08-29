@@ -28,6 +28,7 @@ namespace Chemo.Treatment.Apps
                     {
                         if (StoreApps.ShouldRemove(package.DisplayName))
                         {
+                            Logger.Log("Would deprovision {0}", package.DisplayName);
                             packageCount += 1;
                         }
                     }
@@ -62,18 +63,18 @@ namespace Chemo.Treatment.Apps
                             if (StoreApps.ShouldRemove(package.DisplayName))
                             {
                                 DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
-                                logger.Log("Successfully deprovisioned {0}", package.DisplayName);
+                                Logger.Log("Successfully deprovisioned {0}", package.DisplayName);
                                 removedPackageCount += 1;
                             }
                             else
                             {
-                                logger.Log("Not deprovisioning {0}", package.DisplayName);
+                                Logger.Log("Not deprovisioning {0}", package.DisplayName);
                             }
 
                         }
                         catch (DismRebootRequiredException ex)
                         {
-                            logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                            Logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
                             removedPackageCount += 1;
                         }
                     }
@@ -81,13 +82,13 @@ namespace Chemo.Treatment.Apps
             }
             catch (Exception ex)
             {
-                logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
+                Logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
                 return false;
             }
 
             if (removedPackageCount <= 0)
             {
-                logger.Log("No Windows Store packages were deprovisioned.");
+                Logger.Log("No Windows Store packages were deprovisioned.");
             }
 
             return true;

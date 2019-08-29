@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Features
 {
     class InternetExplorer : BaseTreatment
     {
-        public static readonly string IE32BitName = "Internet-Explorer-Optional-x86";
-        public static readonly string IE64BitName = "Internet-Explorer-Optional-amd64";
+        public const string IE32BitName = "Internet-Explorer-Optional-x86";
+        public const string IE64BitName = "Internet-Explorer-Optional-amd64";
         protected string resolvedFeatureName = "";
 
         public override string Name()
@@ -68,17 +68,17 @@ namespace Chemo.Treatment.Features
                     }
                     catch (DismRebootRequiredException ex)
                     {
-                        logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
+                        Logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
                         return true;
                     }
 
-                    logger.Log("Successfully disabled Internet Explorer 11.");
+                    Logger.Log("Successfully disabled Internet Explorer 11.");
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                logger.Log("An error occurred while disabling Internet Explorer: {0}", ex.Message);
+                Logger.Log("An error occurred while disabling Internet Explorer: {0}", ex.Message);
             }
 
             return false;

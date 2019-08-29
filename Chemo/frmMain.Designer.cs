@@ -123,6 +123,7 @@ namespace Chemo
             this.lstResults.TabIndex = 7;
             this.lstResults.UseCompatibleStateImageBehavior = false;
             this.lstResults.View = System.Windows.Forms.View.Details;
+            this.lstResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstResults_MouseClick);
             // 
             // column1
             // 

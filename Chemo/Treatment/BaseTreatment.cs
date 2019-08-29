@@ -2,7 +2,7 @@ namespace Chemo.Treatment
 {
     public abstract class BaseTreatment
     {
-        public readonly Logger logger = Logger.Instance;
+        public MemoryLogger Logger { get; } = MemoryLogger.Instance;
 
         /// <summary>
         /// The short name of the treatment.

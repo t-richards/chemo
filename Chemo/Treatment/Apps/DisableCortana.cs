@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Apps
 {
     class DisableCortana : BaseTreatment
     {
-        private static readonly string CortanaKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search";
-        private static readonly int DesiredValue = 0;
+        private const string CortanaKey = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {
@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Apps
             try
             {
                 Registry.SetValue(CortanaKey, "AllowCortana", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully disabled Cortana.");
+                Logger.Log("Successfully disabled Cortana.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not disable Cortana: {0}", ex.Message);
+                Logger.Log("Could not disable Cortana: {0}", ex.Message);
             }
 
             return false;

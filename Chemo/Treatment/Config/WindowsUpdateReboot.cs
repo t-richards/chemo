@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class WindowsUpdateReboot : BaseTreatment
     {
-        private static readonly string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
-        private static readonly int DesiredValue = 2;
+        private const string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
+        private const int DesiredValue = 2;
 
         public override string Name()
         {
@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(AutoUpdateKey, "AUOptions", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully disabled automatic reboot for Windows Update.");
+                Logger.Log("Successfully disabled automatic reboot for Windows Update.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not disable automatic reboot for Windows Update: {0}", ex.Message);
+                Logger.Log("Could not disable automatic reboot for Windows Update: {0}", ex.Message);
             }
 
             return false;

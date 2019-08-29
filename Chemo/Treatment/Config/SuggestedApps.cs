@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class SuggestedApps : BaseTreatment
     {
-        private static readonly string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
-        private static readonly int DesiredValue = 1;
+        private const string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
+        private const int DesiredValue = 1;
 
         public override string Name()
         {
@@ -28,12 +28,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully turned off suggested apps.");
+                Logger.Log("Successfully turned off suggested apps.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not turn off suggested apps: {0}", ex.Message);
+                Logger.Log("Could not turn off suggested apps: {0}", ex.Message);
             }
 
             return false;

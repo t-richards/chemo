@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class DisableInternetSearchResults : BaseTreatment
     {
-        private static readonly string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
-        private static readonly int DesiredValue = 0;
+        private const string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {
@@ -34,12 +34,12 @@ namespace Chemo.Treatment.Config
                 Registry.SetValue(SearchKey, "BingSearchEnabled", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(SearchKey, "AllowSearchToUseLocation", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(SearchKey, "CortanaConsent", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully disabled internet search results in the start menu.");
+                Logger.Log("Successfully disabled internet search results in the start menu.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not disable internet search results in the start menu: {0}", ex.Message);
+                Logger.Log("Could not disable internet search results in the start menu: {0}", ex.Message);
             }
 
             return false;

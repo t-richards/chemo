@@ -5,9 +5,9 @@ namespace Chemo.Treatment.Config
 {
     class GameBar : BaseTreatment
     {
-        private static readonly string GameDVR = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR";
-        private static readonly string GameConfigStore = @"HKEY_CURRENT_USER\System\GameConfigStore";
-        private static readonly int DesiredValue = 0;
+        private const string GameDVR = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR";
+        private const string GameConfigStore = @"HKEY_CURRENT_USER\System\GameConfigStore";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {
@@ -33,12 +33,12 @@ namespace Chemo.Treatment.Config
             {
                 Registry.SetValue(GameDVR, "AppCaptureEnabled", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(GameConfigStore, "GameDVR_Enabled", DesiredValue, RegistryValueKind.DWord);
-                logger.Log("Successfully turned off the game bar.");
+                Logger.Log("Successfully turned off the game bar.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not turn off the game bar: {0}", ex.Message);
+                Logger.Log("Could not turn off the game bar: {0}", ex.Message);
             }
 
             return false;

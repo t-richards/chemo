@@ -5,8 +5,8 @@ namespace Chemo.Treatment.Config
 {
     class RequireCtrlAltDel : BaseTreatment
     {
-        private static readonly string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
-        private static readonly int DesiredValue = 0;
+        private const string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
+        private const int DesiredValue = 0;
 
         public override string Name()
         {
@@ -28,12 +28,12 @@ namespace Chemo.Treatment.Config
             try
             {
                 Registry.SetValue(WinLogon, "DisableCAD", 0, RegistryValueKind.DWord);
-                logger.Log("Successfully required Ctrl-Alt-Delete for user login.");
+                Logger.Log("Successfully required Ctrl-Alt-Delete for user login.");
                 return true;
             }
             catch (Exception ex)
             {
-                logger.Log("Could not require Ctrl-Alt-Delete for user login: {0}", ex.Message);
+                Logger.Log("Could not require Ctrl-Alt-Delete for user login: {0}", ex.Message);
             }
 
             return false;

@@ -8,9 +8,9 @@ namespace Chemo
     {
         public BaseTreatment Treatment { get; }
 
-        public TreatmentNode(Type treatmentType)
+        public TreatmentNode(BaseTreatment treatment)
         {
-            Treatment = (BaseTreatment)Activator.CreateInstance(treatmentType);
+            Treatment = treatment;
             Text = Treatment.Name();
             ToolTipText = Treatment.Tooltip();
             Checked = true;
