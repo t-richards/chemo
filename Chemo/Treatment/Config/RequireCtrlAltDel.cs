@@ -1,5 +1,6 @@
 using Microsoft.Win32;
 using System;
+using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Config
 {
@@ -18,25 +19,27 @@ namespace Chemo.Treatment.Config
             return "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reasons.";
         }
 
-        public override bool ShouldPerformTreatment()
+        public override Task<bool> ShouldPerformTreatment()
         {
-            return !RegistryUtils.IntEquals(WinLogon, "DisableCAD", DesiredValue);
+            return Task.FromResult(
+                !RegistryUtils.IntEquals(WinLogon, "DisableCAD", DesiredValue)
+            );
         }
 
-        public override bool PerformTreatment()
+        public override Task<bool> PerformTreatment()
         {
             try
             {
                 Registry.SetValue(WinLogon, "DisableCAD", 0, RegistryValueKind.DWord);
                 Logger.Log("Successfully required Ctrl-Alt-Delete for user login.");
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not require Ctrl-Alt-Delete for user login: {0}", ex.Message);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
     }
 }

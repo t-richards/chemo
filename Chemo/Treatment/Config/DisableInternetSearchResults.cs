@@ -1,5 +1,6 @@
 using Microsoft.Win32;
 using System;
+using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Config
 {
@@ -18,16 +19,18 @@ namespace Chemo.Treatment.Config
             return "Prevents internet junk from appearing when searching apps, files, etc. in the start menu.";
         }
 
-        public override bool ShouldPerformTreatment()
+        public override Task<bool> ShouldPerformTreatment()
         {
-            return !(
-                RegistryUtils.IntEquals(SearchKey, "BingSearchEnabled", 0) &&
-                RegistryUtils.IntEquals(SearchKey, "AllowSearchToUseLocation", 0) &&
-                RegistryUtils.IntEquals(SearchKey, "CortanaConsent", 0)
+            return Task.FromResult(
+                !(
+                    RegistryUtils.IntEquals(SearchKey, "BingSearchEnabled", 0) &&
+                    RegistryUtils.IntEquals(SearchKey, "AllowSearchToUseLocation", 0) &&
+                    RegistryUtils.IntEquals(SearchKey, "CortanaConsent", 0)
+                )
             );
         }
 
-        public override bool PerformTreatment()
+        public override Task<bool> PerformTreatment()
         {
             try
             {
@@ -35,14 +38,14 @@ namespace Chemo.Treatment.Config
                 Registry.SetValue(SearchKey, "AllowSearchToUseLocation", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(SearchKey, "CortanaConsent", DesiredValue, RegistryValueKind.DWord);
                 Logger.Log("Successfully disabled internet search results in the start menu.");
-                return true;
+                return Task.FromResult(true);
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not disable internet search results in the start menu: {0}", ex.Message);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
     }
 }

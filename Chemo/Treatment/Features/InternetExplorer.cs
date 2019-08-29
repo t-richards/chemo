@@ -1,5 +1,6 @@
 using Microsoft.Dism;
 using System;
+using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Features
 {
@@ -31,7 +32,7 @@ namespace Chemo.Treatment.Features
             }
         }
 
-        public override bool ShouldPerformTreatment()
+        public override Task<bool> ShouldPerformTreatment()
         {
             try
             {
@@ -44,19 +45,19 @@ namespace Chemo.Treatment.Features
                         info.FeatureState == DismPackageFeatureState.Staged ||
                         info.FeatureState == DismPackageFeatureState.UninstallPending)
                     {
-                        return false;
+                        return Task.FromResult(false);
                     }
                 }
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
 
-            return true;
+            return Task.FromResult(true);
         }
 
-        public override bool PerformTreatment()
+        public override Task<bool> PerformTreatment()
         {
             try
             {
@@ -69,11 +70,11 @@ namespace Chemo.Treatment.Features
                     catch (DismRebootRequiredException ex)
                     {
                         Logger.Log("Successfully disabled Internet Explorer 11. {0}", ex.Message);
-                        return true;
+                        return Task.FromResult(true);
                     }
 
                     Logger.Log("Successfully disabled Internet Explorer 11.");
-                    return true;
+                    return Task.FromResult(true);
                 }
             }
             catch (Exception ex)
@@ -81,7 +82,7 @@ namespace Chemo.Treatment.Features
                 Logger.Log("An error occurred while disabling Internet Explorer: {0}", ex.Message);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
     }
 }

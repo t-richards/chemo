@@ -1,6 +1,7 @@
 using Chemo.Data;
 using Microsoft.Dism;
 using System;
+using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Apps
 {
@@ -16,7 +17,7 @@ namespace Chemo.Treatment.Apps
             return "Deprovisions all packages.This prevents Windows Store application from re-appearing when a new user is created, or when a feature update is applied.";
         }
 
-        public override bool ShouldPerformTreatment()
+        public override Task<bool> ShouldPerformTreatment()
         {
             int packageCount = 0;
             try
@@ -36,18 +37,18 @@ namespace Chemo.Treatment.Apps
             }
             catch
             {
-                return false;
+                return Task.FromResult(false);
             }
 
             if (packageCount > 0)
             {
-                return true;
+                return Task.FromResult(true);
             }
 
-            return false;
+            return Task.FromResult(false);
         }
 
-        public override bool PerformTreatment()
+        public override Task<bool> PerformTreatment()
         {
             int removedPackageCount = 0;
 
@@ -83,7 +84,7 @@ namespace Chemo.Treatment.Apps
             catch (Exception ex)
             {
                 Logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
-                return false;
+                return Task.FromResult(false);
             }
 
             if (removedPackageCount <= 0)
@@ -91,7 +92,7 @@ namespace Chemo.Treatment.Apps
                 Logger.Log("No Windows Store packages were deprovisioned.");
             }
 
-            return true;
+            return Task.FromResult(true);
         }
     }
 }
