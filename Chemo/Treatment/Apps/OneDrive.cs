@@ -2,6 +2,7 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Apps
 {
@@ -99,7 +100,7 @@ namespace Chemo.Treatment.Apps
                 }
             }
 
-            return false;
+            return true;
         }
 
         private void DeleteRegistryKeys()
@@ -135,7 +136,7 @@ namespace Chemo.Treatment.Apps
         {
             if (!Directory.Exists(path))
             {
-                return false;
+                return true;
             }
 
             try
@@ -150,7 +151,7 @@ namespace Chemo.Treatment.Apps
                 Logger.Log("Could not delete {0}: {1}", path, ex.Message);
             }
 
-            return false;
+            return true;
         }
 
         private bool FoldersExist()
@@ -170,7 +171,7 @@ namespace Chemo.Treatment.Apps
         }
         #endregion
 
-        public override bool ShouldPerformTreatment()
+        public override Task<bool> ShouldPerformTreatment()
         {
             bool retval = false;
             if (ProcessesRunning())
@@ -191,10 +192,10 @@ namespace Chemo.Treatment.Apps
                 retval = true;
             }
 
-            return retval;
+            return Task.FromResult(retval);
         }
 
-        public override bool PerformTreatment()
+        public override Task<bool> PerformTreatment()
         {
             bool retval = true;
 
@@ -234,7 +235,7 @@ namespace Chemo.Treatment.Apps
                 retval = false;
             }
 
-            return retval;
+            return Task.FromResult(retval);
         }
     }
 }
