@@ -242,7 +242,7 @@ namespace Chemo
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form aboutForm = new frmAbout();
-            aboutForm.Show();
+            aboutForm.ShowDialog();
         }
 
         private async void BtnAnalyze_Click(object sender, EventArgs e)
