@@ -6,7 +6,6 @@ namespace Chemo
     public sealed class MemoryLogger
     {
         private StringBuilder data;
-        private readonly CultureInfo cultureInfo = CultureInfo.InvariantCulture;
 
         public MemoryLogger()
         {
@@ -21,7 +20,7 @@ namespace Chemo
         public void Log(string format, params object[] args)
         {
             format += "\r\n";
-            data.AppendFormat(cultureInfo, format, args);
+            data.AppendFormat(CultureInfo.InvariantCulture, format, args);
         }
 
         /// <summary>
