@@ -27,8 +27,8 @@ build_script:
       msbuild /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
-  - ps: >-
-      packages\ILRepack.2.0.17\tools\ILRepack.exe /out:build/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
+  - cmd: >-
+      "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.17\tools\ILRepack.exe /out:build/Chemo.exe Chemo\bin\Release\Chemo.exe Chemo\bin\Release\Microsoft.Dism.dll
 
       cp build\Chemo.exe Chemo.exe
 
