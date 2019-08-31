@@ -241,6 +241,7 @@ namespace Chemo
         {
             Form aboutForm = new frmAbout();
             aboutForm.ShowDialog();
+            aboutForm.Dispose();
         }
 
         private async void BtnAnalyze_Click(object sender, EventArgs e)

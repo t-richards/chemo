@@ -111,6 +111,7 @@ namespace Chemo.Treatment.Apps
             };
 
             opCompletedEvent.WaitOne();
+            opCompletedEvent.Dispose();
         }
     }
 }
