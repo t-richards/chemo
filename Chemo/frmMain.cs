@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -116,15 +118,16 @@ namespace Chemo
             ApplyTreatments(performNodes);
         }
 
-        private void ApplyTreatments(List<TreatmentNode> treeNodes)
+        private async void ApplyTreatments(List<TreatmentNode> treeNodes)
         {
             foreach (TreatmentNode node in treeNodes)
             {
                 var treatment = node.Treatment;
-
+                ConfiguredTaskAwaitable<bool> performTask = Task<bool>.Factory.StartNew(() => treatment.PerformTreatment()).ConfigureAwait(true);
                 Stopwatch stopWatch = new Stopwatch();
+
                 stopWatch.Start();
-                var result = treatment.PerformTreatment();
+                var result = await performTask;
                 stopWatch.Stop();
 
                 var listItem = new ListViewItem(treatment.Name());
@@ -240,7 +243,7 @@ namespace Chemo
             aboutForm.ShowDialog();
         }
 
-        private void BtnAnalyze_Click(object sender, EventArgs e)
+        private async void BtnAnalyze_Click(object sender, EventArgs e)
         {
             Reset();
 
@@ -255,25 +258,26 @@ namespace Chemo
             {
                 var treatment = node.Treatment;
                 ListViewItem detail = new ListViewItem(treatment.Name());
-
+                ConfiguredTaskAwaitable<bool> analyzeTask = Task<bool>.Factory.StartNew(() => treatment.ShouldPerformTreatment()).ConfigureAwait(true);
                 Stopwatch itemTime = new Stopwatch();
+
                 itemTime.Start();
+                bool shouldPerform = await analyzeTask;
+                itemTime.Stop();
 
                 node.ImageKey = "Ok";
 
-                if (treatment.ShouldPerformTreatment())
+                if (shouldPerform)
                 {
-                    detail.ImageKey = "Ok";
                     detail.SubItems.Add("Should be applied");
                     performTreatmentCount += 1;
                 }
                 else
                 {
-                    detail.ImageKey = "Ok";
                     detail.SubItems.Add("Already applied");
                 }
 
-                itemTime.Stop();
+                detail.ImageKey = "Ok";
                 detail.SubItems.Add(itemTime.Elapsed.ToString());
                 detail.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(detail);
