@@ -1,6 +1,5 @@
 using Microsoft.Win32;
 using System;
-using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Apps
 {
@@ -19,31 +18,31 @@ namespace Chemo.Treatment.Apps
             return "Prevents Cortana from appearing in the taskbar. A sign out is required to complete this operation.";
         }
 
-        public override Task<bool> ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             var value = Registry.GetValue(CortanaKey, "AllowCortana", 0);
             if (value == null || (int)value != DesiredValue)
             {
-                return Task.FromResult(true);
+                return true;
             }
 
-            return Task.FromResult(false);
+            return false;
         }
 
-        public override Task<bool> PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {
                 Registry.SetValue(CortanaKey, "AllowCortana", DesiredValue, RegistryValueKind.DWord);
                 Logger.Log("Successfully disabled Cortana.");
-                return Task.FromResult(true);
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not disable Cortana: {0}", ex.Message);
             }
 
-            return Task.FromResult(false);
+            return false;
         }
     }
 }

@@ -1,6 +1,5 @@
 using Microsoft.Win32;
 using System;
-using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Config
 {
@@ -19,27 +18,25 @@ namespace Chemo.Treatment.Config
             return @"Prevents 'recommended' applications from displaying on the start menu.";
         }
 
-        public override Task<bool> ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
-            return Task.FromResult(
-                !RegistryUtils.IntEquals(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue)
-            );
+            return !RegistryUtils.IntEquals(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue);
         }
 
-        public override Task<bool> PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {
                 Registry.SetValue(CloudContent, "DisableWindowsConsumerFeatures", DesiredValue, RegistryValueKind.DWord);
                 Logger.Log("Successfully turned off suggested apps.");
-                return Task.FromResult(true);
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not turn off suggested apps: {0}", ex.Message);
             }
 
-            return Task.FromResult(false);
+            return false;
         }
     }
 }

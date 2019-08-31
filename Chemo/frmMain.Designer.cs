@@ -30,18 +30,18 @@ namespace Chemo
         {
             this.btnInitiateTreatment = new System.Windows.Forms.Button();
             this.grpTreatments = new System.Windows.Forms.GroupBox();
+            this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lstResults = new System.Windows.Forms.ListView();
-            this.colTask = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colResult = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.column3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAnalyze = new System.Windows.Forms.Button();
             this.lblProgressPercent = new System.Windows.Forms.Label();
             this.prgTreatmentApplication = new System.Windows.Forms.ProgressBar();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.grpTreatments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -72,6 +72,17 @@ namespace Chemo
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
             // 
+            // treeViewTreatments
+            // 
+            this.treeViewTreatments.CheckBoxes = true;
+            this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
+            this.treeViewTreatments.Name = "treeViewTreatments";
+            this.treeViewTreatments.ShowNodeToolTips = true;
+            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
+            this.treeViewTreatments.TabIndex = 0;
+            this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewTreatments_AfterCheck);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -101,9 +112,9 @@ namespace Chemo
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstResults.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colTask,
-            this.colResult,
-            this.colTime});
+            this.column1,
+            this.column2,
+            this.column3});
             this.lstResults.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstResults.Location = new System.Drawing.Point(3, 45);
             this.lstResults.Name = "lstResults";
@@ -114,20 +125,20 @@ namespace Chemo
             this.lstResults.View = System.Windows.Forms.View.Details;
             this.lstResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstResults_MouseClick);
             // 
-            // colTask
+            // column1
             // 
-            this.colTask.Text = "Task";
-            this.colTask.Width = 209;
+            this.column1.Text = "";
+            this.column1.Width = 209;
             // 
-            // colResult
+            // column2
             // 
-            this.colResult.Text = "Result";
-            this.colResult.Width = 169;
+            this.column2.Text = "";
+            this.column2.Width = 169;
             // 
-            // colTime
+            // column3
             // 
-            this.colTime.Text = "Time Elapsed";
-            this.colTime.Width = 118;
+            this.column3.Text = "";
+            this.column3.Width = 118;
             // 
             // btnAnalyze
             // 
@@ -184,17 +195,6 @@ namespace Chemo
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
-            // treeViewTreatments
-            // 
-            this.treeViewTreatments.CheckBoxes = true;
-            this.treeViewTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
-            this.treeViewTreatments.Name = "treeViewTreatments";
-            this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
-            this.treeViewTreatments.TabIndex = 0;
-            this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewTreatments_AfterCheck);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,8 +229,8 @@ namespace Chemo
         private System.Windows.Forms.Label lblProgressPercent;
         private System.Windows.Forms.Button btnAnalyze;
         private System.Windows.Forms.ListView lstResults;
-        private System.Windows.Forms.ColumnHeader colTask;
-        private System.Windows.Forms.ColumnHeader colResult;
-        private System.Windows.Forms.ColumnHeader colTime;
+        private System.Windows.Forms.ColumnHeader column1;
+        private System.Windows.Forms.ColumnHeader column2;
+        private System.Windows.Forms.ColumnHeader column3;
     }
 }

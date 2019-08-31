@@ -1,6 +1,5 @@
 using Microsoft.Win32;
 using System;
-using System.Threading.Tasks;
 
 namespace Chemo.Treatment.Config
 {
@@ -20,31 +19,29 @@ namespace Chemo.Treatment.Config
             return "Turns off the game bar for both apps and games.";
         }
 
-        public override Task<bool> ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
-            return Task.FromResult(
-                !(
-                    RegistryUtils.IntEquals(GameDVR, "AppCaptureEnabled", DesiredValue) &&
-                    RegistryUtils.IntEquals(GameConfigStore, "GameDVR_Enabled", DesiredValue)
-                )
+            return !(
+                RegistryUtils.IntEquals(GameDVR, "AppCaptureEnabled", DesiredValue) &&
+                RegistryUtils.IntEquals(GameConfigStore, "GameDVR_Enabled", DesiredValue)
             );
         }
 
-        public override Task<bool> PerformTreatment()
+        public override bool PerformTreatment()
         {
             try
             {
                 Registry.SetValue(GameDVR, "AppCaptureEnabled", DesiredValue, RegistryValueKind.DWord);
                 Registry.SetValue(GameConfigStore, "GameDVR_Enabled", DesiredValue, RegistryValueKind.DWord);
                 Logger.Log("Successfully turned off the game bar.");
-                return Task.FromResult(true);
+                return true;
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not turn off the game bar: {0}", ex.Message);
             }
 
-            return Task.FromResult(false);
+            return false;
         }
     }
 }

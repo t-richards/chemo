@@ -1,7 +1,6 @@
 using Chemo.Data;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;
@@ -22,7 +21,7 @@ namespace Chemo.Treatment.Apps
             return "Removes most pre-installed Windows Store apps.";
         }
 
-        public override Task<bool> ShouldPerformTreatment()
+        public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
@@ -50,13 +49,13 @@ namespace Chemo.Treatment.Apps
 
             if (packageCount > 0)
             {
-                return Task.FromResult(true);
+                return true;
             }
 
-            return Task.FromResult(false);
+            return false;
         }
 
-        public override Task<bool> PerformTreatment()
+        public override bool PerformTreatment()
         {
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
@@ -89,7 +88,7 @@ namespace Chemo.Treatment.Apps
             }
             Logger.Log("");
 
-            return Task.FromResult(true);
+            return true;
         }
 
         private void RemovePackage(Package package)

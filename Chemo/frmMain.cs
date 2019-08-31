@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -117,7 +116,7 @@ namespace Chemo
             ApplyTreatments(performNodes);
         }
 
-        private async void ApplyTreatments(List<TreatmentNode> treeNodes)
+        private void ApplyTreatments(List<TreatmentNode> treeNodes)
         {
             foreach (TreatmentNode node in treeNodes)
             {
@@ -125,7 +124,7 @@ namespace Chemo
 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-                bool result = await treatment.PerformTreatment();
+                var result = treatment.PerformTreatment();
                 stopWatch.Stop();
 
                 var listItem = new ListViewItem(treatment.Name());
@@ -142,7 +141,6 @@ namespace Chemo
                 listItem.SubItems.Add(stopWatch.Elapsed.ToString());
                 listItem.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(listItem);
-                lstResults.Refresh();
                 IncrementProgress();
             }
 
@@ -178,7 +176,6 @@ namespace Chemo
             lblProgressPercent.Text = "";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = 0;
-            prgTreatmentApplication.Refresh();
 
             foreach (var treeNode in treeViewTreatments.Nodes.All())
             {
@@ -197,7 +194,6 @@ namespace Chemo
             lblProgressPercent.Text = $"{progressPercent}%";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
-            prgTreatmentApplication.Refresh();
         }
 
         private void SetProgress(int value)
@@ -206,7 +202,6 @@ namespace Chemo
             lblProgressPercent.Text = $"{progressPercent}%";
             lblProgressPercent.Refresh();
             prgTreatmentApplication.Value = progressPercent;
-            prgTreatmentApplication.Refresh();
         }
 
         private void TreeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
@@ -245,7 +240,7 @@ namespace Chemo
             aboutForm.ShowDialog();
         }
 
-        private async void BtnAnalyze_Click(object sender, EventArgs e)
+        private void BtnAnalyze_Click(object sender, EventArgs e)
         {
             Reset();
 
@@ -265,8 +260,8 @@ namespace Chemo
                 itemTime.Start();
 
                 node.ImageKey = "Ok";
-                bool shouldPerform = await treatment.ShouldPerformTreatment();
-                if (shouldPerform)
+
+                if (treatment.ShouldPerformTreatment())
                 {
                     detail.ImageKey = "Ok";
                     detail.SubItems.Add("Should be applied");
@@ -282,7 +277,6 @@ namespace Chemo
                 detail.SubItems.Add(itemTime.Elapsed.ToString());
                 detail.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(detail);
-                lstResults.Refresh();
             }
 
             overallAnalysisTime.Stop();

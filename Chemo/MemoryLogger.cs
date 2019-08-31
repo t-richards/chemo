@@ -1,5 +1,4 @@
 using System;
-using System.Globalization;
 using System.Text;
 
 namespace Chemo
@@ -21,7 +20,7 @@ namespace Chemo
         public void Log(string format, params object[] args)
         {
             format += "\r\n";
-            data.AppendFormat(CultureInfo.InvariantCulture, format, args);
+            data.AppendFormat(format, args);
         }
 
         /// <summary>

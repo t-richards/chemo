@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Chemo.Treatment
 {
     public abstract class BaseTreatment
@@ -22,12 +20,12 @@ namespace Chemo.Treatment
         /// Determines whether the treatment should be applied. This operation should be idempotent.
         /// </summary>
         /// <returns>Returns true if the treatment should be applied, false otherwise.</returns>
-        public abstract Task<bool> ShouldPerformTreatment();
+        public abstract bool ShouldPerformTreatment();
 
         /// <summary>
         /// Perform the treatment. This operation can produce side effects or be destructive.
         /// </summary>
         /// <returns>Returns true if the treatment was successful, false otherwise.</returns>
-        public abstract Task<bool> PerformTreatment();
+        public abstract bool PerformTreatment();
     }
 }
