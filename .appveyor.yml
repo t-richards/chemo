@@ -5,7 +5,7 @@ branches:
   only:
   - master
 
-image: Visual Studio 2019
+image: Visual Studio 2017
 
 init:
 - ps: >-
