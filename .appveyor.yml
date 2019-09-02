@@ -20,6 +20,10 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}-$(ABBREV_COMMIT)"
 
+before_build:
+  - cmd: >-
+      nuget restore
+
 after_build:
   - cmd: >-
       "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.17\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Release\Chemo.exe src\Chemo\bin\Release\Microsoft.Dism.dll
