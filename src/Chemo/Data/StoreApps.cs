@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Chemo.Data
 {
-    class StoreApps
+    public static class StoreApps
     {
-        protected static readonly HashSet<string> AppsToRemove = new HashSet<string>
+        private static readonly HashSet<string> AppsToRemove = new HashSet<string>
         {
             "46928bounde.EclipseManager",
             "828B5831.HiddenCityMysteryofShadows",

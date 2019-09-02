@@ -20,11 +20,9 @@ assembly_info:
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}-$(ABBREV_COMMIT)"
 
-build_script:
+before_build:
   - cmd: >-
       nuget restore
-
-      msbuild /BinaryLogger /Logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
 
 after_build:
   - cmd: >-
