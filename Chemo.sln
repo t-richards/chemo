@@ -4,6 +4,8 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemo", "src\Chemo\Chemo.csproj", "{82683839-7977-4813-B69C-E9E7F72B0207}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chemo.Test", "test\Chemo.Test\Chemo.Test.csproj", "{E1DFF919-F9BF-477F-B1F7-22C4EA89E7F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,6 +16,10 @@ Global
 		{82683839-7977-4813-B69C-E9E7F72B0207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82683839-7977-4813-B69C-E9E7F72B0207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82683839-7977-4813-B69C-E9E7F72B0207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1DFF919-F9BF-477F-B1F7-22C4EA89E7F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1DFF919-F9BF-477F-B1F7-22C4EA89E7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1DFF919-F9BF-477F-B1F7-22C4EA89E7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1DFF919-F9BF-477F-B1F7-22C4EA89E7F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
