@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\StoreAppsTest.cs" />
+    <Compile Include="Logger\ChemoLoggerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Chemo\Chemo.csproj">
