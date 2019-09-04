@@ -32,28 +32,40 @@ namespace Chemo
             this.grpTreatments = new System.Windows.Forms.GroupBox();
             this.treeViewTreatments = new Chemo.ChemoTreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.prgTreatmentApplication = new System.Windows.Forms.ProgressBar();
+            this.btnAnalyze = new System.Windows.Forms.Button();
             this.lstResults = new System.Windows.Forms.ListView();
             this.column1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.column3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnAnalyze = new System.Windows.Forms.Button();
             this.lblProgressPercent = new System.Windows.Forms.Label();
-            this.prgTreatmentApplication = new System.Windows.Forms.ProgressBar();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.dataGridEventsView = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TreatmentName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpTreatments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridEventsView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnInitiateTreatment
             // 
             this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(395, 482);
+            this.btnInitiateTreatment.Location = new System.Drawing.Point(528, 631);
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(120, 40);
             this.btnInitiateTreatment.TabIndex = 1;
@@ -67,7 +79,7 @@ namespace Chemo
             this.grpTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpTreatments.Location = new System.Drawing.Point(0, 0);
             this.grpTreatments.Name = "grpTreatments";
-            this.grpTreatments.Size = new System.Drawing.Size(332, 525);
+            this.grpTreatments.Size = new System.Drawing.Size(422, 703);
             this.grpTreatments.TabIndex = 2;
             this.grpTreatments.TabStop = false;
             this.grpTreatments.Text = "Treatments to Apply";
@@ -79,7 +91,7 @@ namespace Chemo
             this.treeViewTreatments.Location = new System.Drawing.Point(3, 16);
             this.treeViewTreatments.Name = "treeViewTreatments";
             this.treeViewTreatments.ShowNodeToolTips = true;
-            this.treeViewTreatments.Size = new System.Drawing.Size(326, 506);
+            this.treeViewTreatments.Size = new System.Drawing.Size(416, 684);
             this.treeViewTreatments.TabIndex = 0;
             this.treeViewTreatments.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.TreeViewTreatments_AfterCheck);
             // 
@@ -97,14 +109,56 @@ namespace Chemo
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.lstResults);
-            this.splitContainer1.Panel2.Controls.Add(this.btnAnalyze);
-            this.splitContainer1.Panel2.Controls.Add(this.lblProgressPercent);
-            this.splitContainer1.Panel2.Controls.Add(this.prgTreatmentApplication);
-            this.splitContainer1.Panel2.Controls.Add(this.btnInitiateTreatment);
-            this.splitContainer1.Size = new System.Drawing.Size(854, 525);
-            this.splitContainer1.SplitterDistance = 332;
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Size = new System.Drawing.Size(1088, 703);
+            this.splitContainer1.SplitterDistance = 422;
             this.splitContainer1.TabIndex = 4;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(662, 703);
+            this.tabControl1.TabIndex = 8;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.prgTreatmentApplication);
+            this.tabPage1.Controls.Add(this.btnInitiateTreatment);
+            this.tabPage1.Controls.Add(this.btnAnalyze);
+            this.tabPage1.Controls.Add(this.lstResults);
+            this.tabPage1.Controls.Add(this.lblProgressPercent);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(654, 677);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Treatment Overview";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // prgTreatmentApplication
+            // 
+            this.prgTreatmentApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.prgTreatmentApplication.Location = new System.Drawing.Point(6, 6);
+            this.prgTreatmentApplication.Name = "prgTreatmentApplication";
+            this.prgTreatmentApplication.Size = new System.Drawing.Size(563, 36);
+            this.prgTreatmentApplication.TabIndex = 4;
+            // 
+            // btnAnalyze
+            // 
+            this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAnalyze.Location = new System.Drawing.Point(6, 631);
+            this.btnAnalyze.Name = "btnAnalyze";
+            this.btnAnalyze.Size = new System.Drawing.Size(120, 40);
+            this.btnAnalyze.TabIndex = 6;
+            this.btnAnalyze.Text = "Analyze";
+            this.btnAnalyze.UseVisualStyleBackColor = true;
+            this.btnAnalyze.Click += new System.EventHandler(this.BtnAnalyze_Click);
             // 
             // lstResults
             // 
@@ -116,59 +170,68 @@ namespace Chemo
             this.column2,
             this.column3});
             this.lstResults.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstResults.Location = new System.Drawing.Point(3, 45);
+            this.lstResults.HideSelection = false;
+            this.lstResults.Location = new System.Drawing.Point(3, 48);
             this.lstResults.Name = "lstResults";
             this.lstResults.ShowItemToolTips = true;
-            this.lstResults.Size = new System.Drawing.Size(512, 431);
+            this.lstResults.Size = new System.Drawing.Size(642, 577);
             this.lstResults.TabIndex = 7;
             this.lstResults.UseCompatibleStateImageBehavior = false;
             this.lstResults.View = System.Windows.Forms.View.Details;
-            this.lstResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LstResults_MouseClick);
             // 
             // column1
             // 
-            this.column1.Text = "";
+            this.column1.Text = "Treatment";
             this.column1.Width = 209;
             // 
             // column2
             // 
-            this.column2.Text = "";
+            this.column2.Text = "Status";
             this.column2.Width = 169;
             // 
             // column3
             // 
-            this.column3.Text = "";
+            this.column3.Text = "Time Elapsed";
             this.column3.Width = 118;
-            // 
-            // btnAnalyze
-            // 
-            this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAnalyze.Location = new System.Drawing.Point(3, 482);
-            this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Size = new System.Drawing.Size(120, 40);
-            this.btnAnalyze.TabIndex = 6;
-            this.btnAnalyze.Text = "Analyze";
-            this.btnAnalyze.UseVisualStyleBackColor = true;
-            this.btnAnalyze.Click += new System.EventHandler(this.BtnAnalyze_Click);
             // 
             // lblProgressPercent
             // 
             this.lblProgressPercent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblProgressPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgressPercent.Location = new System.Drawing.Point(445, 3);
+            this.lblProgressPercent.Location = new System.Drawing.Point(575, 6);
             this.lblProgressPercent.Name = "lblProgressPercent";
             this.lblProgressPercent.Size = new System.Drawing.Size(70, 36);
             this.lblProgressPercent.TabIndex = 5;
             this.lblProgressPercent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // prgTreatmentApplication
+            // tabPage2
             // 
-            this.prgTreatmentApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.prgTreatmentApplication.Location = new System.Drawing.Point(3, 3);
-            this.prgTreatmentApplication.Name = "prgTreatmentApplication";
-            this.prgTreatmentApplication.Size = new System.Drawing.Size(436, 36);
-            this.prgTreatmentApplication.TabIndex = 4;
+            this.tabPage2.Controls.Add(this.dataGridEventsView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(654, 677);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Details";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // dataGridEventsView
+            // 
+            this.dataGridEventsView.AllowUserToAddRows = false;
+            this.dataGridEventsView.AllowUserToDeleteRows = false;
+            this.dataGridEventsView.AllowUserToOrderColumns = true;
+            this.dataGridEventsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridEventsView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Time,
+            this.TreatmentName,
+            this.Level,
+            this.Message});
+            this.dataGridEventsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridEventsView.Location = new System.Drawing.Point(3, 3);
+            this.dataGridEventsView.Name = "dataGridEventsView";
+            this.dataGridEventsView.ReadOnly = true;
+            this.dataGridEventsView.Size = new System.Drawing.Size(648, 671);
+            this.dataGridEventsView.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -176,7 +239,7 @@ namespace Chemo
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(878, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1112, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -195,11 +258,36 @@ namespace Chemo
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
+            // Time
+            // 
+            this.Time.HeaderText = "Timestamp";
+            this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
+            // 
+            // TreatmentName
+            // 
+            this.TreatmentName.HeaderText = "Treatment Name";
+            this.TreatmentName.Name = "TreatmentName";
+            this.TreatmentName.ReadOnly = true;
+            this.TreatmentName.Width = 200;
+            // 
+            // Level
+            // 
+            this.Level.HeaderText = "Level";
+            this.Level.Name = "Level";
+            this.Level.ReadOnly = true;
+            // 
+            // Message
+            // 
+            this.Message.HeaderText = "Message";
+            this.Message.Name = "Message";
+            this.Message.ReadOnly = true;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 564);
+            this.ClientSize = new System.Drawing.Size(1112, 742);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -210,6 +298,10 @@ namespace Chemo
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridEventsView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -232,5 +324,13 @@ namespace Chemo
         private System.Windows.Forms.ColumnHeader column1;
         private System.Windows.Forms.ColumnHeader column2;
         private System.Windows.Forms.ColumnHeader column3;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataGridView dataGridEventsView;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TreatmentName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Level;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Message;
     }
 }

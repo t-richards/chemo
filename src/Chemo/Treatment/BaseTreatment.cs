@@ -1,8 +1,10 @@
+using Chemo.Logger;
+
 namespace Chemo.Treatment
 {
     public abstract class BaseTreatment
     {
-        public MemoryLogger Logger { get; } = MemoryLogger.Instance;
+        public ChemoLogger Logger { get; } = ChemoLogger.Instance;
 
         /// <summary>
         /// The short name of the treatment.

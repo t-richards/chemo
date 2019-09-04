@@ -139,10 +139,9 @@ namespace Chemo
                 else
                 {
                     listItem.ImageKey = "Error";
-                    listItem.SubItems.Add("Error, hover for detail");
+                    listItem.SubItems.Add("Error, visit details tab");
                 }
                 listItem.SubItems.Add(stopWatch.Elapsed.ToString());
-                listItem.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(listItem);
                 IncrementProgress();
             }
@@ -280,7 +279,6 @@ namespace Chemo
 
                 detail.ImageKey = "Ok";
                 detail.SubItems.Add(itemTime.Elapsed.ToString());
-                detail.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(detail);
             }
 
@@ -291,41 +289,13 @@ namespace Chemo
             analysis.SubItems.Add("");
             analysis.SubItems.Add(overallAnalysisTime.Elapsed.ToString());
 
+            // TODO(tom): Move out of tooltip
             StringBuilder tooltip = new StringBuilder();
             tooltip.Append($"Selected {selectedTreatments.Count} treatments.\r\n");
             tooltip.Append($"{performTreatmentCount} treatments need to be applied.\r\n");
             tooltip.Append($"{selectedTreatments.Count - performTreatmentCount} treatments already applied.\r\n");
             analysis.ToolTipText = tooltip.ToString();
             lstResults.Items.Insert(0, analysis);
-        }
-
-        private void LstResults_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Right)
-            {
-                return;
-            }
-
-            Point clickPoint = new Point(e.X, e.Y);
-            ListViewHitTestInfo hitTestInfo = lstResults.HitTest(clickPoint);
-
-            if (hitTestInfo.Item == null)
-            {
-                return;
-            }
-
-            string text = $"Show Details for {hitTestInfo.Item.Text}";
-            MenuItem[] menuItems = new MenuItem[]
-            {
-                new MenuItem(text, LstResults_OnContextMenuClick)
-            };
-            lstResults.ContextMenu = new ContextMenu(menuItems);
-            return;
-        }
-
-        private void LstResults_OnContextMenuClick(object sender, EventArgs e)
-        {
-            Console.WriteLine("Hello");
         }
     }
 }
