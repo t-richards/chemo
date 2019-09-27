@@ -12,6 +12,7 @@ namespace Chemo.Treatment.Apps
         private const string ClassKey = @"HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
 
         private readonly string UserDataPath;
+        private readonly string ShortcutPath;
         private readonly string LocalAppDataPath;
         private readonly string ProgramDataPath;
 
@@ -33,10 +34,16 @@ namespace Chemo.Treatment.Apps
                 "OneDrive"
             );
 
+            // %APPDATA%\Microsoft\Windows\StartMenu\Programs\OneDrive
+            ShortcutPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Microsoft", "Windows", "Start Menu", "Programs", "OneDrive.lnk"
+            );
+
             // %LOCALAPPDATA%\Microsoft\OneDrive
             LocalAppDataPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "Local", "Microsoft", "OneDrive"
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "Microsoft", "OneDrive"
             );
 
             // %PROGRAMDATA%\Microsoft OneDrive
@@ -131,7 +138,7 @@ namespace Chemo.Treatment.Apps
         #endregion
 
         #region Folders
-        private bool MaybeDelete(string path)
+        private bool DeleteFolder(string path)
         {
             if (!Directory.Exists(path))
             {
@@ -153,20 +160,42 @@ namespace Chemo.Treatment.Apps
             return false;
         }
 
+        private bool DeleteFile(string path)
+        {
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Could not delete {0}: {1}", path, ex.Message);
+            }
+
+            return false;
+        }
+
         private bool FoldersExist()
         {
             return (
                 Directory.Exists(UserDataPath) ||
                 Directory.Exists(LocalAppDataPath) ||
-                Directory.Exists(ProgramDataPath)
+                Directory.Exists(ProgramDataPath) || 
+                File.Exists(ShortcutPath)
             );
         }
 
-        private void DeleteFolders()
+        private void DeleteFoldersAndFiles()
         {
-            MaybeDelete(UserDataPath);
-            MaybeDelete(LocalAppDataPath);
-            MaybeDelete(ProgramDataPath);
+            DeleteFolder(UserDataPath);
+            DeleteFolder(LocalAppDataPath);
+            DeleteFolder(ProgramDataPath);
+            DeleteFile(ShortcutPath);
         }
         #endregion
 
@@ -225,7 +254,7 @@ namespace Chemo.Treatment.Apps
             try
             {
                 Logger.Log("Deleting OneDrive folders completely...");
-                DeleteFolders();
+                DeleteFoldersAndFiles();
                 Logger.Log("Completed removal of OneDrive folders.");
             }
             catch (Exception ex)
