@@ -11,7 +11,7 @@ init:
 - ps: >-
     $env:ABBREV_COMMIT = $env:APPVEYOR_REPO_COMMIT.substring(0,8)
 
-configuration: Release
+configuration: Debug
 version: '0.2.{build}.0'
 assembly_info:
   patch: true
@@ -26,7 +26,7 @@ before_build:
 
 after_build:
   - cmd: >-
-      "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.17\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Release\Chemo.exe src\Chemo\bin\Release\Microsoft.Dism.dll
+      "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.17\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Debug\Chemo.exe src\Chemo\bin\Debug\Microsoft.Dism.dll
 
       cp build\Chemo.exe Chemo.exe
 

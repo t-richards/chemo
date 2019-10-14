@@ -26,7 +26,7 @@ namespace Chemo.Treatment.Apps
             int packageCount = 0;
             IEnumerable<Package> packages = packageManager.FindPackages();
 
-            foreach (var package in packages)
+            foreach (Package package in packages)
             {
                 // Don't remove frameworks or system packages
                 if (
