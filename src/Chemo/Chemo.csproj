@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="TreatmentNode.cs" />
     <Compile Include="CoreExt\TreeNodeExt.cs" />
     <Compile Include="Data\StoreApps.cs" />

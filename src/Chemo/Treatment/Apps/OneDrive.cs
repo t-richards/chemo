@@ -138,7 +138,7 @@ namespace Chemo.Treatment.Apps
         #endregion
 
         #region Folders
-        private bool DeleteFolder(string path)
+        private bool DeleteDirectory(string path)
         {
             if (!Directory.Exists(path))
             {
@@ -147,10 +147,26 @@ namespace Chemo.Treatment.Apps
 
             try
             {
-                var di = new DirectoryInfo(path);
-                di.Attributes &= ~FileAttributes.ReadOnly;
-                Directory.Delete(path, true);
-                return true;
+                string[] files = Directory.GetFiles(path);
+                string[] directories = Directory.GetDirectories(path);
+
+                foreach (string file in files)
+                {
+                    DeleteFile(file);
+                }
+
+                foreach (string dir in directories)
+                {
+                    DeleteDirectory(dir);
+                }
+
+                File.SetAttributes(path, FileAttributes.Normal);
+                Directory.Delete(path, false);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Logger.Log("Deleting {0} on reboot: {1}", path, ex.Message);
+                return DeleteOnReboot(path);
             }
             catch (Exception ex)
             {
@@ -169,8 +185,14 @@ namespace Chemo.Treatment.Apps
 
             try
             {
+                File.SetAttributes(path, FileAttributes.Normal);
                 File.Delete(path);
                 return true;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                Logger.Log("Deleting {0} on reboot: {1}", path, ex.Message);
+                return DeleteOnReboot(path);
             }
             catch (Exception ex)
             {
@@ -178,6 +200,11 @@ namespace Chemo.Treatment.Apps
             }
 
             return false;
+        }
+
+        private static bool DeleteOnReboot(string path)
+        {
+            return UnsafeNativeMethods.MoveFileEx(path, null, MoveFileFlags.DelayUntilReboot);
         }
 
         private bool FoldersExist()
@@ -192,9 +219,9 @@ namespace Chemo.Treatment.Apps
 
         private void DeleteFoldersAndFiles()
         {
-            DeleteFolder(UserDataPath);
-            DeleteFolder(LocalAppDataPath);
-            DeleteFolder(ProgramDataPath);
+            DeleteDirectory(UserDataPath);
+            DeleteDirectory(LocalAppDataPath);
+            DeleteDirectory(ProgramDataPath);
             DeleteFile(ShortcutPath);
         }
         #endregion
