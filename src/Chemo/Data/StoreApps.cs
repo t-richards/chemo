@@ -16,6 +16,7 @@ namespace Chemo.Data
             "king.com.BubbleWitch3Saga",
             "king.com.CandyCrushSaga",
             "king.com.CandyCrushSodaSaga",
+            "king.com.FarmHeroesSaga",
             "Microsoft.3DBuilder",
             "Microsoft.BingFinance",
             "Microsoft.BingFoodAndDrink",
