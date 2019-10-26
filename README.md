@@ -102,6 +102,16 @@ Re-gain control of your privacy. (TBD)
 Bug reports and pull requests are welcome on GitHub at
 https://github.com/t-richards/chemo
 
+## Build Requirements
+
+Building Chemo requires the following tools:
+
+ - Windows 10
+ - Visual Studio 2019
+ - .NET Framework 4.6
+ - NuGet package manager
+ - Windows 10 SDK (10.0.18362.0)
+
 ## License
 
 The application is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
