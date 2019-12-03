@@ -28,17 +28,9 @@ namespace Chemo.Treatment.Apps
 
             foreach (Package package in packages)
             {
-                // Don't remove frameworks or system packages
-                if (
-                    package.IsFramework ||
-                    package.SignatureKind == PackageSignatureKind.System
-                )
-                {
-                    continue;
-                }
-
                 if (StoreApps.ShouldRemove(package.Id.Name))
                 {
+                    Logger.Log("Would remove {0}", package.Id.Name);
                     packageCount += 1;
                 }
                 else
@@ -62,15 +54,6 @@ namespace Chemo.Treatment.Apps
 
             foreach (var package in packages)
             {
-                // Don't remove frameworks or system packages
-                if (
-                    package.IsFramework ||
-                    package.SignatureKind == PackageSignatureKind.System
-                )
-                {
-                    continue;
-                }
-
                 if (StoreApps.ShouldRemove(package.Id.Name))
                 {
                     RemovePackage(package);
