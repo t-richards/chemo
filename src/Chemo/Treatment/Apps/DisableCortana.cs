@@ -26,6 +26,7 @@ namespace Chemo.Treatment.Apps
                 return true;
             }
 
+            Logger.Log("Cortana already disabled.");
             return false;
         }
 

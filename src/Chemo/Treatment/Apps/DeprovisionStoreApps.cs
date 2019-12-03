@@ -31,6 +31,10 @@ namespace Chemo.Treatment.Apps
                             Logger.Log("Would deprovision {0}", package.DisplayName);
                             packageCount += 1;
                         }
+                        else
+                        {
+                            Logger.Log("Not deprovisioning {0}", package.DisplayName);
+                        }
                     }
                 }
             }

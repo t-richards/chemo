@@ -229,10 +229,15 @@ namespace Chemo.Treatment.Apps
         public override bool ShouldPerformTreatment()
         {
             bool retval = false;
+
             if (ProcessesRunning())
             {
                 Logger.Log("Would kill one or more running OneDrive processes.");
                 retval = true;
+            }
+            else
+            {
+                Logger.Log("No OneDrive processes are running.");
             }
 
             if (RegistryKeysExist())
@@ -240,11 +245,19 @@ namespace Chemo.Treatment.Apps
                 Logger.Log("Would remove one or more OneDrive registry keys.");
                 retval = true;
             }
+            else
+            {
+                Logger.Log("No OneDrive registry keys are present.");
+            }
 
             if (FoldersExist())
             {
                 Logger.Log("Would delete one or more OneDrive folders.");
                 retval = true;
+            }
+            else
+            {
+                Logger.Log("No OneDrive folders are present.");
             }
 
             return retval;
