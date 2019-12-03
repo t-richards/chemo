@@ -139,10 +139,9 @@ namespace Chemo
                 else
                 {
                     listItem.ImageKey = "Error";
-                    listItem.SubItems.Add("Error, hover for detail");
+                    listItem.SubItems.Add("Error, right click for detail");
                 }
                 listItem.SubItems.Add(stopWatch.Elapsed.ToString());
-                listItem.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(listItem);
                 IncrementProgress();
             }
@@ -278,9 +277,9 @@ namespace Chemo
                     detail.SubItems.Add("Already applied");
                 }
 
+                detail.Tag = treatment;
                 detail.ImageKey = "Ok";
                 detail.SubItems.Add(itemTime.Elapsed.ToString());
-                detail.ToolTipText = treatment.Logger.ToString();
                 lstResults.Items.Add(detail);
             }
 
@@ -309,7 +308,7 @@ namespace Chemo
             Point clickPoint = new Point(e.X, e.Y);
             ListViewHitTestInfo hitTestInfo = lstResults.HitTest(clickPoint);
 
-            if (hitTestInfo.Item == null)
+            if (hitTestInfo.Item == null || hitTestInfo.Item.Tag == null)
             {
                 return;
             }
@@ -320,12 +319,21 @@ namespace Chemo
                 new MenuItem(text, LstResults_OnContextMenuClick)
             };
             lstResults.ContextMenu = new ContextMenu(menuItems);
-            return;
+            lstResults.ContextMenu.Tag = hitTestInfo.Item.Tag;
         }
 
         private void LstResults_OnContextMenuClick(object sender, EventArgs e)
         {
-            Console.WriteLine("Hello");
+            MenuItem senderItem = (MenuItem)sender;
+            BaseTreatment treatment = (BaseTreatment)senderItem.Parent.Tag;
+            string message = treatment.Logger.ToString();
+
+            if (string.IsNullOrEmpty(message))
+            {
+                return;
+            }
+
+            MessageBox.Show(message, treatment.Name());
         }
     }
 }
