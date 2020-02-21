@@ -9,7 +9,7 @@ namespace Chemo.Treatment.Apps
 {
     class RemoveStoreApps : BaseTreatment
     {
-        private static PackageManager packageManager = new PackageManager();
+        private static readonly PackageManager packageManager = new PackageManager();
 
         public override string Name()
         {

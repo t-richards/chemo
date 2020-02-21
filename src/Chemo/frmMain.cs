@@ -318,8 +318,10 @@ namespace Chemo
             {
                 new MenuItem(text, LstResults_OnContextMenuClick)
             };
-            lstResults.ContextMenu = new ContextMenu(menuItems);
-            lstResults.ContextMenu.Tag = hitTestInfo.Item.Tag;
+            lstResults.ContextMenu = new ContextMenu(menuItems)
+            {
+                Tag = hitTestInfo.Item.Tag
+            };
         }
 
         private void LstResults_OnContextMenuClick(object sender, EventArgs e)
