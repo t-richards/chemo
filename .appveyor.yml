@@ -22,6 +22,10 @@ assembly_info:
 
 before_build:
   - cmd: >-
+      dotnet tool install -g dotnet-format --version 5.0.142902 --add-source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json
+      dotnet-format --check
+
+  - cmd: >-
       nuget restore
 
 after_build:
