@@ -16,7 +16,7 @@ namespace Chemo.CoreExt
             foreach (TreeNode n in nodes)
             {
                 yield return n;
-                
+
                 foreach (TreeNode child in n.Nodes.All())
                 {
                     yield return child;

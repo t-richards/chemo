@@ -212,7 +212,7 @@ namespace Chemo.Treatment.Apps
             return (
                 Directory.Exists(UserDataPath) ||
                 Directory.Exists(LocalAppDataPath) ||
-                Directory.Exists(ProgramDataPath) || 
+                Directory.Exists(ProgramDataPath) ||
                 File.Exists(ShortcutPath)
             );
         }
