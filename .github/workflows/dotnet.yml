@@ -31,8 +31,9 @@ jobs:
       run: msbuild Chemo.sln /p:Configuration=Release
 
     - name: Merge assemblies
+      shell: cmd
       run: |
-        %USERPROFILE%\.nuget\packages\ILRepack\2.0.18\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Release\Chemo.exe src\Chemo\bin\Release\Microsoft.Dism.dll
+        "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.18\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Release\Chemo.exe src\Chemo\bin\Release\Microsoft.Dism.dll
         cp build\Chemo.exe Chemo.exe
 
     - name: Reproducible build
