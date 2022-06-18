@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("tomrichards.net")]
 [assembly: AssemblyProduct("Chemo")]
-[assembly: AssemblyCopyright("Copyright © Tom Richards")]
+[assembly: AssemblyCopyright("Copyright © 2022 Tom Richards")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,8 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
-[assembly: AssemblyInformationalVersion("custom build")]
+[assembly: AssemblyVersion("0.3.0.0")]
+[assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: AssemblyInformationalVersion("0.3.0.0")]
 [assembly: NeutralResourcesLanguage("en-US")]
-
