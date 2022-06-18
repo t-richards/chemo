@@ -16,6 +16,11 @@ jobs:
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1
 
+    - name: Setup Windows SDK
+      uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
+      with:
+        sdk-version: 18362
+
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1
 
