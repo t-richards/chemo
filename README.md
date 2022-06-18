@@ -24,10 +24,10 @@ The latest "release" can be [downloaded from the releases section on GitHub](htt
 
 ## System Requirements
 
- - Windows 10
+ - Windows 10 version 1903 (May 2019 Update "19H1") or newer.
 
-Note: This program is designed strictly for Windows 10. Use on other versions of
-Microsoft Windows is not supported.
+Note: This program is designed strictly for Windows 10.
+Use on other versions of Microsoft Windows is not supported.
 
 ## Available Treatments
 
@@ -107,8 +107,8 @@ https://github.com/t-richards/chemo
 Building Chemo requires the following tools:
 
  - Windows 10
- - Visual Studio 2019
- - .NET Framework 4.6
+ - Visual Studio 2022
+ - .NET Framework 4.8
  - NuGet package manager
  - Windows 10 SDK (10.0.18362.0)
 
