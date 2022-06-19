@@ -10,10 +10,12 @@ namespace Chemo
         protected override void WndProc(ref Message m)
         {
             // Filter double-click event
-            if (m.Msg != WM_LBUTTONDBLCLK)
+            if (m.Msg == WM_LBUTTONDBLCLK)
             {
-                base.WndProc(ref m);
+                return;
             }
+
+            base.WndProc(ref m);
         }
     }
 }

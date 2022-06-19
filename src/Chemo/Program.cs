@@ -13,10 +13,7 @@ namespace Chemo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-#pragma warning disable CA2000 // Dispose objects before losing scope
             Application.Run(new frmMain());
-#pragma warning restore CA2000 // Dispose objects before losing scope
         }
     }
 }
