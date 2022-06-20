@@ -63,6 +63,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RegistryUtils.cs" />
+    <Compile Include="Treatment\Appearance\DarkMode.cs" />
     <Compile Include="Treatment\Apps\DeprovisionStoreApps.cs" />
     <Compile Include="Treatment\Apps\DisableCortana.cs" />
     <Compile Include="frmAbout.cs">

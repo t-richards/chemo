@@ -46,6 +46,16 @@ namespace Chemo
                 Checked = true
             };
 
+            // appearance
+            TreeNode appearance = new TreeNode("Appearance", new TreeNode[]
+            {
+                new TreatmentNode(new Treatment.Appearance.DarkMode())
+            })
+            {
+                Checked = true,
+                ToolTipText = "Treatments related to visual appearance."
+            };
+
             // apps
             TreeNode apps = new TreeNode("Apps", new TreeNode[] {
                 new TreatmentNode(new Treatment.Apps.RemoveStoreApps()),
@@ -84,6 +94,7 @@ namespace Chemo
             // add root node children, and add node to tree
             root.Nodes.AddRange(new TreeNode[]
             {
+                appearance,
                 apps,
                 config,
                 features
