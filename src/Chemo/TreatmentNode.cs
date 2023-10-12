@@ -1,5 +1,4 @@
 ﻿using Chemo.Treatment;
-using System;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -15,6 +14,12 @@ namespace Chemo
             ToolTipText = Treatment.Tooltip();
             Checked = true;
             ImageKey = "NotStarted";
+        }
+
+        public TreatmentNode Unchecked()
+        {
+            Checked = false;
+            return this;
         }
     }
 }

@@ -40,8 +40,8 @@ namespace Chemo
         {
             treeViewTreatments.Nodes.Clear();
 
-            // root node
-            TreeNode root = new TreeNode("All Treatments")
+            // top-level node
+            TreeNode primary = new TreeNode("Primary Treatments")
             {
                 Checked = true
             };
@@ -49,7 +49,8 @@ namespace Chemo
             // appearance
             TreeNode appearance = new TreeNode("Appearance", new TreeNode[]
             {
-                new TreatmentNode(new Treatment.Appearance.DarkMode())
+                new TreatmentNode(new Treatment.Appearance.DarkMode()),
+                new TreatmentNode(new Treatment.Appearance.DisableTransparency())
             })
             {
                 Checked = true,
@@ -58,8 +59,6 @@ namespace Chemo
 
             // apps
             TreeNode apps = new TreeNode("Apps", new TreeNode[] {
-                new TreatmentNode(new Treatment.Apps.RemoveStoreApps()),
-                new TreatmentNode(new Treatment.Apps.DeprovisionStoreApps()),
                 new TreatmentNode(new Treatment.Apps.OneDrive()),
                 new TreatmentNode(new Treatment.Apps.DisableCortana()),
             })
@@ -75,7 +74,6 @@ namespace Chemo
                 new TreatmentNode(new Treatment.Config.DisableInternetSearchResults()),
                 new TreatmentNode(new Treatment.Config.SetClockUTC()),
                 new TreatmentNode(new Treatment.Config.SuggestedApps()),
-                new TreatmentNode(new Treatment.Config.GameBar()),
             })
             {
                 Checked = true,
@@ -92,14 +90,29 @@ namespace Chemo
             };
 
             // add root node children, and add node to tree
-            root.Nodes.AddRange(new TreeNode[]
+            primary.Nodes.AddRange(new TreeNode[]
             {
                 appearance,
                 apps,
                 config,
                 features
             });
-            treeViewTreatments.Nodes.Add(root);
+            treeViewTreatments.Nodes.Add(primary);
+
+            // second top-level node
+            TreeNode secondary = new TreeNode("Secondary Treatments", new TreeNode[]
+            {
+                new TreatmentNode(new Treatment.Config.GameBar()).Unchecked(),
+                new TreatmentNode(new Treatment.Apps.RemoveStoreApps()).Unchecked(),
+                new TreatmentNode(new Treatment.Apps.DeprovisionStoreApps()).Unchecked(),
+            })
+            {
+                Checked = false,
+                ToolTipText = "Treatments that may not be easily undone."
+            };
+
+            // add node to tree
+            treeViewTreatments.Nodes.Add(secondary);
 
             treeViewTreatments.ExpandAll();
         }

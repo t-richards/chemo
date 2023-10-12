@@ -25,9 +25,8 @@ namespace Chemo.Treatment.Appearance
             catch (Exception ex)
             {
                 Logger.Log("Could not apply dark mode: {0}", ex.Message);
+                return false;
             }
-
-            return true;
         }
 
         public override bool ShouldPerformTreatment()

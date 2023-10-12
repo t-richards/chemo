@@ -116,6 +116,7 @@ namespace Chemo
             this.column2,
             this.column3});
             this.lstResults.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lstResults.HideSelection = false;
             this.lstResults.Location = new System.Drawing.Point(3, 45);
             this.lstResults.Name = "lstResults";
             this.lstResults.ShowItemToolTips = true;
