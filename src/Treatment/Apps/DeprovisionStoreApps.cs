@@ -1,6 +1,5 @@
 using Chemo.Data;
 using Microsoft.Dism;
-using System;
 
 namespace Chemo.Treatment.Apps
 {

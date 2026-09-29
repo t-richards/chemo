@@ -1,6 +1,4 @@
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 
 namespace Chemo.Utilities
 {
@@ -25,7 +23,7 @@ namespace Chemo.Utilities
         /// The registry lists pairs of NT paths: the file to move, then where to move it. An empty destination
         /// means the file is deleted. Windows 11 writes paths like "*1\??\C:\path", with a prefix before the "\??\".
         /// </summary>
-        public static HashSet<string> Parse(string[] operations)
+        public static HashSet<string> Parse(string[]? operations)
         {
             HashSet<string> paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             if (operations == null)

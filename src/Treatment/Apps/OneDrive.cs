@@ -1,11 +1,7 @@
 using Chemo.Utilities;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace Chemo.Treatment.Apps
 {
@@ -130,7 +126,7 @@ namespace Chemo.Treatment.Apps
         {
             try
             {
-                string path = process.MainModule?.FileName;
+                string? path = process.MainModule?.FileName;
                 return path != null && folders.Any(folder => path.StartsWith(folder + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
             }
             catch (Exception ex) when (ex is Win32Exception || ex is InvalidOperationException)

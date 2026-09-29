@@ -1,5 +1,4 @@
 using Chemo.Data;
-using Xunit;
 
 namespace Chemo.Test
 {

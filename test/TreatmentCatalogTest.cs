@@ -1,7 +1,4 @@
 using Chemo.Treatment;
-using System;
-using System.Linq;
-using Xunit;
 
 namespace Chemo.Test
 {

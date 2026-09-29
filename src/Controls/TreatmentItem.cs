@@ -1,7 +1,5 @@
 using Chemo.Treatment;
 using Chemo.Utilities;
-using System;
-using System.Windows.Forms;
 
 namespace Chemo.Controls
 {

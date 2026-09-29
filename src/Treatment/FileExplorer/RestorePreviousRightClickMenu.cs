@@ -1,6 +1,5 @@
 using Chemo.Settings;
 using Microsoft.Win32;
-using System.Collections.Generic;
 
 namespace Chemo.Treatment.FileExplorer
 {

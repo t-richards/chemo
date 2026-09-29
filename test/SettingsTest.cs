@@ -1,7 +1,5 @@
 using Chemo.Settings;
 using Microsoft.Win32;
-using System;
-using Xunit;
 
 namespace Chemo.Test
 {

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -27,7 +24,7 @@ namespace Chemo.Utilities
         private sealed class Layout
         {
             [DataMember(Name = "pinnedList")]
-            public List<Pin> PinnedList { get; set; }
+            public List<Pin>? PinnedList { get; set; }
         }
 
         [DataContract]

@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Chemo.Treatment
 {
     public sealed class Category

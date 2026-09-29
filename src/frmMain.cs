@@ -1,14 +1,8 @@
 using Chemo.Controls;
 using Chemo.Treatment;
 using Chemo.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Chemo
 {
@@ -284,7 +278,7 @@ namespace Chemo
         /// </summary>
         private void ShowDetails()
         {
-            ListViewItem selected = lstTreatments.SelectedItems.Count > 0 ? lstTreatments.SelectedItems[0] : null;
+            ListViewItem? selected = lstTreatments.SelectedItems.Count > 0 ? lstTreatments.SelectedItems[0] : null;
 
             txtDetails.Text = selected switch
             {

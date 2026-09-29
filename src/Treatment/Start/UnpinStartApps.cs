@@ -1,11 +1,7 @@
 using Chemo.Settings;
 using Chemo.Utilities;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Threading;
 
 namespace Chemo.Treatment.Start
 {

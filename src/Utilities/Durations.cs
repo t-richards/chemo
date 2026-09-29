@@ -1,5 +1,3 @@
-using System;
-
 namespace Chemo.Utilities
 {
     public static class Durations

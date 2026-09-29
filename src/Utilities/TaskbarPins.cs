@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 
 namespace Chemo.Utilities
 {
@@ -213,8 +210,8 @@ namespace Chemo.Utilities
         /// </summary>
         private static T OnStaThread<T>(Func<T> func)
         {
-            T result = default;
-            Exception error = null;
+            T result = default!;
+            Exception? error = null;
 
             Thread thread = new Thread(() =>
             {

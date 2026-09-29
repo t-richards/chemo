@@ -1,7 +1,4 @@
 using Microsoft.Win32;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;
@@ -13,16 +10,24 @@ namespace Chemo.Utilities
     /// </summary>
     internal sealed class AppPackage
     {
-        public string Name { get; set; }
+        public string Name { get; }
 
-        public string PackageFullName { get; set; }
+        public string PackageFullName { get; }
 
-        public string PackageFamilyName { get; set; }
+        public string PackageFamilyName { get; }
 
         /// <summary>
         /// Whether the package is part of Windows, which Windows refuses to remove until it's retired.
         /// </summary>
-        public bool IsSystemApp { get; set; }
+        public bool IsSystemApp { get; }
+
+        public AppPackage(string name, string packageFullName, string packageFamilyName, bool isSystemApp)
+        {
+            Name = name;
+            PackageFullName = packageFullName;
+            PackageFamilyName = packageFamilyName;
+            IsSystemApp = isSystemApp;
+        }
     }
 
     /// <summary>
@@ -44,13 +49,11 @@ namespace Chemo.Utilities
         public static List<AppPackage> FindForAllUsers()
         {
             return packageManager.FindPackages()
-                .Select(package => new AppPackage
-                {
-                    Name = package.Id.Name,
-                    PackageFullName = package.Id.FullName,
-                    PackageFamilyName = package.Id.FamilyName,
-                    IsSystemApp = package.SignatureKind == PackageSignatureKind.System,
-                })
+                .Select(package => new AppPackage(
+                    package.Id.Name,
+                    package.Id.FullName,
+                    package.Id.FamilyName,
+                    package.SignatureKind == PackageSignatureKind.System))
                 .GroupBy(package => package.PackageFullName)
                 .Select(group => group.First())
                 .ToList();

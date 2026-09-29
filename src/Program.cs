@@ -1,9 +1,6 @@
 using Microsoft.Dism;
-using System;
-using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Windows.Forms;
 
 namespace Chemo
 {
@@ -38,11 +35,11 @@ namespace Chemo
             }
         }
 
-        private static Assembly LoadEmbeddedAssembly(object sender, ResolveEventArgs args)
+        private static Assembly? LoadEmbeddedAssembly(object sender, ResolveEventArgs args)
         {
             string resourceName = new AssemblyName(args.Name).Name + ".dll";
 
-            using (Stream resource = typeof(Program).Assembly.GetManifestResourceStream(resourceName))
+            using (Stream? resource = typeof(Program).Assembly.GetManifestResourceStream(resourceName))
             {
                 if (resource == null)
                 {

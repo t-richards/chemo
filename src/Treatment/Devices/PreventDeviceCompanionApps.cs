@@ -1,5 +1,4 @@
 using Chemo.Settings;
-using System.Collections.Generic;
 
 namespace Chemo.Treatment.Devices
 {

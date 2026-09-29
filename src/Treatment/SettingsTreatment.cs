@@ -1,6 +1,4 @@
 using Chemo.Settings;
-using System;
-using System.Collections.Generic;
 
 namespace Chemo.Treatment
 {

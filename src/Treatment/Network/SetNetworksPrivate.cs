@@ -1,7 +1,4 @@
 using Chemo.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Chemo.Treatment.Network
 {

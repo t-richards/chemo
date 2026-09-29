@@ -1,10 +1,7 @@
 using Chemo.Settings;
 using Chemo.Utilities;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 
 namespace Chemo.Treatment.LockScreenSignIn
 {

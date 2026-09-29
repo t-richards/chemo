@@ -1,6 +1,5 @@
 using Chemo.Settings;
 using Chemo.Utilities;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 

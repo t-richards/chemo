@@ -1,6 +1,5 @@
 using Chemo.Utilities;
 using Microsoft.Win32;
-using System;
 using System.ComponentModel;
 using System.ServiceProcess;
 

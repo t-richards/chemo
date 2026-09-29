@@ -1,7 +1,5 @@
 using Chemo.Settings;
 using Microsoft.Win32;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Chemo.Treatment.Sound
 {

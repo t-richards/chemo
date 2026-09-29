@@ -1,6 +1,5 @@
 using Chemo.Data;
 using Chemo.Utilities;
-using System.Collections.Generic;
 
 namespace Chemo.Treatment.Apps
 {
