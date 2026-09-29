@@ -26,6 +26,7 @@ Chemo aims to support versions of Windows that are still covered under "Security
 - Prevent device companion apps
 - Block PC maker software from firmware (WPBT)
 5. File Explorer
+- Show file extensions, hidden files, full paths, and empty drives
 - Remove Home and Gallery
 - Restore the previous right-click menu
 - Disable automatic folder type discovery

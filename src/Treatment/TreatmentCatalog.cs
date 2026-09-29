@@ -33,6 +33,7 @@ namespace Chemo.Treatment
                 new Devices.DisableWpbt()),
 
             new Category("File Explorer", "Change how File Explorer shows your files.",
+                new FileExplorer.TurnOnAdvancedSettings(),
                 new FileExplorer.RemoveHomeAndGallery(),
                 new FileExplorer.RestorePreviousRightClickMenu(),
                 new FileExplorer.DisableFolderDiscovery()),
