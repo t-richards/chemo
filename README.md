@@ -1,5 +1,7 @@
 # Chemo
 
+[![build](https://github.com/t-richards/chemo/actions/workflows/dotnet.yml/badge.svg)](https://github.com/t-richards/chemo/actions/workflows/dotnet.yml)
+
 Chemo is an opinionated setup utility for Windows.
 
 ## Supported Windows Versions
