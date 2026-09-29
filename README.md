@@ -4,7 +4,7 @@
 
 > I want to bring my computer to the brink of death using an overdose of chemo, only to have it maybe survive and be a normal computer
 
-Chemo is an opinionated setup/debloat utility for Windows.
+Chemo is an opinionated setup/debloat utility for Windows. Chemo is your first stop after a fresh install of Windows. Before you install any apps or prepare your system image, hit it with a dose of Chemo.
 
 ## Supported Windows Versions
 
@@ -35,6 +35,7 @@ Chemo aims to support versions of Windows that are still covered under "Security
 7. Lock Screen & Sign-in
 - Lock after 15 minutes away
 - Require Ctrl+Alt+Del at sign-in
+- Skip the lock screen
 - Turn off lock screen tips
 8. Network
 - Make the current network private
