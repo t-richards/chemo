@@ -41,6 +41,11 @@ namespace Chemo
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.viewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemThemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightThemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkThemeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.versionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.githubMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,12 +176,54 @@ namespace Chemo
             // menuStrip
             //
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewMenuItem,
             this.helpMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(860, 24);
             this.menuStrip.TabIndex = 4;
             this.menuStrip.Text = "menuStrip";
+            //
+            // viewMenuItem
+            //
+            this.viewMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.themeMenuItem});
+            this.viewMenuItem.Name = "viewMenuItem";
+            this.viewMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewMenuItem.Text = "View";
+            //
+            // themeMenuItem
+            //
+            this.themeMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.systemThemeMenuItem,
+            this.lightThemeMenuItem,
+            this.darkThemeMenuItem});
+            this.themeMenuItem.Name = "themeMenuItem";
+            this.themeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.themeMenuItem.Text = "Theme";
+            //
+            // systemThemeMenuItem
+            //
+            this.systemThemeMenuItem.Checked = true;
+            this.systemThemeMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.systemThemeMenuItem.Name = "systemThemeMenuItem";
+            this.systemThemeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.systemThemeMenuItem.Text = "Use system setting";
+            this.systemThemeMenuItem.Click += new System.EventHandler(this.ThemeMenuItem_Click);
+            //
+            // lightThemeMenuItem
+            //
+            this.lightThemeMenuItem.Name = "lightThemeMenuItem";
+            this.lightThemeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.lightThemeMenuItem.Text = "Light";
+            this.lightThemeMenuItem.Click += new System.EventHandler(this.ThemeMenuItem_Click);
+            //
+            // darkThemeMenuItem
+            //
+            this.darkThemeMenuItem.Name = "darkThemeMenuItem";
+            this.darkThemeMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.darkThemeMenuItem.Text = "Dark";
+            this.darkThemeMenuItem.Click += new System.EventHandler(this.ThemeMenuItem_Click);
             //
             // helpMenuItem
             //
@@ -242,6 +289,11 @@ namespace Chemo
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripProgressBar progressBar;
         private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem viewMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem themeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systemThemeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lightThemeMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darkThemeMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
         private System.Windows.Forms.ToolStripMenuItem versionMenuItem;
         private System.Windows.Forms.ToolStripMenuItem githubMenuItem;

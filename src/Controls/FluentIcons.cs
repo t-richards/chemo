@@ -14,6 +14,7 @@ namespace Chemo.Controls
         // Menu icons
         public const string CopyGlyph = "";
         public const string OpenInNewWindowGlyph = "";
+        public const string CheckMarkGlyph = "";
 
         // Status icon parts
         private const string Circle = "";

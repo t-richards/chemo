@@ -13,7 +13,7 @@ namespace Chemo
         private readonly string fullVersion;
         private readonly ToolStripRenderMode menuRenderMode;
         private readonly ToolStripRenderMode statusRenderMode;
-        private readonly ThemeChoice themeChoice = ThemeChoice.System;
+        private ThemeChoice themeChoice = ThemeChoice.System;
         private bool dark;
         private bool cascadingChecks;
 
@@ -31,6 +31,10 @@ namespace Chemo
             helpMenuItem.DropDown.ShowItemToolTips = true;
             helpMenuItem.DropDown.Opened += HelpMenu_Opened;
 
+            systemThemeMenuItem.Tag = ThemeChoice.System;
+            lightThemeMenuItem.Tag = ThemeChoice.Light;
+            darkThemeMenuItem.Tag = ThemeChoice.Dark;
+
             // Light mode puts back the renderers the strips start with.
             menuRenderMode = menuStrip.RenderMode;
             statusRenderMode = statusStrip.RenderMode;
@@ -41,7 +45,7 @@ namespace Chemo
             applyButton.HandleCreated += NativeControl_HandleCreated;
             progressBar.ProgressBar.HandleCreated += NativeControl_HandleCreated;
 
-            ApplyTheme(DarkTheme.UseDark(themeChoice, DarkTheme.WindowsIsDark(), SystemInformation.HighContrast));
+            ApplyTheme(ShouldBeDark());
 
             InitTreatments();
             ShowDetails();
@@ -53,6 +57,51 @@ namespace Chemo
 
             // Set before the window is first shown, so it never flashes a light title bar.
             DarkTheme.SetTitleBar(Handle, dark);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+
+            // Windows sends this whenever a setting changes, like the theme in Settings or high contrast, and Chemo's
+            // own dark mode treatment sends it too. The theme is checked after the message is handled, so whoever sent
+            // it isn't kept waiting while Chemo repaints.
+            if (m.Msg == UnsafeNativeMethods.WM_SETTINGCHANGE)
+            {
+                BeginInvoke(new Action(UpdateTheme));
+            }
+        }
+
+        /// <summary>
+        /// Works out whether Chemo should be dark from the theme picked in the View menu, the Windows setting and high
+        /// contrast.
+        /// </summary>
+        private bool ShouldBeDark()
+        {
+            return DarkTheme.UseDark(themeChoice, DarkTheme.WindowsIsDark(), SystemInformation.HighContrast);
+        }
+
+        /// <summary>
+        /// Switches between light and dark if the View menu, the Windows setting or high contrast now calls for it.
+        /// </summary>
+        private void UpdateTheme()
+        {
+            bool useDark = ShouldBeDark();
+            if (useDark != dark)
+            {
+                ApplyTheme(useDark);
+            }
+        }
+
+        private void ThemeMenuItem_Click(object sender, EventArgs e)
+        {
+            themeChoice = (ThemeChoice)((ToolStripMenuItem)sender).Tag;
+            foreach (ToolStripMenuItem item in themeMenuItem.DropDownItems.OfType<ToolStripMenuItem>())
+            {
+                item.Checked = item == sender;
+            }
+
+            UpdateTheme();
         }
 
         /// <summary>

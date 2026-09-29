@@ -24,6 +24,13 @@ namespace Chemo.Controls
             base.OnRenderArrow(e);
         }
 
+        protected override void OnRenderItemCheck(ToolStripItemImageRenderEventArgs e)
+        {
+            // The standard check mark is a black image, so draw the icon font's check mark in the text color instead.
+            using Bitmap checkMark = FluentIcons.DrawGlyph(FluentIcons.CheckMarkGlyph, e.ImageRectangle.Width, DarkTheme.Text);
+            e.Graphics.DrawImage(checkMark, e.ImageRectangle.Location);
+        }
+
         protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e)
         {
             // The status bar's top edge is drawn in a light system color whatever the color table says, so leave it out.
