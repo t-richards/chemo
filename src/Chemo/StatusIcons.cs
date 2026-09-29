@@ -10,6 +10,7 @@ namespace Chemo
         NotStarted,
         Ok,
         Info,
+        Restart,
         Error,
     }
 
@@ -23,6 +24,7 @@ namespace Chemo
         private const string Circle = "";
         private const string Checkmark = "";
         private const string InfoMark = "";
+        private const string RestartMark = "";
         private const string ErrorMark = "";
 
         /// <summary>
@@ -33,10 +35,11 @@ namespace Chemo
         {
             bool dark = Application.IsDarkModeEnabled;
 
-            // Colors match the WinUI system fill colors for success, attention, and critical.
+            // Colors match the WinUI system fill colors for success, attention, caution, and critical.
             Color markColor = dark ? Color.FromArgb(228, 0, 0, 0) : Color.White;
             Color ok = dark ? Color.FromArgb(0x6C, 0xCB, 0x5F) : Color.FromArgb(0x0F, 0x7B, 0x0F);
             Color info = dark ? Color.FromArgb(0x60, 0xCD, 0xFF) : Color.FromArgb(0x00, 0x5F, 0xB7);
+            Color restart = dark ? Color.FromArgb(0xFC, 0xE1, 0x00) : Color.FromArgb(0x9D, 0x5D, 0x00);
             Color error = dark ? Color.FromArgb(0xFF, 0x99, 0xA4) : Color.FromArgb(0xC4, 0x2B, 0x1C);
 
             ImageList imageList = new ImageList
@@ -49,6 +52,7 @@ namespace Chemo
             imageList.Images.Add(nameof(TreatmentStatus.NotStarted), new Bitmap(size, size, PixelFormat.Format32bppArgb));
             imageList.Images.Add(nameof(TreatmentStatus.Ok), Draw(size, ok, Checkmark, markColor));
             imageList.Images.Add(nameof(TreatmentStatus.Info), Draw(size, info, InfoMark, markColor));
+            imageList.Images.Add(nameof(TreatmentStatus.Restart), Draw(size, restart, RestartMark, markColor));
             imageList.Images.Add(nameof(TreatmentStatus.Error), Draw(size, error, ErrorMark, markColor));
 
             return imageList;

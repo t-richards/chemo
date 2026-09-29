@@ -30,7 +30,8 @@ namespace Chemo.Treatment.Power
 
         private sealed class HibernationOff : ISetting
         {
-            private const string PowerKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power";
+            // powercfg records the setting here. Session Manager\Power, which some guides use, only holds Fast Startup's setting.
+            private const string PowerKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power";
 
             public bool IsApplied()
             {

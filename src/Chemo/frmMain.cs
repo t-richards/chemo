@@ -57,8 +57,6 @@ namespace Chemo
                 return;
             }
 
-            int readyCount = 0;
-            int failedCount = 0;
             Stopwatch overallTime = Stopwatch.StartNew();
 
             foreach (TreatmentItem item in treatments)
@@ -66,28 +64,29 @@ namespace Chemo
                 lblStatus.Text = $"Analyzing {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Analyzing…");
 
-                (bool shouldPerform, TimeSpan duration, bool failed) = await RunStep(item.Treatment, t => t.ShouldPerformTreatment());
-
-                if (failed)
+                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Analyze);
+                string text = status switch
                 {
-                    item.SetStatus(TreatmentStatus.Error, "Couldn't analyze, right-click for details", duration);
-                    failedCount += 1;
-                }
-                else if (shouldPerform)
-                {
-                    item.SetStatus(TreatmentStatus.Info, "Ready to apply", duration);
-                    readyCount += 1;
-                }
-                else
-                {
-                    item.SetStatus(TreatmentStatus.Ok, "Already applied", duration);
-                }
+                    TreatmentStatus.Info => "Ready to apply",
+                    TreatmentStatus.Restart => "Restart to finish",
+                    TreatmentStatus.Error => "Couldn't analyze, right-click for details",
+                    _ => "Already applied",
+                };
+                item.SetStatus(status, text, duration);
 
                 prgTreatmentApplication.Value += 1;
             }
 
+            int readyCount = CountStatus(treatments, TreatmentStatus.Info);
+            int restartCount = CountStatus(treatments, TreatmentStatus.Restart);
+            int failedCount = CountStatus(treatments, TreatmentStatus.Error);
+
             string summary = $"Analyzed {Count(treatments.Count, "treatment")} in {Durations.Humanize(overallTime.Elapsed)}. ";
             summary += readyCount == 0 ? "Nothing needs to be applied." : $"{readyCount} ready to apply.";
+            if (restartCount > 0)
+            {
+                summary += $" {restartCount} waiting for a restart.";
+            }
             if (failedCount > 0)
             {
                 summary += $" {failedCount} couldn't be analyzed.";
@@ -103,7 +102,6 @@ namespace Chemo
                 return;
             }
 
-            int failedCount = 0;
             Stopwatch overallTime = Stopwatch.StartNew();
 
             foreach (TreatmentItem item in treatments)
@@ -111,22 +109,26 @@ namespace Chemo
                 lblStatus.Text = $"Applying {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Applying…");
 
-                (bool succeeded, TimeSpan duration, bool failed) = await RunStep(item.Treatment, t => t.PerformTreatment());
-
-                if (succeeded && !failed)
+                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Apply);
+                string text = status switch
                 {
-                    item.SetStatus(TreatmentStatus.Ok, "Applied", duration);
-                }
-                else
-                {
-                    item.SetStatus(TreatmentStatus.Error, "Failed, right-click for details", duration);
-                    failedCount += 1;
-                }
+                    TreatmentStatus.Restart => "Applied, restart to finish",
+                    TreatmentStatus.Error => "Failed, right-click for details",
+                    _ => "Applied",
+                };
+                item.SetStatus(status, text, duration);
 
                 prgTreatmentApplication.Value += 1;
             }
 
+            int restartCount = CountStatus(treatments, TreatmentStatus.Restart);
+            int failedCount = CountStatus(treatments, TreatmentStatus.Error);
+
             string summary = $"Applied {Count(treatments.Count, "treatment")} in {Durations.Humanize(overallTime.Elapsed)}.";
+            if (restartCount > 0)
+            {
+                summary += $" Restart Windows to finish {Count(restartCount, "treatment")}.";
+            }
             if (failedCount > 0)
             {
                 summary += $" {failedCount} failed; right-click for details.";
@@ -134,23 +136,49 @@ namespace Chemo
             EndRun(summary);
         }
 
+        private static TreatmentStatus Analyze(BaseTreatment treatment)
+        {
+            if (treatment.ShouldPerformTreatment())
+            {
+                return TreatmentStatus.Info;
+            }
+
+            return treatment.RestartPending() ? TreatmentStatus.Restart : TreatmentStatus.Ok;
+        }
+
+        private static TreatmentStatus Apply(BaseTreatment treatment)
+        {
+            if (!treatment.PerformTreatment())
+            {
+                return TreatmentStatus.Error;
+            }
+
+            return treatment.RestartPending() ? TreatmentStatus.Restart : TreatmentStatus.Ok;
+        }
+
         /// <summary>
-        /// Runs part of a treatment in the background, recording any exception in the treatment's log.
+        /// Runs part of a treatment in the background. An exception is recorded in the treatment's log and
+        /// reported as an error.
         /// </summary>
-        private static async Task<(bool Result, TimeSpan Duration, bool Failed)> RunStep(BaseTreatment treatment, Func<BaseTreatment, bool> step)
+        private static async Task<(TreatmentStatus Status, TimeSpan Duration)> RunStep(BaseTreatment treatment, Func<BaseTreatment, TreatmentStatus> step)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             try
             {
-                bool result = await Task.Run(() => step(treatment));
-                return (result, stopwatch.Elapsed, false);
+                TreatmentStatus status = await Task.Run(() => step(treatment));
+                return (status, stopwatch.Elapsed);
             }
             catch (Exception ex)
             {
                 treatment.Logger.Log("{0}", ex.Message);
-                return (false, stopwatch.Elapsed, true);
+                return (TreatmentStatus.Error, stopwatch.Elapsed);
             }
+        }
+
+        private static int CountStatus(List<TreatmentItem> treatments, TreatmentStatus status)
+        {
+            return treatments.Count(item => item.Status == status);
         }
 
         private List<TreatmentItem> CheckedTreatments()

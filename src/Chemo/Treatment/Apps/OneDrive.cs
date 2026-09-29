@@ -1,5 +1,6 @@
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -70,7 +71,8 @@ namespace Chemo.Treatment.Apps
         #region Uninstaller
         private bool IsInstalled()
         {
-            return File.Exists(Path.Combine(LocalAppDataPath, "OneDrive.exe"));
+            string executable = Path.Combine(LocalAppDataPath, "OneDrive.exe");
+            return File.Exists(executable) && !PendingDeletes.Read().Contains(executable);
         }
 
         private void Uninstall()
@@ -123,19 +125,20 @@ namespace Chemo.Treatment.Apps
         #region Registry Keys
         private bool RegistryKeysExist()
         {
-            if (!RegistryUtils.StringEquals(AutoRunKey, "OneDrive", ""))
+            // The uninstaller deletes these values, so a missing value counts as removed.
+            if (Registry.GetValue(AutoRunKey, "OneDrive", null) is string autoRun && autoRun.Length > 0)
             {
                 return true;
             }
 
-            if (!RegistryUtils.IntEquals(ClassKey, "System.IsPinnedToNameSpaceTree", 0))
+            if (Registry.GetValue(ClassKey, "System.IsPinnedToNameSpaceTree", null) is int pinned && pinned != 0)
             {
                 return true;
             }
 
             if (Environment.Is64BitOperatingSystem)
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\", true))
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\"))
                 {
                     if (regKey.OpenSubKey(Clsid) != null)
                     {
@@ -145,7 +148,7 @@ namespace Chemo.Treatment.Apps
             }
             else
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID", true))
+                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID"))
                 {
                     if (regKey.OpenSubKey(Clsid) != null)
                     {
@@ -159,8 +162,12 @@ namespace Chemo.Treatment.Apps
 
         private void DeleteRegistryKeys()
         {
-            Registry.SetValue(ClassKey, "System.IsPinnedToNameSpaceTree", 0, RegistryValueKind.DWord);
-            Registry.SetValue(AutoRunKey, "OneDrive", "", RegistryValueKind.String);
+            // Only unpin OneDrive from File Explorer's navigation pane if it's still registered there.
+            if (Registry.GetValue(ClassKey, "System.IsPinnedToNameSpaceTree", null) != null)
+            {
+                Registry.SetValue(ClassKey, "System.IsPinnedToNameSpaceTree", 0, RegistryValueKind.DWord);
+            }
+            RegistryUtils.DeleteValue(AutoRunKey, "OneDrive");
 
             if (Environment.Is64BitOperatingSystem)
             {
@@ -186,24 +193,21 @@ namespace Chemo.Treatment.Apps
         #endregion
 
         #region Folders
-        private bool DeleteDirectory(string path)
+        private void DeleteDirectory(string path)
         {
             if (!Directory.Exists(path))
             {
-                return false;
+                return;
             }
 
             try
             {
-                string[] files = Directory.GetFiles(path);
-                string[] directories = Directory.GetDirectories(path);
-
-                foreach (string file in files)
+                foreach (string file in Directory.GetFiles(path))
                 {
                     DeleteFile(file);
                 }
 
-                foreach (string dir in directories)
+                foreach (string dir in Directory.GetDirectories(path))
                 {
                     DeleteDirectory(dir);
                 }
@@ -211,43 +215,41 @@ namespace Chemo.Treatment.Apps
                 File.SetAttributes(path, FileAttributes.Normal);
                 Directory.Delete(path, false);
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
-                Logger.Log("Deleting {0} on reboot: {1}", path, ex.Message);
-                return DeleteOnReboot(path);
+                // Usually a file inside is in use and waiting to be deleted at restart. Windows deletes the
+                // folder at restart too, once it's empty.
+                Logger.Log("Deleting {0} on restart: {1}", path, ex.Message);
+                DeleteOnReboot(path);
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not delete {0}: {1}", path, ex.Message);
             }
-
-            return false;
         }
 
-        private bool DeleteFile(string path)
+        private void DeleteFile(string path)
         {
             if (!File.Exists(path))
             {
-                return false;
+                return;
             }
 
             try
             {
                 File.SetAttributes(path, FileAttributes.Normal);
                 File.Delete(path);
-                return true;
             }
-            catch (UnauthorizedAccessException ex)
+            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
-                Logger.Log("Deleting {0} on reboot: {1}", path, ex.Message);
-                return DeleteOnReboot(path);
+                // Files that are in use, like OneDrive's File Explorer extension, can only be deleted at restart.
+                Logger.Log("Deleting {0} on restart: {1}", path, ex.Message);
+                DeleteOnReboot(path);
             }
             catch (Exception ex)
             {
                 Logger.Log("Could not delete {0}: {1}", path, ex.Message);
             }
-
-            return false;
         }
 
         private static bool DeleteOnReboot(string path)
@@ -285,14 +287,36 @@ namespace Chemo.Treatment.Apps
             }
         }
 
+        /// <summary>
+        /// Leftover OneDrive files and folders that still exist, including the user's OneDrive folder if it's empty.
+        /// </summary>
+        private List<string> Leftovers()
+        {
+            List<string> leftovers = new[] { LocalAppDataPath, ProgramDataPath }.Where(Directory.Exists).ToList();
+
+            if (File.Exists(ShortcutPath))
+            {
+                leftovers.Add(ShortcutPath);
+            }
+
+            if (UserFolderIsEmpty())
+            {
+                leftovers.Add(UserDataPath);
+            }
+
+            return leftovers;
+        }
+
         private bool FoldersExist()
         {
-            return (
-                UserFolderIsEmpty() ||
-                Directory.Exists(LocalAppDataPath) ||
-                Directory.Exists(ProgramDataPath) ||
-                File.Exists(ShortcutPath)
-            );
+            HashSet<string> pendingDeletes = PendingDeletes.Read();
+            return Leftovers().Any(path => !pendingDeletes.Contains(path));
+        }
+
+        public override bool RestartPending()
+        {
+            HashSet<string> pendingDeletes = PendingDeletes.Read();
+            return Leftovers().Any(pendingDeletes.Contains);
         }
 
         private void DeleteFoldersAndFiles()
@@ -352,6 +376,10 @@ namespace Chemo.Treatment.Apps
             {
                 Logger.Log("Would delete one or more leftover OneDrive folders.");
                 retval = true;
+            }
+            else if (RestartPending())
+            {
+                Logger.Log("Leftover OneDrive files will be deleted when Windows restarts.");
             }
             else
             {
