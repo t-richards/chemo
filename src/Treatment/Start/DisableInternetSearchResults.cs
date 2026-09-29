@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Start
 {
-    class DisableInternetSearchResults : BaseTreatment
+    internal sealed class DisableInternetSearchResults : BaseTreatment
     {
         private const string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
         private const int DesiredValue = 0;

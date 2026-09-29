@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Time
 {
-    class UseIsoDates : SettingsTreatment
+    internal sealed class UseIsoDates : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,10 +17,10 @@ namespace Chemo.Treatment.Time
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new LocaleFormat("Short date format", UnsafeNativeMethods.LOCALE_SSHORTDATE, "yyyy-MM-dd"),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

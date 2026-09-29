@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Time
 {
-    class Use24HourClock : SettingsTreatment
+    internal sealed class Use24HourClock : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,11 +17,11 @@ namespace Chemo.Treatment.Time
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new LocaleFormat("Short time format", UnsafeNativeMethods.LOCALE_SSHORTTIME, "HH:mm"),
                 new LocaleFormat("Long time format", UnsafeNativeMethods.LOCALE_STIMEFORMAT, "HH:mm:ss"),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

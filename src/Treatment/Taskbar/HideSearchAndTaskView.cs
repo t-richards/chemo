@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class HideSearchAndTaskView : SettingsTreatment
+    internal sealed class HideSearchAndTaskView : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,12 +18,12 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // 0 is Hide in Settings > Personalization > Taskbar > Search.
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", 0),
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "ShowTaskViewButton", 0),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

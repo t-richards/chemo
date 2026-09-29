@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Devices
 {
-    class DisableWpbt : SettingsTreatment
+    internal sealed class DisableWpbt : SettingsTreatment
     {
         public override string Name()
         {
@@ -16,10 +16,10 @@ namespace Chemo.Treatment.Devices
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager", "DisableWpbtExecution", 1),
-            };
+            ];
         }
     }
 }

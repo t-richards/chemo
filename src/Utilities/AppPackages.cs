@@ -39,9 +39,9 @@ namespace Chemo.Utilities
         private const string SystemSid = "S-1-5-18";
 
         // SYSTEM, LOCAL SERVICE, and NETWORK SERVICE, which nobody signs in with.
-        private static readonly string[] ServiceSids = { SystemSid, "S-1-5-19", "S-1-5-20" };
+        private static readonly string[] ServiceSids = [SystemSid, "S-1-5-19", "S-1-5-20"];
 
-        private static readonly PackageManager packageManager = new PackageManager();
+        private static readonly PackageManager packageManager = new();
 
         /// <summary>
         /// Finds the app packages installed for any user, listing each package once.
@@ -98,14 +98,14 @@ namespace Chemo.Utilities
         /// <returns>The packages that couldn't be removed.</returns>
         public static List<AppPackage> RemoveForAllUsers(IReadOnlyCollection<AppPackage> packages, MemoryLogger logger)
         {
-            List<AppPackage> failed = new List<AppPackage>();
+            List<AppPackage> failed = [];
 
             foreach (AppPackage package in packages)
             {
                 IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
                     packageManager.RemovePackageAsync(package.PackageFullName, RemovalOptions.RemoveForAllUsers);
 
-                using (ManualResetEvent opCompletedEvent = new ManualResetEvent(false))
+                using (ManualResetEvent opCompletedEvent = new(false))
                 {
                     deploymentOperation.Completed = (result, progress) => opCompletedEvent.Set();
                     opCompletedEvent.WaitOne();

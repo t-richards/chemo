@@ -1,10 +1,10 @@
 <Project>
   <PropertyGroup>
-    <!-- .NET Framework 4.8.1 is built into every version of Windows 11, so Chemo needs nothing installed. -->
     <TargetFramework>net481</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AnalysisLevel>latest</AnalysisLevel>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 </Project>

@@ -25,7 +25,7 @@ namespace Chemo.Utilities
         /// </summary>
         public static HashSet<string> Parse(string[]? operations)
         {
-            HashSet<string> paths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            HashSet<string> paths = new(StringComparer.OrdinalIgnoreCase);
             if (operations == null)
             {
                 return paths;

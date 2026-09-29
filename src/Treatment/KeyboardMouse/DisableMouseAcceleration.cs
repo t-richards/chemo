@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Chemo.Treatment.KeyboardMouse
 {
-    class DisableMouseAcceleration : SettingsTreatment
+    internal sealed class DisableMouseAcceleration : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,10 +18,10 @@ namespace Chemo.Treatment.KeyboardMouse
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new PointerPrecisionOff(),
-            };
+            ];
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Chemo.Treatment.KeyboardMouse
             public void Apply()
             {
                 const uint UpdateAndNotify = UnsafeNativeMethods.SPIF_UPDATEINIFILE | UnsafeNativeMethods.SPIF_SENDCHANGE;
-                if (!UnsafeNativeMethods.SystemParametersInfo(UnsafeNativeMethods.SPI_SETMOUSE, 0, new[] { 0, 0, 0 }, UpdateAndNotify))
+                if (!UnsafeNativeMethods.SystemParametersInfo(UnsafeNativeMethods.SPI_SETMOUSE, 0, [0, 0, 0], UpdateAndNotify))
                 {
                     throw new Win32Exception();
                 }

@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.LockScreenSignIn
 {
-    class SkipLockScreen : SettingsTreatment
+    internal sealed class SkipLockScreen : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,11 +17,11 @@ namespace Chemo.Treatment.LockScreenSignIn
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // "Do not display the lock screen"
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Personalization", "NoLockScreen", 1),
-            };
+            ];
         }
     }
 }

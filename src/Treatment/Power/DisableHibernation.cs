@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Chemo.Treatment.Power
 {
-    class DisableHibernation : SettingsTreatment
+    internal sealed class DisableHibernation : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,11 +19,11 @@ namespace Chemo.Treatment.Power
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new HibernationOff(),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FlyoutMenuSettings", "ShowHibernateOption", 0),
-            };
+            ];
         }
 
         private sealed class HibernationOff : ISetting
@@ -39,19 +39,17 @@ namespace Chemo.Treatment.Power
             public void Apply()
             {
                 // powercfg also deletes hiberfil.sys, which setting HibernateEnabled alone doesn't.
-                ProcessStartInfo startInfo = new ProcessStartInfo(Path.Combine(Environment.SystemDirectory, "powercfg.exe"), "/hibernate off")
+                ProcessStartInfo startInfo = new(Path.Combine(Environment.SystemDirectory, "powercfg.exe"), "/hibernate off")
                 {
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
 
-                using (Process process = Process.Start(startInfo))
+                using Process process = Process.Start(startInfo);
+                process.WaitForExit();
+                if (process.ExitCode != 0)
                 {
-                    process.WaitForExit();
-                    if (process.ExitCode != 0)
-                    {
-                        throw new InvalidOperationException($"powercfg exited with code {process.ExitCode}.");
-                    }
+                    throw new InvalidOperationException($"powercfg exited with code {process.ExitCode}.");
                 }
             }
 

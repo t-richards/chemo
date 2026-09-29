@@ -44,11 +44,9 @@ namespace Chemo.Utilities
             {
                 exporter.ExportStartLayout(path);
 
-                using (FileStream stream = File.OpenRead(path))
-                {
-                    Layout layout = (Layout)new DataContractJsonSerializer(typeof(Layout)).ReadObject(stream);
-                    return layout.PinnedList?.Count ?? 0;
-                }
+                using FileStream stream = File.OpenRead(path);
+                Layout layout = (Layout)new DataContractJsonSerializer(typeof(Layout)).ReadObject(stream);
+                return layout.PinnedList?.Count ?? 0;
             }
             finally
             {

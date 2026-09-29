@@ -4,7 +4,7 @@ using System.Security.Principal;
 
 namespace Chemo.Treatment.Start
 {
-    class DisableStoreSearchResults : SettingsTreatment
+    internal sealed class DisableStoreSearchResults : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,10 +18,10 @@ namespace Chemo.Treatment.Start
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new StoreDatabaseLocked(),
-            };
+            ];
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Chemo.Treatment.Start
         /// </summary>
         private sealed class StoreDatabaseLocked : ISetting
         {
-            private static readonly SecurityIdentifier Everyone = new SecurityIdentifier(WellKnownSidType.WorldSid, null);
+            private static readonly SecurityIdentifier Everyone = new(WellKnownSidType.WorldSid, null);
 
             private readonly string LocalStatePath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -47,7 +47,7 @@ namespace Chemo.Treatment.Start
                     return true;
                 }
 
-                FileInfo database = new FileInfo(DatabasePath);
+                FileInfo database = new(DatabasePath);
                 if (!database.Exists)
                 {
                     return false;
@@ -64,7 +64,7 @@ namespace Chemo.Treatment.Start
 
             public void Apply()
             {
-                FileInfo database = new FileInfo(DatabasePath);
+                FileInfo database = new(DatabasePath);
                 if (!database.Exists)
                 {
                     // A locked, empty database keeps the Store from creating a real one later.

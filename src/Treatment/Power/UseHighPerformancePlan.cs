@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Chemo.Treatment.Power
 {
-    class UseHighPerformancePlan : SettingsTreatment
+    internal sealed class UseHighPerformancePlan : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,16 +19,16 @@ namespace Chemo.Treatment.Power
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new HighPerformanceActive(),
-            };
+            ];
         }
 
         private sealed class HighPerformanceActive : ISetting
         {
             // Built into Windows as SCHEME_MIN, the scheme with the least power saving.
-            private static readonly Guid HighPerformance = new Guid("8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c");
+            private static readonly Guid HighPerformance = new("8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c");
 
             public bool IsApplied()
             {

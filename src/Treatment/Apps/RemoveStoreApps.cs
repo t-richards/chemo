@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Apps
 {
-    class RemoveStoreApps : BaseTreatment
+    internal sealed class RemoveStoreApps : BaseTreatment
     {
         public override string Name()
         {
@@ -42,7 +42,7 @@ namespace Chemo.Treatment.Apps
 
         public override bool PerformTreatment()
         {
-            List<AppPackage> packagesToRemove = new List<AppPackage>();
+            List<AppPackage> packagesToRemove = [];
 
             foreach (AppPackage package in AppPackages.FindForAllUsers())
             {

@@ -13,8 +13,8 @@ namespace Chemo.Utilities
         // The command's name in every language
         private const string UnpinVerb = "taskbarunpin";
 
-        private static readonly Guid BHID_EnumItems = new Guid("94f60519-2850-4924-aa5a-d15e84868039");
-        private static readonly Guid BHID_SFUIObject = new Guid("3981e225-f559-11d3-8e3a-00c04f6837d5");
+        private static readonly Guid BHID_EnumItems = new("94f60519-2850-4924-aa5a-d15e84868039");
+        private static readonly Guid BHID_SFUIObject = new("3981e225-f559-11d3-8e3a-00c04f6837d5");
         private const uint SIGDN_PARENTRELATIVEPARSING = 0x80018001;
         private const uint CMF_NORMAL = 0x0;
         private const uint GCS_VERBW = 0x4;
@@ -72,7 +72,7 @@ namespace Chemo.Utilities
         {
             return OnStaThread(() =>
             {
-                List<string> pinned = new List<string>();
+                List<string> pinned = [];
                 VisitPinnedApps((appId, unpin) => pinned.Add(appId));
                 return pinned;
             });
@@ -86,7 +86,7 @@ namespace Chemo.Utilities
         {
             return OnStaThread(() =>
             {
-                List<string> unpinned = new List<string>();
+                List<string> unpinned = [];
                 VisitPinnedApps((appId, unpin) =>
                 {
                     if (shouldUnpin(appId))
@@ -164,7 +164,7 @@ namespace Chemo.Utilities
                 item.GetDisplayName(SIGDN_PARENTRELATIVEPARSING, out string appId);
                 visit(appId, () =>
                 {
-                    CMINVOKECOMMANDINFO info = new CMINVOKECOMMANDINFO
+                    CMINVOKECOMMANDINFO info = new()
                     {
                         cbSize = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFO)),
                         fMask = CMIC_MASK_FLAG_NO_UI,
@@ -194,7 +194,7 @@ namespace Chemo.Utilities
                     continue;
                 }
 
-                StringBuilder name = new StringBuilder(64);
+                StringBuilder name = new(64);
                 if (menu.GetCommandString((UIntPtr)(command - FirstCommand), GCS_VERBW, IntPtr.Zero, name, (uint)name.Capacity) == 0 &&
                     string.Equals(name.ToString(), verb, StringComparison.OrdinalIgnoreCase))
                 {
@@ -213,7 +213,7 @@ namespace Chemo.Utilities
             T result = default!;
             Exception? error = null;
 
-            Thread thread = new Thread(() =>
+            Thread thread = new(() =>
             {
                 try
                 {

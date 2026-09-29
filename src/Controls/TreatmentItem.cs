@@ -6,7 +6,7 @@ namespace Chemo.Controls
     /// <summary>
     /// A treatment's row in the treatment list, showing its status and how long it took.
     /// </summary>
-    class TreatmentItem : ListViewItem
+    internal sealed class TreatmentItem : ListViewItem
     {
         private const int StatusColumn = 1;
         private const int TimeColumn = 2;

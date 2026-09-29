@@ -4,13 +4,13 @@ using System.Runtime.CompilerServices;
 
 namespace Chemo
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             // Microsoft.Dism.dll is embedded in Chemo.exe, so it's loaded from there when first needed.
             AppDomain.CurrentDomain.AssemblyResolve += LoadEmbeddedAssembly;
@@ -39,19 +39,15 @@ namespace Chemo
         {
             string resourceName = new AssemblyName(args.Name).Name + ".dll";
 
-            using (Stream? resource = typeof(Program).Assembly.GetManifestResourceStream(resourceName))
+            using Stream? resource = typeof(Program).Assembly.GetManifestResourceStream(resourceName);
+            if (resource == null)
             {
-                if (resource == null)
-                {
-                    return null;
-                }
-
-                using (MemoryStream assembly = new MemoryStream())
-                {
-                    resource.CopyTo(assembly);
-                    return Assembly.Load(assembly.ToArray());
-                }
+                return null;
             }
+
+            using MemoryStream assembly = new();
+            resource.CopyTo(assembly);
+            return Assembly.Load(assembly.ToArray());
         }
     }
 }

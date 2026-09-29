@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Chemo.Treatment.LockScreenSignIn
 {
-    class LockWhenIdle : SettingsTreatment
+    internal sealed class LockWhenIdle : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,13 +19,13 @@ namespace Chemo.Treatment.LockScreenSignIn
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new BlankScreenSaver(),
                 new ScreenSaverParameter("Screen saver is on", UnsafeNativeMethods.SPI_GETSCREENSAVEACTIVE, UnsafeNativeMethods.SPI_SETSCREENSAVEACTIVE, 1),
                 new ScreenSaverParameter("Screen saver starts after 900 seconds", UnsafeNativeMethods.SPI_GETSCREENSAVETIMEOUT, UnsafeNativeMethods.SPI_SETSCREENSAVETIMEOUT, 900),
                 new ScreenSaverParameter("Sign-in is required after the screen saver", UnsafeNativeMethods.SPI_GETSCREENSAVESECURE, UnsafeNativeMethods.SPI_SETSCREENSAVESECURE, 1),
-            };
+            ];
         }
 
         /// <summary>

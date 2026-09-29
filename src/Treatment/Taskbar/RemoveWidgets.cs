@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class RemoveWidgets : SettingsTreatment
+    internal sealed class RemoveWidgets : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,17 +18,17 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new WidgetPackagesRemoved(Logger),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Dsh", "AllowNewsAndInterests", 0),
-            };
+            ];
         }
 
         private sealed class WidgetPackagesRemoved : ISetting
         {
-            private static readonly string[] PackageNames = { "Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience" };
-            private static readonly string[] ProcessNames = { "Widgets", "WidgetService" };
+            private static readonly string[] PackageNames = ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"];
+            private static readonly string[] ProcessNames = ["Widgets", "WidgetService"];
 
             private readonly MemoryLogger Logger;
 

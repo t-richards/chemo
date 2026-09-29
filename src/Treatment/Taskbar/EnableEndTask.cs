@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class EnableEndTask : SettingsTreatment
+    internal sealed class EnableEndTask : SettingsTreatment
     {
         public override string Name()
         {
@@ -16,10 +16,10 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings", "TaskbarEndTask", 1),
-            };
+            ];
         }
     }
 }

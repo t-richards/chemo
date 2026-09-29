@@ -10,8 +10,8 @@ namespace Chemo.Treatment
     /// </remarks>
     public static class TreatmentCatalog
     {
-        public static IReadOnlyList<Category> Categories { get; } = new[]
-        {
+        public static IReadOnlyList<Category> Categories { get; } =
+        [
             new Category("Appearance", "Change how Windows looks.",
                 new Appearance.DarkMode(),
                 new Appearance.DisableTransparency(),
@@ -89,6 +89,6 @@ namespace Chemo.Treatment
 
             new Category("Updates", "Control when Windows Update interrupts you.",
                 new Updates.WindowsUpdateReboot()),
-        };
+        ];
     }
 }

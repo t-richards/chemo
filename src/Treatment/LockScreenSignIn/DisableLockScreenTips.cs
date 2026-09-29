@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.LockScreenSignIn
 {
-    class DisableLockScreenTips : SettingsTreatment
+    internal sealed class DisableLockScreenTips : SettingsTreatment
     {
         private const string ContentDeliveryManager = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
 
@@ -19,11 +19,11 @@ namespace Chemo.Treatment.LockScreenSignIn
         protected override IEnumerable<ISetting> Settings()
         {
             // The "Get fun facts, tips, tricks, and more on your lock screen" setting.
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(ContentDeliveryManager, "RotatingLockScreenOverlayEnabled", 0),
                 new RegistryValue(ContentDeliveryManager, "SubscribedContent-338387Enabled", 0),
-            };
+            ];
         }
     }
 }

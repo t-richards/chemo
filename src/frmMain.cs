@@ -32,16 +32,16 @@ namespace Chemo
         public void InitTreatments()
         {
             lstTreatments.Items.Clear();
-            Font categoryFont = new Font(lstTreatments.Font, FontStyle.Bold);
+            Font categoryFont = new(lstTreatments.Font, FontStyle.Bold);
 
             foreach (Category category in TreatmentCatalog.Categories)
             {
-                CategoryItem categoryItem = new CategoryItem(category, categoryFont);
+                CategoryItem categoryItem = new(category, categoryFont);
                 lstTreatments.Items.Add(categoryItem);
 
                 foreach (BaseTreatment treatment in category.Treatments)
                 {
-                    TreatmentItem treatmentItem = new TreatmentItem(treatment, categoryItem);
+                    TreatmentItem treatmentItem = new(treatment, categoryItem);
                     categoryItem.Treatments.Add(treatmentItem);
                     lstTreatments.Items.Add(treatmentItem);
                 }

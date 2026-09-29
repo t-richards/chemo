@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Appearance
 {
-    internal class DarkMode : SettingsTreatment
+    internal sealed class DarkMode : SettingsTreatment
     {
         private const string Personalize = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
@@ -20,11 +20,11 @@ namespace Chemo.Treatment.Appearance
         protected override IEnumerable<ISetting> Settings()
         {
             // The Settings app's single mode choice sets both of these; its Custom mode sets them separately.
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(Personalize, "SystemUsesLightTheme", 0),
                 new RegistryValue(Personalize, "AppsUseLightTheme", 0),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

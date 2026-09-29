@@ -6,7 +6,7 @@ namespace Chemo.Utilities
     public sealed class MemoryLogger
     {
         // Treatments log from a background thread while the details pane reads the log on the UI thread.
-        private readonly object dataLock = new object();
+        private readonly object dataLock = new();
         private StringBuilder data;
 
         public MemoryLogger()
@@ -49,7 +49,7 @@ namespace Chemo.Utilities
 
         public static MemoryLogger Instance
         {
-            get => new MemoryLogger();
+            get => new();
         }
     }
 }

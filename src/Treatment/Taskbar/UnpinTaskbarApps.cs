@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class UnpinTaskbarApps : SettingsTreatment
+    internal sealed class UnpinTaskbarApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,10 +18,10 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new OnlyFileExplorerPinned(Logger),
-            };
+            ];
         }
 
         private sealed class OnlyFileExplorerPinned : ISetting

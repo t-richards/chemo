@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Privacy
 {
-    class DisableLocationTracking : SettingsTreatment
+    internal sealed class DisableLocationTracking : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,13 +17,13 @@ namespace Chemo.Treatment.Privacy
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location", "Value", "Deny", RegistryValueKind.String),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}", "SensorPermissionState", 0),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SYSTEM\Maps", "AutoUpdateEnabled", 0),
                 new ServiceStartup("lfsvc", ServiceStartType.Disabled),
-            };
+            ];
         }
     }
 }

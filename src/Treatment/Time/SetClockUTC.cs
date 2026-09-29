@@ -2,7 +2,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Time
 {
-    class SetClockUTC : BaseTreatment
+    internal sealed class SetClockUTC : BaseTreatment
     {
         private const string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
         private const int DesiredValue = 1;
@@ -19,7 +19,7 @@ namespace Chemo.Treatment.Time
 
         public override bool ShouldPerformTreatment()
         {
-            var value = Registry.GetValue(TimezoneKey, "RealTimeIsUniversal", 0);
+            object value = Registry.GetValue(TimezoneKey, "RealTimeIsUniversal", 0);
             if (value == null || (int)value != DesiredValue)
             {
                 return true;

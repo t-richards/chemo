@@ -6,10 +6,10 @@ namespace Chemo.Controls
     /// A details list view that can show images in any column, not just the first, and whose last column
     /// fills the remaining width.
     /// </summary>
-    class TreatmentListView : ListView
+    internal sealed class TreatmentListView : ListView
     {
         // The image shown in each column after the first, keyed by item and column.
-        private readonly Dictionary<(ListViewItem Item, int Column), string> subItemImages = new Dictionary<(ListViewItem, int), string>();
+        private readonly Dictionary<(ListViewItem Item, int Column), string> subItemImages = [];
 
         public TreatmentListView()
         {
@@ -65,7 +65,7 @@ namespace Chemo.Controls
 
         private void SendSubItemImage(ListViewItem item, int column, string imageKey)
         {
-            UnsafeNativeMethods.LVITEMW lvItem = new UnsafeNativeMethods.LVITEMW
+            UnsafeNativeMethods.LVITEMW lvItem = new()
             {
                 mask = UnsafeNativeMethods.LVIF_IMAGE,
                 iItem = item.Index,

@@ -55,8 +55,8 @@ namespace Chemo.Test
         [Fact]
         public void ItAppliesMissingSettingsAndNotifiesOnce()
         {
-            FakeSetting missing = new FakeSetting();
-            FakeTreatment treatment = new FakeTreatment(missing, new FakeSetting(), new FakeSetting { Applied = true });
+            FakeSetting missing = new();
+            FakeTreatment treatment = new(missing, new FakeSetting(), new FakeSetting { Applied = true });
 
             Assert.True(treatment.ShouldPerformTreatment());
             Assert.True(treatment.PerformTreatment());
@@ -68,7 +68,7 @@ namespace Chemo.Test
         [Fact]
         public void ItDoesNotNotifyWhenNothingChanged()
         {
-            FakeTreatment treatment = new FakeTreatment(new FakeSetting { Applied = true });
+            FakeTreatment treatment = new(new FakeSetting { Applied = true });
 
             Assert.False(treatment.ShouldPerformTreatment());
             Assert.True(treatment.PerformTreatment());

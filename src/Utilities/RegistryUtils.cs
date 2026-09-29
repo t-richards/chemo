@@ -2,7 +2,7 @@
 
 namespace Chemo.Utilities
 {
-    class RegistryUtils
+    internal static class RegistryUtils
     {
         // A value of another type, such as a DWORD stored as a string, doesn't match rather than throwing.
         public static bool IntEquals(string keyName, string valueName, int expectedValue)
@@ -28,10 +28,8 @@ namespace Chemo.Utilities
                 _ => throw new ArgumentException($"Unsupported registry root in {keyName}.", nameof(keyName)),
             };
 
-            using (RegistryKey key = root.OpenSubKey(keyName.Substring(separator + 1), true))
-            {
-                key?.DeleteValue(valueName, false);
-            }
+            using RegistryKey key = root.OpenSubKey(keyName.Substring(separator + 1), true);
+            key?.DeleteValue(valueName, false);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Chemo.Data
         // Pre-installed apps on a typical Windows 11 Pro install that are ads, upsells, or discontinued.
         // Built-in utilities (Calculator, Clock, Camera, Media Player, Photos, Snipping Tool, etc.) and
         // anything other apps depend on (App Installer, Store, Xbox identity, codecs) are deliberately kept.
-        private static readonly HashSet<string> AppsToRemove = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> AppsToRemove = new(StringComparer.OrdinalIgnoreCase)
         {
             // Bing & MSN content
             "Microsoft.BingNews",                       // News

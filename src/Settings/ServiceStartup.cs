@@ -41,17 +41,15 @@ namespace Chemo.Settings
         /// </summary>
         public bool IsRunning()
         {
-            using (ServiceController service = new ServiceController(ServiceName))
+            using ServiceController service = new(ServiceName);
+            try
             {
-                try
-                {
-                    return service.Status != ServiceControllerStatus.Stopped;
-                }
-                catch (InvalidOperationException)
-                {
-                    // The service doesn't exist on this edition of Windows.
-                    return false;
-                }
+                return service.Status != ServiceControllerStatus.Stopped;
+            }
+            catch (InvalidOperationException)
+            {
+                // The service doesn't exist on this edition of Windows.
+                return false;
             }
         }
 

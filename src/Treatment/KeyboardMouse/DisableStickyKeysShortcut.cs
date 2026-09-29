@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Chemo.Treatment.KeyboardMouse
 {
-    class DisableStickyKeysShortcut : SettingsTreatment
+    internal sealed class DisableStickyKeysShortcut : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,17 +19,17 @@ namespace Chemo.Treatment.KeyboardMouse
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new ShortcutOff(),
-            };
+            ];
         }
 
         private sealed class ShortcutOff : ISetting
         {
             private static UnsafeNativeMethods.STICKYKEYS Read()
             {
-                UnsafeNativeMethods.STICKYKEYS stickyKeys = new UnsafeNativeMethods.STICKYKEYS
+                UnsafeNativeMethods.STICKYKEYS stickyKeys = new()
                 {
                     cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.STICKYKEYS>()
                 };

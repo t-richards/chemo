@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.FileExplorer
 {
-    class TurnOnAdvancedSettings : SettingsTreatment
+    internal sealed class TurnOnAdvancedSettings : SettingsTreatment
     {
         private const string Advanced = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 
@@ -19,8 +19,8 @@ namespace Chemo.Treatment.FileExplorer
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(Advanced, "HideFileExt", 0),
 
                 // 1 shows hidden files. Protected operating system files, like the desktop.ini in every folder,
@@ -32,7 +32,7 @@ namespace Chemo.Treatment.FileExplorer
 
                 // Settings sets this through the policy editor, since it's a policy.
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "ShowRunAsDifferentUserInStart", 1),
-            };
+            ];
         }
     }
 }

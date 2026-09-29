@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.LockScreenSignIn
 {
-    class RequireCtrlAltDel : BaseTreatment
+    internal sealed class RequireCtrlAltDel : BaseTreatment
     {
         private const string WinLogon = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
         private const int DesiredValue = 0;

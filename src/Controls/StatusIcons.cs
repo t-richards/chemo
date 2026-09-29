@@ -39,7 +39,7 @@ namespace Chemo.Controls
             Color restart = dark ? Color.FromArgb(0xFC, 0xE1, 0x00) : Color.FromArgb(0x9D, 0x5D, 0x00);
             Color error = dark ? Color.FromArgb(0xFF, 0x99, 0xA4) : Color.FromArgb(0xC4, 0x2B, 0x1C);
 
-            ImageList imageList = new ImageList
+            ImageList imageList = new()
             {
                 ColorDepth = ColorDepth.Depth32Bit,
                 ImageSize = new Size(size, size)
@@ -57,15 +57,15 @@ namespace Chemo.Controls
 
         private static Bitmap Draw(int size, Color circleColor, string mark, Color markColor)
         {
-            Bitmap bitmap = new Bitmap(size, size, PixelFormat.Format32bppArgb);
+            Bitmap bitmap = new(size, size, PixelFormat.Format32bppArgb);
 
-            using (FontFamily family = new FontFamily(FontName))
+            using (FontFamily family = new(FontName))
             using (GraphicsPath circle = Glyph(family, Circle, size))
             using (GraphicsPath markPath = Glyph(family, mark, size))
-            using (Matrix center = new Matrix())
+            using (Matrix center = new())
             using (Graphics graphics = Graphics.FromImage(bitmap))
-            using (SolidBrush circleBrush = new SolidBrush(circleColor))
-            using (SolidBrush markBrush = new SolidBrush(markColor))
+            using (SolidBrush circleBrush = new(circleColor))
+            using (SolidBrush markBrush = new(markColor))
             {
                 // The mark glyphs are drawn relative to the circle, so both move by the offset that centers the circle.
                 RectangleF bounds = circle.GetBounds();
@@ -83,7 +83,7 @@ namespace Chemo.Controls
 
         private static GraphicsPath Glyph(FontFamily family, string glyph, int size)
         {
-            GraphicsPath path = new GraphicsPath();
+            GraphicsPath path = new();
             path.AddString(glyph, family, (int)FontStyle.Regular, size, PointF.Empty, StringFormat.GenericTypographic);
             return path;
         }

@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class CombineButtonsWhenFull : SettingsTreatment
+    internal sealed class CombineButtonsWhenFull : SettingsTreatment
     {
         private const string Advanced = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 
@@ -20,11 +20,11 @@ namespace Chemo.Treatment.Taskbar
         protected override IEnumerable<ISetting> Settings()
         {
             // 0 always combines, 1 combines when the taskbar is full, and 2 never combines.
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(Advanced, "TaskbarGlomLevel", 1),
                 new RegistryValue(Advanced, "MMTaskbarGlomLevel", 1),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

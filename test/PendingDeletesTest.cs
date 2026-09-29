@@ -9,13 +9,13 @@ namespace Chemo.Test
         {
             // Entries as Windows 11 writes them.
             string[] operations =
-            {
+            [
                 @"*1\??\C:\Users\Test\AppData\Local\Microsoft\OneDrive\FileSyncShell64.dll", "",
                 @"*1\??\C:\Temp\old.txt", @"!*1\??\C:\Temp\new.txt",
                 @"*1\??\C:\Users\Test\AppData\Local\Microsoft\OneDrive", "",
-            };
+            ];
 
-            var paths = PendingDeletes.Parse(operations);
+            HashSet<string> paths = PendingDeletes.Parse(operations);
 
             Assert.Equal(2, paths.Count);
             Assert.Contains(@"C:\Users\Test\AppData\Local\Microsoft\OneDrive", paths);
@@ -26,7 +26,7 @@ namespace Chemo.Test
         [Fact]
         public void ItHandlesEntriesWithoutAPrefix()
         {
-            var paths = PendingDeletes.Parse(new[] { @"\??\C:\Temp\old.txt", "" });
+            HashSet<string> paths = PendingDeletes.Parse([@"\??\C:\Temp\old.txt", ""]);
 
             Assert.Contains(@"C:\Temp\old.txt", paths);
         }

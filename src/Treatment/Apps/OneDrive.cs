@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Chemo.Treatment.Apps
 {
-    class OneDrive : BaseTreatment
+    internal sealed class OneDrive : BaseTreatment
     {
         private const string Clsid = "{018D5C66-4533-4307-9B53-224DE2ED1FE6}";
         private const string AutoRunKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run";
@@ -14,7 +14,7 @@ namespace Chemo.Treatment.Apps
         private const string PolicyValueName = "DisableFileSyncNGSC";
         private const int PolicyValue = 1;
 
-        private static readonly string[] ProcessNames = { "OneDrive", "FileCoAuth" };
+        private static readonly string[] ProcessNames = ["OneDrive", "FileCoAuth"];
 
         private readonly string UninstallerPath;
         private readonly string UserDataPath;
@@ -88,13 +88,11 @@ namespace Chemo.Treatment.Apps
                 return;
             }
 
-            using (Process process = Process.Start(new ProcessStartInfo(UninstallerPath, "/uninstall") { UseShellExecute = false }))
-            {
-                process.WaitForExit();
-                Logger.Log(process.ExitCode == 0
-                    ? "OneDrive uninstaller finished."
-                    : $"OneDrive uninstaller exited with code 0x{process.ExitCode:X8}.");
-            }
+            using Process process = Process.Start(new ProcessStartInfo(UninstallerPath, "/uninstall") { UseShellExecute = false });
+            process.WaitForExit();
+            Logger.Log(process.ExitCode == 0
+                ? "OneDrive uninstaller finished."
+                : $"OneDrive uninstaller exited with code 0x{process.ExitCode:X8}.");
         }
         #endregion
 
@@ -104,8 +102,8 @@ namespace Chemo.Treatment.Apps
         /// </summary>
         private List<Process> FindProcesses()
         {
-            string[] folders = { LocalAppDataPath, ProgramFilesPath };
-            List<Process> found = new List<Process>();
+            string[] folders = [LocalAppDataPath, ProgramFilesPath];
+            List<Process> found = [];
 
             foreach (Process process in Process.GetProcesses())
             {
@@ -182,7 +180,7 @@ namespace Chemo.Treatment.Apps
         #endregion
 
         #region Registry Keys
-        private bool RegistryKeysExist()
+        private static bool RegistryKeysExist()
         {
             // The uninstaller deletes these values, so a missing value counts as removed.
             if (Registry.GetValue(AutoRunKey, "OneDrive", null) is string autoRun && autoRun.Length > 0)
@@ -197,22 +195,18 @@ namespace Chemo.Treatment.Apps
 
             if (Environment.Is64BitOperatingSystem)
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\"))
+                using RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\");
+                if (regKey.OpenSubKey(Clsid) != null)
                 {
-                    if (regKey.OpenSubKey(Clsid) != null)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             else
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID"))
+                using RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID");
+                if (regKey.OpenSubKey(Clsid) != null)
                 {
-                    if (regKey.OpenSubKey(Clsid) != null)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -230,22 +224,18 @@ namespace Chemo.Treatment.Apps
 
             if (Environment.Is64BitOperatingSystem)
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\", true))
+                using RegistryKey regKey = Registry.ClassesRoot.OpenSubKey(@"Wow6432Node\CLSID\", true);
+                if (regKey.OpenSubKey(Clsid) != null)
                 {
-                    if (regKey.OpenSubKey(Clsid) != null)
-                    {
-                        regKey.DeleteSubKeyTree(Clsid);
-                    }
+                    regKey.DeleteSubKeyTree(Clsid);
                 }
             }
             else
             {
-                using (RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID", true))
+                using RegistryKey regKey = Registry.ClassesRoot.OpenSubKey("CLSID", true);
+                if (regKey.OpenSubKey(Clsid) != null)
                 {
-                    if (regKey.OpenSubKey(Clsid) != null)
-                    {
-                        regKey.DeleteSubKeyTree(Clsid);
-                    }
+                    regKey.DeleteSubKeyTree(Clsid);
                 }
             }
         }

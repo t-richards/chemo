@@ -3,7 +3,7 @@ using Microsoft.Dism;
 
 namespace Chemo.Treatment.Apps
 {
-    class DeprovisionStoreApps : BaseTreatment
+    internal sealed class DeprovisionStoreApps : BaseTreatment
     {
         public override string Name()
         {
@@ -23,7 +23,7 @@ namespace Chemo.Treatment.Apps
             using (DismSession session = DismApi.OpenOnlineSession())
             {
                 DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                foreach (var package in dismAppxPackages)
+                foreach (DismAppxPackage package in dismAppxPackages)
                 {
                     if (StoreApps.ShouldRemove(package.DisplayName))
                     {
@@ -51,30 +51,28 @@ namespace Chemo.Treatment.Apps
 
             try
             {
-                using (DismSession session = DismApi.OpenOnlineSession())
+                using DismSession session = DismApi.OpenOnlineSession();
+                DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
+                foreach (DismAppxPackage package in dismAppxPackages)
                 {
-                    DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                    foreach (var package in dismAppxPackages)
+                    try
                     {
-                        try
+                        if (StoreApps.ShouldRemove(package.DisplayName))
                         {
-                            if (StoreApps.ShouldRemove(package.DisplayName))
-                            {
-                                DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
-                                Logger.Log("Successfully deprovisioned {0}", package.DisplayName);
-                                removedPackageCount += 1;
-                            }
-                            else
-                            {
-                                Logger.Log("Not deprovisioning {0}", package.DisplayName);
-                            }
-
-                        }
-                        catch (DismRebootRequiredException ex)
-                        {
-                            Logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                            DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                            Logger.Log("Successfully deprovisioned {0}", package.DisplayName);
                             removedPackageCount += 1;
                         }
+                        else
+                        {
+                            Logger.Log("Not deprovisioning {0}", package.DisplayName);
+                        }
+
+                    }
+                    catch (DismRebootRequiredException ex)
+                    {
+                        Logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
+                        removedPackageCount += 1;
                     }
                 }
             }

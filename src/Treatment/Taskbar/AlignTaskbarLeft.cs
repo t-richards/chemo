@@ -3,7 +3,7 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class AlignTaskbarLeft : SettingsTreatment
+    internal sealed class AlignTaskbarLeft : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,10 +17,10 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "TaskbarAl", 0),
-            };
+            ];
         }
 
         protected override void OnSettingsChanged()

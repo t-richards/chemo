@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Sound
 {
-    class DisableSystemSounds : SettingsTreatment
+    internal sealed class DisableSystemSounds : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,14 +18,14 @@ namespace Chemo.Treatment.Sound
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new NoSoundsScheme(),
 
                 // Unchecking "Play Windows Startup sound" in the Sound control panel sets both of these.
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EditionOverrides", "UserSetting_DisableStartupSound", 1),
-            };
+            ];
         }
 
         /// <summary>
@@ -84,10 +84,8 @@ namespace Chemo.Treatment.Sound
 
             private static string Sound(RegistryKey eventKey, string scheme)
             {
-                using (RegistryKey sound = eventKey.OpenSubKey(scheme))
-                {
-                    return sound?.GetValue("") as string ?? "";
-                }
+                using RegistryKey sound = eventKey.OpenSubKey(scheme);
+                return sound?.GetValue("") as string ?? "";
             }
 
             /// <summary>
@@ -96,34 +94,30 @@ namespace Chemo.Treatment.Sound
             /// </summary>
             private static IEnumerable<RegistryKey> SchemeEvents(bool writable)
             {
-                using (RegistryKey apps = Registry.CurrentUser.OpenSubKey(Schemes + @"\Apps"))
+                using RegistryKey apps = Registry.CurrentUser.OpenSubKey(Schemes + @"\Apps");
+                if (apps == null)
                 {
-                    if (apps == null)
-                    {
-                        yield break;
-                    }
+                    yield break;
+                }
 
-                    foreach (string app in apps.GetSubKeyNames())
+                foreach (string app in apps.GetSubKeyNames())
+                {
+                    using RegistryKey appKey = apps.OpenSubKey(app);
+                    foreach (string eventName in appKey.GetSubKeyNames())
                     {
-                        using (RegistryKey appKey = apps.OpenSubKey(app))
+                        RegistryKey eventKey = appKey.OpenSubKey(eventName, writable);
+                        if (eventKey == null)
                         {
-                            foreach (string eventName in appKey.GetSubKeyNames())
-                            {
-                                RegistryKey eventKey = appKey.OpenSubKey(eventName, writable);
-                                if (eventKey == null)
-                                {
-                                    continue;
-                                }
+                            continue;
+                        }
 
-                                if (eventKey.GetSubKeyNames().Contains(Scheme, StringComparer.OrdinalIgnoreCase))
-                                {
-                                    yield return eventKey;
-                                }
-                                else
-                                {
-                                    eventKey.Dispose();
-                                }
-                            }
+                        if (eventKey.GetSubKeyNames().Contains(Scheme, StringComparer.OrdinalIgnoreCase))
+                        {
+                            yield return eventKey;
+                        }
+                        else
+                        {
+                            eventKey.Dispose();
                         }
                     }
                 }

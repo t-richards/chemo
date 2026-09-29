@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Appearance
 {
-    internal class DisableTransparency : SettingsTreatment
+    internal sealed class DisableTransparency : SettingsTreatment
     {
         public override string Name()
         {
@@ -16,10 +16,10 @@ namespace Chemo.Treatment.Appearance
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 0),
-            };
+            ];
         }
     }
 }

@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Start
 {
-    class SuggestedApps : SettingsTreatment
+    internal sealed class SuggestedApps : SettingsTreatment
     {
         private const string ContentDeliveryManager = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
 
@@ -18,8 +18,8 @@ namespace Chemo.Treatment.Start
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // Consumer features policy. Only Enterprise and Education honor it; the values below cover Pro.
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures", 1),
 
@@ -32,7 +32,7 @@ namespace Chemo.Treatment.Start
                 new RegistryValue(ContentDeliveryManager, "SilentInstalledAppsEnabled", 0),
                 new RegistryValue(ContentDeliveryManager, "PreInstalledAppsEnabled", 0),
                 new RegistryValue(ContentDeliveryManager, "OemPreInstalledAppsEnabled", 0),
-            };
+            ];
         }
     }
 }

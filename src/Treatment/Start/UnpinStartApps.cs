@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Chemo.Treatment.Start
 {
-    class UnpinStartApps : SettingsTreatment
+    internal sealed class UnpinStartApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -20,10 +20,10 @@ namespace Chemo.Treatment.Start
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new NothingPinned(),
-            };
+            ];
         }
 
         /// <summary>

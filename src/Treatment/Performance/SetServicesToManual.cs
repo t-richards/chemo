@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Performance
 {
-    class SetServicesToManual : SettingsTreatment
+    internal sealed class SetServicesToManual : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,13 +18,13 @@ namespace Chemo.Treatment.Performance
         {
             // Internet Connection Sharing (SharedAccess) is left alone because Mobile Hotspot and
             // the Hyper-V Default Switch depend on it.
-            return new ISetting[]
-            {
+            return
+            [
                 new ServiceStartup("CscService", ServiceStartType.Disabled),
                 new ServiceStartup("DiagTrack", ServiceStartType.Disabled),
                 new ServiceStartup("MapsBroker", ServiceStartType.Manual),
                 new ServiceStartup("StorSvc", ServiceStartType.Manual),
-            };
+            ];
         }
     }
 }

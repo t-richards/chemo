@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Chemo.Treatment.Appearance
 {
-    internal class DisableAnimations : SettingsTreatment
+    internal sealed class DisableAnimations : SettingsTreatment
     {
         private const uint UpdateAndNotify = UnsafeNativeMethods.SPIF_UPDATEINIFILE | UnsafeNativeMethods.SPIF_SENDCHANGE;
 
@@ -21,12 +21,12 @@ namespace Chemo.Treatment.Appearance
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new AppAnimationsOff(),
                 new WindowAnimationsOff(),
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "TaskbarAnimations", 0),
-            };
+            ];
         }
 
         private sealed class AppAnimationsOff : ISetting
@@ -61,7 +61,7 @@ namespace Chemo.Treatment.Appearance
         {
             private static UnsafeNativeMethods.ANIMATIONINFO Read()
             {
-                UnsafeNativeMethods.ANIMATIONINFO info = new UnsafeNativeMethods.ANIMATIONINFO
+                UnsafeNativeMethods.ANIMATIONINFO info = new()
                 {
                     cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.ANIMATIONINFO>()
                 };

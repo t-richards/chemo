@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Start
 {
-    class RestorePreviousStartMenu : SettingsTreatment
+    internal sealed class RestorePreviousStartMenu : SettingsTreatment
     {
         public override string Name()
         {
@@ -16,11 +16,11 @@ namespace Chemo.Treatment.Start
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // Feature override that turns off the redesigned Start menu, as set by ViVeTool.
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FeatureManagement\Overrides\8\3036241548", "EnabledState", 1),
-            };
+            ];
         }
     }
 }

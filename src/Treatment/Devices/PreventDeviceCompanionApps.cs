@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Devices
 {
-    class PreventDeviceCompanionApps : SettingsTreatment
+    internal sealed class PreventDeviceCompanionApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -16,10 +16,10 @@ namespace Chemo.Treatment.Devices
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Device Metadata", "PreventDeviceMetadataFromNetwork", 1),
-            };
+            ];
         }
     }
 }

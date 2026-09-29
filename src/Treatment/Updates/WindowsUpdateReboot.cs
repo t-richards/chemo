@@ -2,7 +2,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Updates
 {
-    class WindowsUpdateReboot : BaseTreatment
+    internal sealed class WindowsUpdateReboot : BaseTreatment
     {
         private const string AutoUpdateKey = @"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\WindowsUpdate\AU";
         private const int DesiredValue = 2;
@@ -19,7 +19,7 @@ namespace Chemo.Treatment.Updates
 
         public override bool ShouldPerformTreatment()
         {
-            var value = Registry.GetValue(AutoUpdateKey, "AUOptions", 0);
+            object value = Registry.GetValue(AutoUpdateKey, "AUOptions", 0);
             if (value == null || (int)value != DesiredValue)
             {
                 return true;

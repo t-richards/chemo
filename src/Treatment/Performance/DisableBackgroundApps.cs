@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Performance
 {
-    class DisableBackgroundApps : SettingsTreatment
+    internal sealed class DisableBackgroundApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,11 +19,11 @@ namespace Chemo.Treatment.Performance
         {
             // Windows 11 only offers this per app in Settings. Windows 10's single "Let apps run in the
             // background" switch set both of these, and Windows 11 still honors them.
-            return new ISetting[]
-            {
+            return
+            [
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\BackgroundAccessApplications", "GlobalUserDisabled", 1),
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "BackgroundAppGlobalToggle", 0),
-            };
+            ];
         }
     }
 }

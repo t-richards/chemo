@@ -4,7 +4,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.FileExplorer
 {
-    class DisableFolderDiscovery : SettingsTreatment
+    internal sealed class DisableFolderDiscovery : SettingsTreatment
     {
         public override string Name()
         {
@@ -19,10 +19,10 @@ namespace Chemo.Treatment.FileExplorer
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new GenericFolderViews(),
-            };
+            ];
         }
 
         private sealed class GenericFolderViews : ISetting

@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Privacy
 {
-    class DisableTelemetry : SettingsTreatment
+    internal sealed class DisableTelemetry : SettingsTreatment
     {
         private const string HKCU = @"HKEY_CURRENT_USER\Software\Microsoft";
 
@@ -19,8 +19,8 @@ namespace Chemo.Treatment.Privacy
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // Diagnostic data. Pro treats 0 (off) as 1 (required), the lowest level it supports.
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection", "AllowTelemetry", 0),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection", "AllowTelemetry", 0),
@@ -48,7 +48,7 @@ namespace Chemo.Treatment.Privacy
 
                 // PowerShell 7
                 new MachineEnvironmentVariable("POWERSHELL_TELEMETRY_OPTOUT", "1"),
-            };
+            ];
         }
     }
 }

@@ -2,7 +2,7 @@ using Chemo.Settings;
 
 namespace Chemo.Treatment.Start
 {
-    class HideRecentItems : SettingsTreatment
+    internal sealed class HideRecentItems : SettingsTreatment
     {
         private const string ExplorerPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer";
 
@@ -19,15 +19,15 @@ namespace Chemo.Treatment.Start
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // "Show recommended files in Start, recent files in File Explorer, and items in Jump Lists"
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_TrackDocs", 0),
 
                 // For every user. 2 hides the Most used list.
                 new RegistryValue(ExplorerPolicies, "HideRecentlyAddedApps", 1),
                 new RegistryValue(ExplorerPolicies, "ShowOrHideMostUsedApps", 2),
-            };
+            ];
         }
     }
 }

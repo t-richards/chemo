@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.FileExplorer
 {
-    class RestorePreviousRightClickMenu : SettingsTreatment
+    internal sealed class RestorePreviousRightClickMenu : SettingsTreatment
     {
         public override string Name()
         {
@@ -17,12 +17,12 @@ namespace Chemo.Treatment.FileExplorer
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 // An empty per-user server for the Windows 11 menu's COM class stops it from loading, and Explorer
                 // falls back to the previous menu. The value must be an empty string, not missing.
                 new RegistryValue(@"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", "", "", RegistryValueKind.String),
-            };
+            ];
         }
     }
 }

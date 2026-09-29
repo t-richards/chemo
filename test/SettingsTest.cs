@@ -16,7 +16,7 @@ namespace Chemo.Test
         [Fact]
         public void RegistryValueAppliesDwords()
         {
-            RegistryValue setting = new RegistryValue(KeyName, "Value", 1);
+            RegistryValue setting = new(KeyName, "Value", 1);
 
             Assert.False(setting.IsApplied());
             setting.Apply();
@@ -36,7 +36,7 @@ namespace Chemo.Test
         [Fact]
         public void RegistryValueTellsEmptyDefaultValuesFromMissingOnes()
         {
-            RegistryValue setting = new RegistryValue(KeyName, "", "", RegistryValueKind.String);
+            RegistryValue setting = new(KeyName, "", "", RegistryValueKind.String);
             Registry.CurrentUser.CreateSubKey(subKey).Dispose();
 
             Assert.False(setting.IsApplied());
@@ -49,7 +49,7 @@ namespace Chemo.Test
         public void DeletedRegistryValueRemovesValues()
         {
             Registry.SetValue(KeyName, "Value", 1, RegistryValueKind.DWord);
-            DeletedRegistryValue setting = new DeletedRegistryValue(KeyName, "Value");
+            DeletedRegistryValue setting = new(KeyName, "Value");
 
             Assert.False(setting.IsApplied());
             setting.Apply();
@@ -59,7 +59,7 @@ namespace Chemo.Test
         [Fact]
         public void DeletedRegistryValueIgnoresMissingKeys()
         {
-            DeletedRegistryValue setting = new DeletedRegistryValue(KeyName + @"\Missing", "Value");
+            DeletedRegistryValue setting = new(KeyName + @"\Missing", "Value");
 
             Assert.True(setting.IsApplied());
             setting.Apply();

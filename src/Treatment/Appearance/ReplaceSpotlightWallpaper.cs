@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Chemo.Treatment.Appearance
 {
-    class ReplaceSpotlightWallpaper : SettingsTreatment
+    internal sealed class ReplaceSpotlightWallpaper : SettingsTreatment
     {
         public override string Name()
         {
@@ -20,10 +20,10 @@ namespace Chemo.Treatment.Appearance
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new SpotlightOff(),
-            };
+            ];
         }
 
         /// <summary>

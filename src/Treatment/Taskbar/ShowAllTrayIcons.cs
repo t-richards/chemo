@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace Chemo.Treatment.Taskbar
 {
-    class ShowAllTrayIcons : SettingsTreatment
+    internal sealed class ShowAllTrayIcons : SettingsTreatment
     {
         public override string Name()
         {
@@ -18,10 +18,10 @@ namespace Chemo.Treatment.Taskbar
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new AllIconsPromoted(),
-            };
+            ];
         }
 
         /// <summary>
@@ -34,22 +34,18 @@ namespace Chemo.Treatment.Taskbar
 
             public bool IsApplied()
             {
-                using (RegistryKey icons = Registry.CurrentUser.OpenSubKey(NotifyIconSettings))
+                using RegistryKey icons = Registry.CurrentUser.OpenSubKey(NotifyIconSettings);
+                if (icons == null)
                 {
-                    if (icons == null)
-                    {
-                        return true;
-                    }
+                    return true;
+                }
 
-                    foreach (string name in icons.GetSubKeyNames())
+                foreach (string name in icons.GetSubKeyNames())
+                {
+                    using RegistryKey icon = icons.OpenSubKey(name);
+                    if (!(icon?.GetValue("IsPromoted") is int promoted && promoted == 1))
                     {
-                        using (RegistryKey icon = icons.OpenSubKey(name))
-                        {
-                            if (!(icon?.GetValue("IsPromoted") is int promoted && promoted == 1))
-                            {
-                                return false;
-                            }
-                        }
+                        return false;
                     }
                 }
 
@@ -58,15 +54,11 @@ namespace Chemo.Treatment.Taskbar
 
             public void Apply()
             {
-                using (RegistryKey icons = Registry.CurrentUser.OpenSubKey(NotifyIconSettings))
+                using RegistryKey icons = Registry.CurrentUser.OpenSubKey(NotifyIconSettings);
+                foreach (string name in icons.GetSubKeyNames())
                 {
-                    foreach (string name in icons.GetSubKeyNames())
-                    {
-                        using (RegistryKey icon = icons.OpenSubKey(name, true))
-                        {
-                            icon.SetValue("IsPromoted", 1, RegistryValueKind.DWord);
-                        }
-                    }
+                    using RegistryKey icon = icons.OpenSubKey(name, true);
+                    icon.SetValue("IsPromoted", 1, RegistryValueKind.DWord);
                 }
             }
 

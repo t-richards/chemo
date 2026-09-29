@@ -3,13 +3,13 @@ using Chemo.Utilities;
 
 namespace Chemo.Treatment.CopilotAI
 {
-    class RemoveWindowsAI : SettingsTreatment
+    internal sealed class RemoveWindowsAI : SettingsTreatment
     {
         private const string WindowsAIPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI";
         private const string PaintPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Paint";
 
         // Windows AI Components Host
-        private static readonly ServiceStartup AIService = new ServiceStartup("WSAIFabricSvc", ServiceStartType.Disabled);
+        private static readonly ServiceStartup AIService = new("WSAIFabricSvc", ServiceStartType.Disabled);
 
         public override string Name()
         {
@@ -24,8 +24,8 @@ namespace Chemo.Treatment.CopilotAI
 
         protected override IEnumerable<ISetting> Settings()
         {
-            return new ISetting[]
-            {
+            return
+            [
                 new AIPackagesRemoved(Logger),
 
                 // Recall. Windows removes the feature and any saved snapshots at the next restart.
@@ -46,7 +46,7 @@ namespace Chemo.Treatment.CopilotAI
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\WindowsNotepad", "DisableAIFeatures", 1),
 
                 AIService,
-            };
+            ];
         }
 
         public override bool RestartPending()
@@ -58,7 +58,7 @@ namespace Chemo.Treatment.CopilotAI
         private sealed class AIPackagesRemoved : ISetting
         {
             // Copilot, Microsoft 365 Copilot, and the system app behind Click to Do.
-            private static readonly string[] PackageNames = { "Microsoft.Copilot", "Microsoft.MicrosoftOfficeHub", "MicrosoftWindows.Client.CoreAI" };
+            private static readonly string[] PackageNames = ["Microsoft.Copilot", "Microsoft.MicrosoftOfficeHub", "MicrosoftWindows.Client.CoreAI"];
 
             private readonly MemoryLogger Logger;
 

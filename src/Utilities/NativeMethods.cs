@@ -53,7 +53,7 @@ namespace Chemo.Utilities
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hWnd, string? pszSubAppName, string? pszSubIdList);
 
-        public static readonly IntPtr HWND_BROADCAST = new IntPtr(0xFFFF);
+        public static readonly IntPtr HWND_BROADCAST = new(0xFFFF);
         public const int WM_SETTINGCHANGE = 0x001A;
         public const uint SMTO_ABORTIFHUNG = 0x0002;
 
