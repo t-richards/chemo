@@ -8,6 +8,9 @@ namespace Chemo.Treatment.CopilotAI
         private const string WindowsAIPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsAI";
         private const string PaintPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Paint";
 
+        // Copilot, Microsoft 365 Copilot, and the system app behind Click to Do.
+        private static readonly string[] PackageNames = ["Microsoft.Copilot", "Microsoft.MicrosoftOfficeHub", "MicrosoftWindows.Client.CoreAI"];
+
         // Windows AI Components Host
         private static readonly ServiceStartup AIService = new("WSAIFabricSvc", ServiceStartType.Disabled);
 
@@ -26,7 +29,7 @@ namespace Chemo.Treatment.CopilotAI
         {
             return
             [
-                new AIPackagesRemoved(Logger),
+                new AppPackagesRemoved("Copilot and Click to Do apps", name => PackageNames.Contains(name, StringComparer.OrdinalIgnoreCase), Logger),
 
                 // Recall. Windows removes the feature and any saved snapshots at the next restart.
                 new RegistryValue(WindowsAIPolicies, "AllowRecallEnablement", 0),
@@ -53,62 +56,6 @@ namespace Chemo.Treatment.CopilotAI
         {
             // Recall is also removed at restart, but Windows doesn't show whether that's still to come.
             return AIService.IsApplied() && AIService.IsRunning();
-        }
-
-        private sealed class AIPackagesRemoved : ISetting
-        {
-            // Copilot, Microsoft 365 Copilot, and the system app behind Click to Do.
-            private static readonly string[] PackageNames = ["Microsoft.Copilot", "Microsoft.MicrosoftOfficeHub", "MicrosoftWindows.Client.CoreAI"];
-
-            private readonly MemoryLogger Logger;
-
-            public AIPackagesRemoved(MemoryLogger logger)
-            {
-                Logger = logger;
-            }
-
-            private static List<AppPackage> FindPackages()
-            {
-                return AppPackages.FindForAllUsers()
-                    .Where(p => PackageNames.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
-                    .Where(p => AppPackages.FindInstalledUsers(p).Count > 0)
-                    .ToList();
-            }
-
-            public bool IsApplied()
-            {
-                List<AppPackage> packages = FindPackages();
-
-                foreach (AppPackage package in packages)
-                {
-                    Logger.Log("{0} is installed for {1}", package.PackageFullName, string.Join(", ", AppPackages.FindInstalledUsers(package)));
-                }
-
-                return packages.Count == 0;
-            }
-
-            public void Apply()
-            {
-                List<AppPackage> packages = FindPackages();
-
-                foreach (AppPackage package in packages.Where(p => p.IsSystemApp))
-                {
-                    AppPackages.RetireSystemApp(package);
-                    Logger.Log("Retired {0} so it can be removed.", package.Name);
-                }
-
-                List<AppPackage> failed = AppPackages.RemoveForAllUsers(packages, Logger);
-
-                if (failed.Count > 0)
-                {
-                    throw new InvalidOperationException($"Could not remove {string.Join(", ", failed.Select(p => p.Name))}.");
-                }
-            }
-
-            public override string ToString()
-            {
-                return "Copilot and Click to Do apps are removed";
-            }
         }
     }
 }

@@ -1,9 +1,11 @@
 using Chemo.Data;
+using Chemo.Settings;
+using Chemo.Utilities;
 using Microsoft.Dism;
 
 namespace Chemo.Treatment.Apps
 {
-    internal sealed class DeprovisionStoreApps : BaseTreatment
+    internal sealed class DeprovisionStoreApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -15,79 +17,79 @@ namespace Chemo.Treatment.Apps
             return "Deprovisions the same apps so they don't return when a new user is created or a feature update is applied.";
         }
 
-        public override bool ShouldPerformTreatment()
+        protected override IEnumerable<ISetting> Settings()
         {
-            int packageCount = 0;
-
-            // A DISM failure is reported as an analysis error rather than as nothing to deprovision.
-            using (DismSession session = DismApi.OpenOnlineSession())
-            {
-                DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                foreach (DismAppxPackage package in dismAppxPackages)
-                {
-                    if (StoreApps.ShouldRemove(package.DisplayName))
-                    {
-                        Logger.Log("Would deprovision {0}", package.DisplayName);
-                        packageCount += 1;
-                    }
-                    else
-                    {
-                        Logger.Log("Not deprovisioning {0}", package.DisplayName);
-                    }
-                }
-            }
-
-            if (packageCount > 0)
-            {
-                return true;
-            }
-
-            return false;
+            return
+            [
+                new StoreAppsDeprovisioned(Logger),
+            ];
         }
 
-        public override bool PerformTreatment()
+        /// <summary>
+        /// Windows installs provisioned apps for each new user, and reinstalls them during feature updates.
+        /// </summary>
+        private sealed class StoreAppsDeprovisioned : ISetting
         {
-            int removedPackageCount = 0;
+            private readonly MemoryLogger logger;
 
-            try
+            public StoreAppsDeprovisioned(MemoryLogger logger)
+            {
+                this.logger = logger;
+            }
+
+            private static List<DismAppxPackage> FindPackages(DismSession session)
+            {
+                return DismApi.GetProvisionedAppxPackages(session)
+                    .Where(package => StoreApps.ShouldRemove(package.DisplayName))
+                    .ToList();
+            }
+
+            public bool IsApplied()
             {
                 using DismSession session = DismApi.OpenOnlineSession();
-                DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                foreach (DismAppxPackage package in dismAppxPackages)
+                List<DismAppxPackage> packages = FindPackages(session);
+
+                foreach (DismAppxPackage package in packages)
+                {
+                    logger.Log("{0} is provisioned", package.PackageName);
+                }
+
+                return packages.Count == 0;
+            }
+
+            public void Apply()
+            {
+                using DismSession session = DismApi.OpenOnlineSession();
+                List<string> failed = [];
+
+                foreach (DismAppxPackage package in FindPackages(session))
                 {
                     try
                     {
-                        if (StoreApps.ShouldRemove(package.DisplayName))
-                        {
-                            DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
-                            Logger.Log("Successfully deprovisioned {0}", package.DisplayName);
-                            removedPackageCount += 1;
-                        }
-                        else
-                        {
-                            Logger.Log("Not deprovisioning {0}", package.DisplayName);
-                        }
-
+                        DismApi.RemoveProvisionedAppxPackage(session, package.PackageName);
+                        logger.Log("Deprovisioned {0}.", package.DisplayName);
                     }
-                    catch (DismRebootRequiredException ex)
+                    catch (DismRebootRequiredException)
                     {
-                        Logger.Log("Successfully deprovisioned {0}: {1}", package.DisplayName, ex.Message);
-                        removedPackageCount += 1;
+                        logger.Log("Deprovisioned {0}. Windows finishes at the next restart.", package.DisplayName);
+                    }
+                    catch (DismException ex)
+                    {
+                        logger.Log("Could not deprovision {0}: {1}", package.DisplayName, ex.Message);
+                        failed.Add(package.DisplayName);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("An error occurred while deprovisioning packages: {0}", ex.Message);
-                return false;
+
+                if (failed.Count > 0)
+                {
+                    throw new InvalidOperationException($"Could not deprovision {string.Join(", ", failed)}.");
+                }
             }
 
-            if (removedPackageCount <= 0)
+            public override string ToString()
             {
-                Logger.Log("No Windows Store packages were deprovisioned.");
+                return "Pre-installed Store apps are deprovisioned";
             }
-
-            return true;
         }
     }
 }

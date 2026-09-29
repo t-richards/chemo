@@ -1,12 +1,9 @@
-using Microsoft.Win32;
+using Chemo.Settings;
 
 namespace Chemo.Treatment.Time
 {
-    internal sealed class SetClockUTC : BaseTreatment
+    internal sealed class SetClockUTC : SettingsTreatment
     {
-        private const string TimezoneKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation";
-        private const int DesiredValue = 1;
-
         public override string Name()
         {
             return "Set System Clock to UTC";
@@ -14,34 +11,15 @@ namespace Chemo.Treatment.Time
 
         public override string Tooltip()
         {
-            return @"Sets the system's hardware clock to Coordinated Universal Time (UTC). The Windows default is localtime.";
+            return "Sets the system's hardware clock to Coordinated Universal Time (UTC). The Windows default is localtime.";
         }
 
-        public override bool ShouldPerformTreatment()
+        protected override IEnumerable<ISetting> Settings()
         {
-            object value = Registry.GetValue(TimezoneKey, "RealTimeIsUniversal", 0);
-            if (value == null || (int)value != DesiredValue)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public override bool PerformTreatment()
-        {
-            try
-            {
-                Registry.SetValue(TimezoneKey, "RealTimeIsUniversal", 1, RegistryValueKind.DWord);
-                Logger.Log("Successfully set system clock to UTC.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not set system clock to UTC: {0}", ex.Message);
-            }
-
-            return false;
+            return
+            [
+                new RegistryValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\TimeZoneInformation", "RealTimeIsUniversal", 1),
+            ];
         }
     }
 }

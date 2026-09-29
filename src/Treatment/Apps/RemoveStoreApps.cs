@@ -1,9 +1,9 @@
 using Chemo.Data;
-using Chemo.Utilities;
+using Chemo.Settings;
 
 namespace Chemo.Treatment.Apps
 {
-    internal sealed class RemoveStoreApps : BaseTreatment
+    internal sealed class RemoveStoreApps : SettingsTreatment
     {
         public override string Name()
         {
@@ -15,56 +15,12 @@ namespace Chemo.Treatment.Apps
             return "Removes pre-installed ads, upsells, and discontinued apps such as News, Teams, and Solitaire for all users.";
         }
 
-        public override bool ShouldPerformTreatment()
+        protected override IEnumerable<ISetting> Settings()
         {
-            int packageCount = 0;
-
-            foreach (AppPackage package in AppPackages.FindForAllUsers())
-            {
-                if (StoreApps.ShouldRemove(package.Name))
-                {
-                    Logger.Log("Would remove {0}", package.Name);
-                    packageCount += 1;
-                }
-                else
-                {
-                    Logger.Log("Not removing {0}", package.Name);
-                }
-            }
-
-            if (packageCount > 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public override bool PerformTreatment()
-        {
-            List<AppPackage> packagesToRemove = [];
-
-            foreach (AppPackage package in AppPackages.FindForAllUsers())
-            {
-                if (StoreApps.ShouldRemove(package.Name))
-                {
-                    packagesToRemove.Add(package);
-                }
-                else
-                {
-                    Logger.Log("Not removing {0}", package.Name);
-                }
-            }
-
-            if (packagesToRemove.Count <= 0)
-            {
-                Logger.Log("No Windows Store applications were uninstalled.");
-            }
-
-            List<AppPackage> failed = AppPackages.RemoveForAllUsers(packagesToRemove, Logger);
-            Logger.Log("");
-
-            return failed.Count == 0;
+            return
+            [
+                new AppPackagesRemoved("Pre-installed Store apps", StoreApps.ShouldRemove, Logger),
+            ];
         }
     }
 }

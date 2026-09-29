@@ -1,11 +1,11 @@
 using Chemo.Settings;
-using Chemo.Utilities;
-using System.Diagnostics;
 
 namespace Chemo.Treatment.Taskbar
 {
     internal sealed class RemoveWidgets : SettingsTreatment
     {
+        private static readonly string[] PackageNames = ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"];
+
         public override string Name()
         {
             return "Remove Widgets";
@@ -20,56 +20,10 @@ namespace Chemo.Treatment.Taskbar
         {
             return
             [
-                new WidgetPackagesRemoved(Logger),
+                // Removal can fail while the widgets are running.
+                new AppPackagesRemoved("Widgets packages", name => PackageNames.Contains(name, StringComparer.OrdinalIgnoreCase), Logger, "Widgets", "WidgetService"),
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Dsh", "AllowNewsAndInterests", 0),
             ];
-        }
-
-        private sealed class WidgetPackagesRemoved : ISetting
-        {
-            private static readonly string[] PackageNames = ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"];
-            private static readonly string[] ProcessNames = ["Widgets", "WidgetService"];
-
-            private readonly MemoryLogger Logger;
-
-            public WidgetPackagesRemoved(MemoryLogger logger)
-            {
-                Logger = logger;
-            }
-
-            private static List<AppPackage> FindPackages()
-            {
-                return AppPackages.FindForAllUsers()
-                    .Where(p => PackageNames.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
-                    .ToList();
-            }
-
-            public bool IsApplied()
-            {
-                return FindPackages().Count == 0;
-            }
-
-            public void Apply()
-            {
-                // Removal can fail while the widgets are running.
-                foreach (Process process in ProcessNames.SelectMany(Process.GetProcessesByName))
-                {
-                    process.Kill();
-                    process.WaitForExit(5000);
-                }
-
-                List<AppPackage> failed = AppPackages.RemoveForAllUsers(FindPackages(), Logger);
-
-                if (failed.Count > 0)
-                {
-                    throw new InvalidOperationException($"Could not remove {string.Join(", ", failed.Select(p => p.Name))}.");
-                }
-            }
-
-            public override string ToString()
-            {
-                return "Widgets packages are removed";
-            }
         }
     }
 }
