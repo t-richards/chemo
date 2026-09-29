@@ -46,5 +46,39 @@ namespace Chemo
 
         [DllImport("advapi32.dll", SetLastError = true)]
         public static extern bool CloseServiceHandle(IntPtr hSCObject);
+
+        [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
+
+        public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
+        public const int LVM_SETITEMW = 0x1000 + 76;
+        public const int LVS_EX_SUBITEMIMAGES = 0x0002;
+        public const uint LVIF_IMAGE = 0x0002;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct LVITEMW
+        {
+            public uint mask;
+            public int iItem;
+            public int iSubItem;
+            public uint state;
+            public uint stateMask;
+            public IntPtr pszText;
+            public int cchTextMax;
+            public int iImage;
+            public IntPtr lParam;
+            public int iIndent;
+            public int iGroupId;
+            public uint cColumns;
+            public IntPtr puColumns;
+            public IntPtr piColFmt;
+            public int iGroup;
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SendMessageW")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll", EntryPoint = "SendMessageW")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, ref LVITEMW lParam);
     }
 }

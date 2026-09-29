@@ -1,200 +1,229 @@
-using Chemo.CoreExt;
 using Chemo.Treatment;
-using Microsoft.Dism;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Chemo
 {
-    // Size: 870x600
     public partial class frmMain : Form
     {
-        private static ImageList imageList;
-        private int progressPercent = 0;
-        private int progressIncrement = 0;
+        private bool cascadingChecks;
 
         public frmMain()
         {
             InitializeComponent();
 
-            // Other init stuff here
-            DismApi.InitializeEx(DismLogLevel.LogErrors);
-
-            // Treatments
+            lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16));
             InitTreatments();
+        }
 
-            // Icons
-            treeViewTreatments.ImageList = StateIcons;
-            treeViewTreatments.ImageKey = "NotStarted";
-            lstResults.SmallImageList = StateIcons;
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // While its handle is created, the list reports every checked item as newly checked, before all of the
+            // items are in place. Only follow check changes once the list is ready.
+            lstTreatments.ItemChecked += LstTreatments_ItemChecked;
         }
 
         public void InitTreatments()
         {
-            treeViewTreatments.Nodes.Clear();
+            lstTreatments.Items.Clear();
+            Font categoryFont = new Font(lstTreatments.Font, FontStyle.Bold);
 
             foreach (Category category in TreatmentCatalog.Categories)
             {
-                TreatmentNode[] treatmentNodes = category.Treatments.Select(t => new TreatmentNode(t)).ToArray();
-                TreeNode categoryNode = new TreeNode(category.Name, treatmentNodes)
+                CategoryItem categoryItem = new CategoryItem(category, categoryFont);
+                lstTreatments.Items.Add(categoryItem);
+
+                foreach (BaseTreatment treatment in category.Treatments)
                 {
-                    Checked = true,
-                    ToolTipText = category.Description
-                };
-
-                treeViewTreatments.Nodes.Add(categoryNode);
-            }
-
-            treeViewTreatments.ExpandAll();
-        }
-
-        public static ImageList StateIcons
-        {
-            get
-            {
-                if (imageList == null)
-                {
-                    imageList = new ImageList();
-                    imageList.Images.Add("NotStarted", Properties.Resources.StatusNotStarted_16x);
-                    imageList.Images.Add("Ok", Properties.Resources.StatusOK_16x);
-                    imageList.Images.Add("Info", Properties.Resources.StatusInformation_16x);
-                    imageList.Images.Add("Warning", Properties.Resources.StatusWarning_16x);
-                    imageList.Images.Add("Error", Properties.Resources.StatusCriticalError_16x);
-                }
-
-                return imageList;
-            }
-        }
-
-        private void BtnInitiateTreatment_Click(object sender, EventArgs e)
-        {
-            Reset();
-            List<TreatmentNode> performNodes = CollectTreatmentNodes();
-            ApplyTreatments(performNodes);
-        }
-
-        private async void ApplyTreatments(List<TreatmentNode> treeNodes)
-        {
-            foreach (TreatmentNode node in treeNodes)
-            {
-                var treatment = node.Treatment;
-                ConfiguredTaskAwaitable<bool> performTask = Task<bool>.Factory.StartNew(() => treatment.PerformTreatment()).ConfigureAwait(true);
-                Stopwatch stopWatch = new Stopwatch();
-
-                stopWatch.Start();
-                var result = await performTask;
-                stopWatch.Stop();
-
-                var listItem = new ListViewItem(treatment.Name());
-                if (result)
-                {
-                    listItem.ImageKey = "Ok";
-                    listItem.SubItems.Add("Successfully applied");
-                }
-                else
-                {
-                    listItem.ImageKey = "Error";
-                    listItem.SubItems.Add("Error, right click for detail");
-                }
-                listItem.SubItems.Add(stopWatch.Elapsed.ToString());
-                lstResults.Items.Add(listItem);
-                IncrementProgress();
-            }
-
-            SetProgress(100);
-        }
-
-        private List<TreatmentNode> CollectTreatmentNodes()
-        {
-            List<TreatmentNode> selectedTreatments = new List<TreatmentNode>();
-
-            foreach (TreeNode treeNode in treeViewTreatments.Nodes.All())
-            {
-                if (treeNode.Checked && treeNode.GetType() == typeof(TreatmentNode))
-                {
-                    selectedTreatments.Add((TreatmentNode)treeNode);
-                }
-            }
-
-            progressIncrement = (int)Math.Floor(100.0f / selectedTreatments.Count);
-
-            return selectedTreatments;
-        }
-
-        private void Reset()
-        {
-            // State
-            progressPercent = 0;
-            progressIncrement = 0;
-
-            // Components
-            lstResults.Items.Clear();
-            lstResults.Refresh();
-            lblProgressPercent.Text = "";
-            lblProgressPercent.Refresh();
-            prgTreatmentApplication.Value = 0;
-
-            foreach (var treeNode in treeViewTreatments.Nodes.All())
-            {
-                treeNode.ImageKey = "NotStarted";
-                if (treeNode.GetType() == typeof(TreatmentNode))
-                {
-                    var treatment = ((TreatmentNode)treeNode).Treatment;
-                    treatment.Logger.Reset();
+                    TreatmentItem treatmentItem = new TreatmentItem(treatment, categoryItem);
+                    categoryItem.Treatments.Add(treatmentItem);
+                    lstTreatments.Items.Add(treatmentItem);
                 }
             }
         }
 
-        private void IncrementProgress()
+        private async void BtnAnalyze_Click(object sender, EventArgs e)
         {
-            progressPercent += progressIncrement;
-            lblProgressPercent.Text = $"{progressPercent}%";
-            lblProgressPercent.Refresh();
-            prgTreatmentApplication.Value = progressPercent;
-        }
-
-        private void SetProgress(int value)
-        {
-            progressPercent = value;
-            lblProgressPercent.Text = $"{progressPercent}%";
-            lblProgressPercent.Refresh();
-            prgTreatmentApplication.Value = progressPercent;
-        }
-
-        private void TreeViewTreatments_AfterCheck(object sender, TreeViewEventArgs e)
-        {
-            if (e.Action == TreeViewAction.Unknown)
+            List<TreatmentItem> treatments = CheckedTreatments();
+            if (!BeginRun(treatments))
             {
                 return;
             }
 
+            int readyCount = 0;
+            int failedCount = 0;
+            Stopwatch overallTime = Stopwatch.StartNew();
+
+            foreach (TreatmentItem item in treatments)
+            {
+                lblStatus.Text = $"Analyzing {item.Text}…";
+                item.SetStatus(TreatmentStatus.NotStarted, "Analyzing…");
+
+                (bool shouldPerform, TimeSpan duration, bool failed) = await RunStep(item.Treatment, t => t.ShouldPerformTreatment());
+
+                if (failed)
+                {
+                    item.SetStatus(TreatmentStatus.Error, "Couldn't analyze, right-click for details", duration);
+                    failedCount += 1;
+                }
+                else if (shouldPerform)
+                {
+                    item.SetStatus(TreatmentStatus.Info, "Ready to apply", duration);
+                    readyCount += 1;
+                }
+                else
+                {
+                    item.SetStatus(TreatmentStatus.Ok, "Already applied", duration);
+                }
+
+                prgTreatmentApplication.Value += 1;
+            }
+
+            string summary = $"Analyzed {Count(treatments.Count, "treatment")} in {Durations.Humanize(overallTime.Elapsed)}. ";
+            summary += readyCount == 0 ? "Nothing needs to be applied." : $"{readyCount} ready to apply.";
+            if (failedCount > 0)
+            {
+                summary += $" {failedCount} couldn't be analyzed.";
+            }
+            EndRun(summary);
+        }
+
+        private async void BtnInitiateTreatment_Click(object sender, EventArgs e)
+        {
+            List<TreatmentItem> treatments = CheckedTreatments();
+            if (!BeginRun(treatments))
+            {
+                return;
+            }
+
+            int failedCount = 0;
+            Stopwatch overallTime = Stopwatch.StartNew();
+
+            foreach (TreatmentItem item in treatments)
+            {
+                lblStatus.Text = $"Applying {item.Text}…";
+                item.SetStatus(TreatmentStatus.NotStarted, "Applying…");
+
+                (bool succeeded, TimeSpan duration, bool failed) = await RunStep(item.Treatment, t => t.PerformTreatment());
+
+                if (succeeded && !failed)
+                {
+                    item.SetStatus(TreatmentStatus.Ok, "Applied", duration);
+                }
+                else
+                {
+                    item.SetStatus(TreatmentStatus.Error, "Failed, right-click for details", duration);
+                    failedCount += 1;
+                }
+
+                prgTreatmentApplication.Value += 1;
+            }
+
+            string summary = $"Applied {Count(treatments.Count, "treatment")} in {Durations.Humanize(overallTime.Elapsed)}.";
+            if (failedCount > 0)
+            {
+                summary += $" {failedCount} failed; right-click for details.";
+            }
+            EndRun(summary);
+        }
+
+        /// <summary>
+        /// Runs part of a treatment in the background, recording any exception in the treatment's log.
+        /// </summary>
+        private static async Task<(bool Result, TimeSpan Duration, bool Failed)> RunStep(BaseTreatment treatment, Func<BaseTreatment, bool> step)
+        {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             try
             {
-                CheckTreeViewNodes(e.Node, e.Node.Checked);
+                bool result = await Task.Run(() => step(treatment));
+                return (result, stopwatch.Elapsed, false);
             }
-            finally
+            catch (Exception ex)
             {
-                e.Node.TreeView.EndUpdate();
+                treatment.Logger.Log("{0}", ex.Message);
+                return (false, stopwatch.Elapsed, true);
             }
         }
 
-        private void CheckTreeViewNodes(TreeNode node, bool isChecked)
+        private List<TreatmentItem> CheckedTreatments()
         {
-            foreach (TreeNode child in node.Nodes)
-            {
-                child.Checked = isChecked;
+            return lstTreatments.Items.OfType<TreatmentItem>().Where(item => item.Checked).ToList();
+        }
 
-                if (child.Nodes.Count > 0)
+        /// <summary>
+        /// Clears the previous run's results and, if any treatments are selected, disables the buttons until the run ends.
+        /// </summary>
+        /// <returns>Returns true if there is anything to run, false otherwise.</returns>
+        private bool BeginRun(List<TreatmentItem> treatments)
+        {
+            foreach (TreatmentItem item in lstTreatments.Items.OfType<TreatmentItem>())
+            {
+                item.SetStatus(TreatmentStatus.NotStarted, "");
+                item.Treatment.Logger.Reset();
+            }
+
+            prgTreatmentApplication.Value = 0;
+
+            if (treatments.Count == 0)
+            {
+                lblStatus.Text = "Select at least one treatment.";
+                return false;
+            }
+
+            prgTreatmentApplication.Maximum = treatments.Count;
+            btnAnalyze.Enabled = false;
+            btnInitiateTreatment.Enabled = false;
+            return true;
+        }
+
+        private void EndRun(string summary)
+        {
+            lblStatus.Text = summary;
+            btnAnalyze.Enabled = true;
+            btnInitiateTreatment.Enabled = true;
+        }
+
+        private static string Count(int count, string noun)
+        {
+            return count == 1 ? $"1 {noun}" : $"{count} {noun}s";
+        }
+
+        private void LstTreatments_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            // Checking a category checks its treatments, and a category stays checked only while all of its treatments are.
+            if (cascadingChecks)
+            {
+                return;
+            }
+
+            cascadingChecks = true;
+            try
+            {
+                switch (e.Item)
                 {
-                    CheckTreeViewNodes(child, isChecked);
+                    case CategoryItem category:
+                        foreach (TreatmentItem treatment in category.Treatments)
+                        {
+                            treatment.Checked = category.Checked;
+                        }
+                        break;
+
+                    case TreatmentItem treatment:
+                        treatment.Category.Checked = treatment.Category.Treatments.All(t => t.Checked);
+                        break;
                 }
+            }
+            finally
+            {
+                cascadingChecks = false;
             }
         }
 
@@ -205,88 +234,31 @@ namespace Chemo
             aboutForm.Dispose();
         }
 
-        private async void BtnAnalyze_Click(object sender, EventArgs e)
-        {
-            Reset();
-
-            int performTreatmentCount = 0;
-
-            Stopwatch overallAnalysisTime = new Stopwatch();
-            overallAnalysisTime.Start();
-
-            List<TreatmentNode> selectedTreatments = CollectTreatmentNodes();
-
-            foreach (TreatmentNode node in selectedTreatments)
-            {
-                var treatment = node.Treatment;
-                ListViewItem detail = new ListViewItem(treatment.Name());
-                ConfiguredTaskAwaitable<bool> analyzeTask = Task<bool>.Factory.StartNew(() => treatment.ShouldPerformTreatment()).ConfigureAwait(true);
-                Stopwatch itemTime = new Stopwatch();
-
-                itemTime.Start();
-                bool shouldPerform = await analyzeTask;
-                itemTime.Stop();
-
-                node.ImageKey = "Ok";
-
-                if (shouldPerform)
-                {
-                    detail.SubItems.Add("Should be applied");
-                    performTreatmentCount += 1;
-                }
-                else
-                {
-                    detail.SubItems.Add("Already applied");
-                }
-
-                detail.Tag = treatment;
-                detail.ImageKey = "Ok";
-                detail.SubItems.Add(itemTime.Elapsed.ToString());
-                lstResults.Items.Add(detail);
-            }
-
-            overallAnalysisTime.Stop();
-
-            // Analysis top item
-            ListViewItem analysis = new ListViewItem("Analysis Complete", "OK");
-            analysis.SubItems.Add("");
-            analysis.SubItems.Add(overallAnalysisTime.Elapsed.ToString());
-
-            StringBuilder tooltip = new StringBuilder();
-            tooltip.Append($"Selected {selectedTreatments.Count} treatments.\r\n");
-            tooltip.Append($"{performTreatmentCount} treatments need to be applied.\r\n");
-            tooltip.Append($"{selectedTreatments.Count - performTreatmentCount} treatments already applied.\r\n");
-            analysis.ToolTipText = tooltip.ToString();
-            lstResults.Items.Insert(0, analysis);
-        }
-
-        private void LstResults_MouseClick(object sender, MouseEventArgs e)
+        private void LstTreatments_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
             {
                 return;
             }
 
-            Point clickPoint = new Point(e.X, e.Y);
-            ListViewHitTestInfo hitTestInfo = lstResults.HitTest(clickPoint);
+            lstTreatments.ContextMenuStrip?.Dispose();
+            lstTreatments.ContextMenuStrip = null;
 
-            if (hitTestInfo.Item == null || hitTestInfo.Item.Tag == null)
+            if (lstTreatments.HitTest(e.Location).Item is not TreatmentItem item)
             {
                 return;
             }
 
-            string text = $"Show Details for {hitTestInfo.Item.Text}";
             ContextMenuStrip menu = new ContextMenuStrip
             {
-                Tag = hitTestInfo.Item.Tag
+                Tag = item.Treatment
             };
-            menu.Items.Add(text, null, LstResults_OnContextMenuClick);
+            menu.Items.Add($"Show Details for {item.Text}", null, LstTreatments_OnContextMenuClick);
 
-            lstResults.ContextMenuStrip?.Dispose();
-            lstResults.ContextMenuStrip = menu;
+            lstTreatments.ContextMenuStrip = menu;
         }
 
-        private void LstResults_OnContextMenuClick(object sender, EventArgs e)
+        private void LstTreatments_OnContextMenuClick(object sender, EventArgs e)
         {
             ToolStripItem senderItem = (ToolStripItem)sender;
             BaseTreatment treatment = (BaseTreatment)senderItem.Owner.Tag;

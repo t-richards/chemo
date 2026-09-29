@@ -1,3 +1,4 @@
+using Microsoft.Dism;
 using System;
 using System.Windows.Forms;
 
@@ -15,7 +16,16 @@ namespace Chemo
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.SetColorMode(SystemColorMode.Dark);
-            Application.Run(new frmMain());
+
+            DismApi.InitializeEx(DismLogLevel.LogErrors);
+            try
+            {
+                Application.Run(new frmMain());
+            }
+            finally
+            {
+                DismApi.Shutdown();
+            }
         }
     }
 }
