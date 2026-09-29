@@ -18,6 +18,17 @@ namespace Chemo.Utilities
         FailIfNotTrackable = 32,
     }
 
+    /// <summary>
+    /// Whether an app's native popup menus are light or dark.
+    /// </summary>
+    internal enum PreferredAppMode
+    {
+        Default = 0,
+        AllowDark = 1,
+        ForceDark = 2,
+        ForceLight = 3,
+    }
+
     internal static class UnsafeNativeMethods
     {
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
@@ -52,6 +63,27 @@ namespace Chemo.Utilities
 
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hWnd, string? pszSubAppName, string? pszSubIdList);
+
+        // Undocumented, exported only by ordinal since Windows 10 1903. Notepad++ and many other apps use them to make
+        // their native popup menus dark.
+        [DllImport("uxtheme.dll", EntryPoint = "#135")]
+        public static extern PreferredAppMode SetPreferredAppMode(PreferredAppMode appMode);
+
+        [DllImport("uxtheme.dll", EntryPoint = "#136")]
+        public static extern void FlushMenuThemes();
+
+        public const int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
+
+        public const uint RDW_INVALIDATE = 0x0001;
+        public const uint RDW_ERASE = 0x0004;
+        public const uint RDW_ALLCHILDREN = 0x0080;
+        public const uint RDW_FRAME = 0x0400;
+
+        [DllImport("user32.dll")]
+        public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
 
         public static readonly IntPtr HWND_BROADCAST = new(0xFFFF);
         public const int WM_SETTINGCHANGE = 0x001A;
@@ -150,8 +182,10 @@ namespace Chemo.Utilities
         [DllImport("user32.dll")]
         public static extern uint GetMenuItemID(IntPtr hMenu, int nPos);
 
+        public const int LVM_GETHEADER = 0x1000 + 31;
         public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
         public const int LVM_SETITEMW = 0x1000 + 76;
+        public const int LVM_GETTOOLTIPS = 0x1000 + 78;
         public const int LVS_EX_SUBITEMIMAGES = 0x0002;
         public const uint LVIF_IMAGE = 0x0002;
 
@@ -174,6 +208,46 @@ namespace Chemo.Utilities
             public IntPtr piColFmt;
             public int iGroup;
         }
+
+        // Custom drawing
+        public const int WM_NOTIFY = 0x004E;
+        public const int NM_CUSTOMDRAW = -12;
+        public const int CDDS_PREPAINT = 0x00000001;
+        public const int CDDS_ITEMPREPAINT = 0x00010001;
+        public const int CDRF_DODEFAULT = 0x00000000;
+        public const int CDRF_NOTIFYITEMDRAW = 0x00000020;
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct NMHDR
+        {
+            public IntPtr hwndFrom;
+            public IntPtr idFrom;
+            public int code;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct RECT
+        {
+            public int left;
+            public int top;
+            public int right;
+            public int bottom;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct NMCUSTOMDRAW
+        {
+            public NMHDR hdr;
+            public int dwDrawStage;
+            public IntPtr hdc;
+            public RECT rc;
+            public IntPtr dwItemSpec;
+            public uint uItemState;
+            public IntPtr lItemlParam;
+        }
+
+        [DllImport("gdi32.dll")]
+        public static extern int SetTextColor(IntPtr hdc, int color);
 
         [DllImport("user32.dll", EntryPoint = "SendMessageW")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);

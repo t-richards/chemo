@@ -125,6 +125,7 @@ namespace Chemo
             // analyzeButton
             //
             this.analyzeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.analyzeButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.analyzeButton.Location = new System.Drawing.Point(600, 536);
             this.analyzeButton.Name = "analyzeButton";
             this.analyzeButton.Size = new System.Drawing.Size(120, 30);
@@ -136,6 +137,7 @@ namespace Chemo
             // applyButton
             //
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.applyButton.Location = new System.Drawing.Point(728, 536);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(120, 30);

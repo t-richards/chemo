@@ -11,6 +11,10 @@ namespace Chemo
     {
         private readonly Font categoryFont;
         private readonly string fullVersion;
+        private readonly ToolStripRenderMode menuRenderMode;
+        private readonly ToolStripRenderMode statusRenderMode;
+        private readonly ThemeChoice themeChoice = ThemeChoice.System;
+        private bool dark;
         private bool cascadingChecks;
 
         public MainForm()
@@ -18,7 +22,6 @@ namespace Chemo
             InitializeComponent();
 
             categoryFont = new(treatmentList.Font, FontStyle.Bold);
-            treatmentList.SmallImageList = FluentIcons.CreateStatusIcons(treatmentList.LogicalToDeviceUnits(16), dark: false);
 
             // The full version ends with "+" and the commit it was built from, which is too long for the menu but
             // useful in bug reports, so the menu shows the version number and clicking it copies the rest.
@@ -26,21 +29,138 @@ namespace Chemo
             versionMenuItem.Text = $"Version {fullVersion.Split('+')[0]}";
             versionMenuItem.ToolTipText = $"Copy {fullVersion}";
             helpMenuItem.DropDown.ShowItemToolTips = true;
+            helpMenuItem.DropDown.Opened += HelpMenu_Opened;
 
-            SetMenuIcon(versionMenuItem, FluentIcons.CopyGlyph);
-            SetMenuIcon(githubMenuItem, FluentIcons.OpenInNewWindowGlyph);
+            // Light mode puts back the renderers the strips start with.
+            menuRenderMode = menuStrip.RenderMode;
+            statusRenderMode = statusStrip.RenderMode;
+
+            // These are drawn by Windows, so each gets Windows' light or dark look whenever its window is created.
+            detailsTextBox.HandleCreated += NativeControl_HandleCreated;
+            analyzeButton.HandleCreated += NativeControl_HandleCreated;
+            applyButton.HandleCreated += NativeControl_HandleCreated;
+            progressBar.ProgressBar.HandleCreated += NativeControl_HandleCreated;
+
+            ApplyTheme(DarkTheme.UseDark(themeChoice, DarkTheme.WindowsIsDark(), SystemInformation.HighContrast));
 
             InitTreatments();
             ShowDetails();
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            // Set before the window is first shown, so it never flashes a light title bar.
+            DarkTheme.SetTitleBar(Handle, dark);
+        }
+
         /// <summary>
-        /// Gives a menu item an icon drawn for the display's scale, so it isn't stretched.
+        /// Switches every control between light and dark.
+        /// </summary>
+        private void ApplyTheme(bool useDark)
+        {
+            dark = useDark;
+            DarkTheme.SetMenuMode(useDark);
+
+            if (useDark)
+            {
+                // A new renderer each time, because after going back to the manager's renderer, a strip ignores being
+                // given the renderer it had before.
+                DarkToolStripRenderer darkRenderer = new();
+
+                BackColor = DarkTheme.Background;
+                ForeColor = DarkTheme.Text;
+                menuStrip.Renderer = darkRenderer;
+                statusStrip.Renderer = darkRenderer;
+                splitContainer.Panel2.BackColor = DarkTheme.Border;
+                detailsTextBox.BackColor = DarkTheme.Surface;
+                detailsTextBox.ForeColor = DarkTheme.Text;
+                progressBar.ProgressBar.ForeColor = DarkTheme.ProgressBar;
+                progressBar.ProgressBar.BackColor = DarkTheme.ProgressTrack;
+            }
+            else
+            {
+                ResetBackColor();
+                ResetForeColor();
+                menuStrip.RenderMode = menuRenderMode;
+                statusStrip.RenderMode = statusRenderMode;
+                splitContainer.Panel2.ResetBackColor();
+                detailsTextBox.ResetBackColor();
+                detailsTextBox.ResetForeColor();
+                progressBar.ProgressBar.ResetForeColor();
+                progressBar.ProgressBar.ResetBackColor();
+            }
+
+            // Windows' dark text box keeps the light look's white border, so in dark mode the details box has no
+            // border of its own and its panel shows a line of color around it instead.
+            detailsTextBox.BorderStyle = useDark ? BorderStyle.None : BorderStyle.Fixed3D;
+            splitContainer.Panel2.Padding = new Padding(useDark ? 1 : 0);
+
+            treatmentList.Dark = useDark;
+            SetMenuIcon(versionMenuItem, FluentIcons.CopyGlyph);
+            SetMenuIcon(githubMenuItem, FluentIcons.OpenInNewWindowGlyph);
+
+            foreach (Control control in new Control[] { detailsTextBox, analyzeButton, applyButton, progressBar.ProgressBar })
+            {
+                if (control.IsHandleCreated)
+                {
+                    SetNativeTheme(control);
+                }
+            }
+
+            if (IsHandleCreated)
+            {
+                DarkTheme.SetTitleBar(Handle, useDark);
+
+                // Windows doesn't repaint borders and scrollbars when their theme changes.
+                UnsafeNativeMethods.RedrawWindow(
+                    Handle,
+                    IntPtr.Zero,
+                    IntPtr.Zero,
+                    UnsafeNativeMethods.RDW_FRAME | UnsafeNativeMethods.RDW_INVALIDATE | UnsafeNativeMethods.RDW_ERASE | UnsafeNativeMethods.RDW_ALLCHILDREN);
+            }
+        }
+
+        private void NativeControl_HandleCreated(object sender, EventArgs e)
+        {
+            SetNativeTheme((Control)sender);
+        }
+
+        private void SetNativeTheme(Control control)
+        {
+            if (control is ProgressBar)
+            {
+                // Windows' dark progress bars aren't in every version of Windows 11, so dark mode turns the progress
+                // bar's theme off, which makes it a flat bar in its ForeColor and BackColor.
+                _ = UnsafeNativeMethods.SetWindowTheme(control.Handle, dark ? " " : null, dark ? " " : null);
+            }
+            else
+            {
+                DarkTheme.SetWindowTheme(control.Handle, dark);
+            }
+        }
+
+        private void HelpMenu_Opened(object sender, EventArgs e)
+        {
+            // Windows Forms keeps a menu's tooltip to itself, so it's found through reflection. Windows Forms for .NET
+            // Framework no longer changes, and if this ever fails the tooltip keeps the light look.
+            ToolTip? toolTip = typeof(ToolStrip).GetProperty("ToolTip", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(helpMenuItem.DropDown) as ToolTip;
+            if (typeof(ToolTip).GetProperty("Handle", BindingFlags.Instance | BindingFlags.NonPublic)?.GetValue(toolTip) is IntPtr toolTipHandle)
+            {
+                DarkTheme.SetWindowTheme(toolTipHandle, dark);
+            }
+        }
+
+        /// <summary>
+        /// Gives a menu item an icon drawn for the display's scale and the current theme, so it isn't stretched.
         /// </summary>
         private void SetMenuIcon(ToolStripMenuItem item, string glyph)
         {
-            item.Image = FluentIcons.DrawGlyph(glyph, LogicalToDeviceUnits(16), SystemColors.MenuText);
+            Image? oldImage = item.Image;
+            item.Image = FluentIcons.DrawGlyph(glyph, LogicalToDeviceUnits(16), dark ? DarkTheme.Text : SystemColors.MenuText);
             item.ImageScaling = ToolStripItemImageScaling.None;
+            oldImage?.Dispose();
         }
 
         protected override void OnLoad(EventArgs e)
