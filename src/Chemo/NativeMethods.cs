@@ -50,6 +50,13 @@ namespace Chemo
         [DllImport("uxtheme.dll", CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
 
+        public static readonly IntPtr HWND_BROADCAST = new IntPtr(0xFFFF);
+        public const int WM_SETTINGCHANGE = 0x001A;
+        public const uint SMTO_ABORTIFHUNG = 0x0002;
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, EntryPoint = "SendMessageTimeoutW")]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, int msg, IntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
+
         public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
         public const int LVM_SETITEMW = 0x1000 + 76;
         public const int LVS_EX_SUBITEMIMAGES = 0x0002;
