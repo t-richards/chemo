@@ -72,7 +72,7 @@ Chemo aims to support versions of Windows that are still covered under "Security
 - Use year-month-day dates
 - Set system clock to UTC.
 16. Updates
-- Disable forced reboot after Windows Update
+- Delay restarts after Windows Update
 
 ## Download
 

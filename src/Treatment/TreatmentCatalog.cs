@@ -88,7 +88,7 @@ namespace Chemo.Treatment
                 new Time.SetClockUTC()),
 
             new Category("Updates", "Control when Windows Update interrupts you.",
-                new Updates.WindowsUpdateReboot()),
+                new Updates.DelayUpdateRestarts()),
         ];
     }
 }
