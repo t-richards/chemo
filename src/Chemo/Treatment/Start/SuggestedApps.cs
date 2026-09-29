@@ -1,23 +1,11 @@
-using Microsoft.Win32;
-using System;
+using Chemo.Settings;
+using System.Collections.Generic;
 
 namespace Chemo.Treatment.Start
 {
-    class SuggestedApps : BaseTreatment
+    class SuggestedApps : SettingsTreatment
     {
-        // Tiles
-        private const string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent";
-        private const string ConsumerFeaturesKey = "DisableWindowsConsumerFeatures";
-        private const int ConsumerFeaturesValue = 1;
-
-        // Suggestions v0
         private const string ContentDeliveryManager = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
-        private const string SuggestionsKey = "SystemPaneSuggestionsEnabled";
-        private const int SuggestionsValue = 0;
-
-        // Suggestions v1
-        private const string SubscribedContent = "SubscribedContent-338388Enabled";
-        private const int SubscribedContentValue = 0;
 
         public override string Name()
         {
@@ -26,34 +14,25 @@ namespace Chemo.Treatment.Start
 
         public override string Tooltip()
         {
-            return @"Prevents 'recommended' applications from displaying on the start menu.";
+            return "Stops Windows from recommending apps in the Start menu and from quietly installing promoted apps.";
         }
 
-        public override bool ShouldPerformTreatment()
+        protected override IEnumerable<ISetting> Settings()
         {
-            return !(
-                RegistryUtils.IntEquals(CloudContent, ConsumerFeaturesKey, ConsumerFeaturesValue) &&
-                RegistryUtils.IntEquals(ContentDeliveryManager, SuggestionsKey, SuggestionsValue) &&
-                RegistryUtils.IntEquals(ContentDeliveryManager, SubscribedContent, SubscribedContentValue)
-            );
-        }
-
-        public override bool PerformTreatment()
-        {
-            try
+            return new ISetting[]
             {
-                Registry.SetValue(CloudContent, ConsumerFeaturesKey, ConsumerFeaturesValue, RegistryValueKind.DWord);
-                Registry.SetValue(ContentDeliveryManager, SuggestionsKey, SuggestionsValue, RegistryValueKind.DWord);
-                Registry.SetValue(ContentDeliveryManager, SubscribedContent, SubscribedContentValue, RegistryValueKind.DWord);
-                Logger.Log("Successfully turned off suggested apps.");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not turn off suggested apps: {0}", ex.Message);
-            }
+                // Consumer features policy. Only Enterprise and Education honor it; the values below cover Pro.
+                new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures", 1),
 
-            return false;
+                // Start menu suggestions
+                new RegistryValue(ContentDeliveryManager, "SystemPaneSuggestionsEnabled", 0),
+                new RegistryValue(ContentDeliveryManager, "SubscribedContent-338388Enabled", 0),
+
+                // Promoted apps that install themselves
+                new RegistryValue(ContentDeliveryManager, "SilentInstalledAppsEnabled", 0),
+                new RegistryValue(ContentDeliveryManager, "PreInstalledAppsEnabled", 0),
+                new RegistryValue(ContentDeliveryManager, "OemPreInstalledAppsEnabled", 0),
+            };
         }
     }
 }

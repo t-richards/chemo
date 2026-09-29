@@ -1,17 +1,10 @@
 using Chemo.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using Windows.ApplicationModel;
-using Windows.Foundation;
-using Windows.Management.Deployment;
 
 namespace Chemo.Treatment.Apps
 {
     class RemoveStoreApps : BaseTreatment
     {
-        private static readonly PackageManager packageManager = new PackageManager();
-
         public override string Name()
         {
             return "Remove Windows Store Apps";
@@ -25,9 +18,8 @@ namespace Chemo.Treatment.Apps
         public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
-            IEnumerable<Package> packages = packageManager.FindPackages().DistinctBy(p => p.Id.FullName);
 
-            foreach (Package package in packages)
+            foreach (Package package in AppPackages.FindForAllUsers())
             {
                 if (StoreApps.ShouldRemove(package.Id.Name))
                 {
@@ -51,13 +43,12 @@ namespace Chemo.Treatment.Apps
         public override bool PerformTreatment()
         {
             int packageCount = 0;
-            IEnumerable<Package> packages = packageManager.FindPackages().DistinctBy(p => p.Id.FullName);
 
-            foreach (var package in packages)
+            foreach (Package package in AppPackages.FindForAllUsers())
             {
                 if (StoreApps.ShouldRemove(package.Id.Name))
                 {
-                    RemovePackage(package);
+                    AppPackages.RemoveForAllUsers(package, Logger);
                     packageCount += 1;
                 }
                 else
@@ -73,29 +64,6 @@ namespace Chemo.Treatment.Apps
             Logger.Log("");
 
             return true;
-        }
-
-        private void RemovePackage(Package package)
-        {
-            IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
-                packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.RemoveForAllUsers);
-
-            ManualResetEvent opCompletedEvent = new ManualResetEvent(false);
-
-            deploymentOperation.Completed = (result, progress) =>
-            {
-                Logger.Log("Removal operation {1}: {0}", package.Id.Name, result.Status);
-                if (result.Status == AsyncStatus.Error)
-                {
-                    DeploymentResult deploymentResult = deploymentOperation.GetResults();
-                    Logger.Log("Error code: {0}", deploymentOperation.ErrorCode);
-                    Logger.Log("Error text: {0}", deploymentResult.ErrorText);
-                }
-                opCompletedEvent.Set();
-            };
-
-            opCompletedEvent.WaitOne();
-            opCompletedEvent.Dispose();
         }
     }
 }

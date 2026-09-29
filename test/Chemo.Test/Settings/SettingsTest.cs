@@ -1,0 +1,72 @@
+using Chemo.Settings;
+using Microsoft.Win32;
+using System;
+using Xunit;
+
+namespace Chemo.Test
+{
+    public sealed class SettingsTest : IDisposable
+    {
+        private readonly string subKey = @"Software\Chemo.Test\" + Guid.NewGuid();
+        private string KeyName => @"HKEY_CURRENT_USER\" + subKey;
+
+        public void Dispose()
+        {
+            Registry.CurrentUser.DeleteSubKeyTree(subKey, false);
+        }
+
+        [Fact]
+        public void RegistryValueAppliesDwords()
+        {
+            RegistryValue setting = new RegistryValue(KeyName, "Value", 1);
+
+            Assert.False(setting.IsApplied());
+            setting.Apply();
+            Assert.True(setting.IsApplied());
+            Assert.Equal(RegistryValueKind.DWord, Registry.CurrentUser.OpenSubKey(subKey).GetValueKind("Value"));
+        }
+
+        [Fact]
+        public void RegistryValueDetectsOtherValues()
+        {
+            Registry.SetValue(KeyName, "Value", 0, RegistryValueKind.DWord);
+
+            Assert.False(new RegistryValue(KeyName, "Value", 1).IsApplied());
+            Assert.False(new RegistryValue(KeyName, "Value", "0", RegistryValueKind.String).IsApplied());
+        }
+
+        [Fact]
+        public void DeletedRegistryValueRemovesValues()
+        {
+            Registry.SetValue(KeyName, "Value", 1, RegistryValueKind.DWord);
+            DeletedRegistryValue setting = new DeletedRegistryValue(KeyName, "Value");
+
+            Assert.False(setting.IsApplied());
+            setting.Apply();
+            Assert.True(setting.IsApplied());
+        }
+
+        [Fact]
+        public void DeletedRegistryValueIgnoresMissingKeys()
+        {
+            DeletedRegistryValue setting = new DeletedRegistryValue(KeyName + @"\Missing", "Value");
+
+            Assert.True(setting.IsApplied());
+            setting.Apply();
+        }
+
+        [Fact]
+        public void ServiceStartupReadsStartType()
+        {
+            // The event log service always starts automatically.
+            Assert.True(new ServiceStartup("EventLog", ServiceStartType.Automatic).IsApplied());
+            Assert.False(new ServiceStartup("EventLog", ServiceStartType.Disabled).IsApplied());
+        }
+
+        [Fact]
+        public void ServiceStartupIgnoresMissingServices()
+        {
+            Assert.True(new ServiceStartup("Chemo.Test.Missing", ServiceStartType.Disabled).IsApplied());
+        }
+    }
+}

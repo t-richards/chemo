@@ -40,7 +40,7 @@ namespace Chemo.Test
         {
             foreach (Category category in TreatmentCatalog.Categories)
             {
-                string expectedNamespace = "Chemo.Treatment." + category.Name.Replace("-", "");
+                string expectedNamespace = "Chemo.Treatment." + string.Concat(category.Name.Where(char.IsLetterOrDigit));
 
                 Assert.All(category.Treatments, t =>
                     Assert.Equal(expectedNamespace, t.GetType().Namespace, ignoreCase: true));

@@ -14,12 +14,29 @@ Chemo aims to support versions of Windows that are still covered under "Security
 2. Apps
   - Remove junk apps
   - Uninstall OneDrive
-3. Start
+3. Devices
+  - Prevent device companion apps
+  - Block PC maker software from firmware (WPBT)
+4. File Explorer
+  - Disable automatic folder type discovery
+5. Performance
+  - Trim background services
+6. Power
+  - Disable hibernation
+7. Privacy
+  - Disable telemetry
+  - Disable location tracking
+8. Start
   - Disable internet search results
+  - Disable Store results in search
   - Disable app recommendations
-4. Time
+  - Restore previous Start menu layout
+9. Taskbar
+  - Remove Widgets
+  - Enable End task on right click
+10. Time
   - Set system clock to UTC.
-5. Updates
+11. Updates
   - Disable forced reboot after Windows Update
 
 ## Download
