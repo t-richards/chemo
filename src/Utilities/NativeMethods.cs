@@ -66,6 +66,7 @@ namespace Chemo.Utilities
         public const uint SPI_SETSCREENSAVETIMEOUT = 0x000F;
         public const uint SPI_GETSCREENSAVEACTIVE = 0x0010;
         public const uint SPI_SETSCREENSAVEACTIVE = 0x0011;
+        public const uint SPI_SETDESKWALLPAPER = 0x0014;
         public const uint SPI_GETSTICKYKEYS = 0x003A;
         public const uint SPI_SETSTICKYKEYS = 0x003B;
         public const uint SPI_GETANIMATION = 0x0048;
@@ -104,6 +105,9 @@ namespace Chemo.Utilities
 
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
         public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref STICKYKEYS pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, string pvParam, uint fWinIni);
 
         // Locale information for the current user
         public const uint LOCALE_USER_DEFAULT = 0x0400;

@@ -14,6 +14,7 @@ Chemo aims to support versions of Windows that are still covered under "Security
 - Enable Dark Mode
 - Disable Transparency
 - Turn off animations
+- Replace the Spotlight wallpaper
 2. Apps
 - Remove junk apps
 - Uninstall OneDrive
@@ -45,15 +46,18 @@ Chemo aims to support versions of Windows that are still covered under "Security
 - Disable telemetry
 - Disable location tracking
 12. Sound
-- Turn off system sounds
+- Turn off system sounds and the startup sound
 - Don't lower other sounds during calls
 13. Start
 - Disable internet search results
 - Disable Store results in search
 - Disable app recommendations
+- Unpin everything from Start
+- Hide recent items in Start
 - Restore previous Start menu layout
 14. Taskbar
 - Remove Widgets
+- Hide search and Task View
 - Align the taskbar to the left
 - Combine taskbar buttons only when full
 - Show all system tray icons

@@ -14,7 +14,7 @@ namespace Chemo.Treatment.Sound
 
         public override string Tooltip()
         {
-            return "Switches to the No Sounds scheme, silencing Windows' notification, error, and other event sounds. " +
+            return "Switches to the No Sounds scheme and turns off the startup sound, silencing Windows' notification, error, and other event sounds. " +
                 "Alarms, ringtones for calls, music, and videos aren't affected.";
         }
 
@@ -23,6 +23,10 @@ namespace Chemo.Treatment.Sound
             return new ISetting[]
             {
                 new NoSoundsScheme(),
+
+                // Unchecking "Play Windows Startup sound" in the Sound control panel sets both of these.
+                new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation", "DisableStartupSound", 1),
+                new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EditionOverrides", "UserSetting_DisableStartupSound", 1),
             };
         }
 

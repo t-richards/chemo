@@ -17,7 +17,8 @@ namespace Chemo.Treatment
             new Category("Appearance", "Change how Windows looks.",
                 new Appearance.DarkMode(),
                 new Appearance.DisableTransparency(),
-                new Appearance.DisableAnimations()),
+                new Appearance.DisableAnimations(),
+                new Appearance.ReplaceSpotlightWallpaper()),
 
             new Category("Apps", "Remove apps you didn't ask for.",
                 new Apps.RemoveStoreApps(),
@@ -68,10 +69,13 @@ namespace Chemo.Treatment
                 new Start.DisableInternetSearchResults(),
                 new Start.DisableStoreSearchResults(),
                 new Start.SuggestedApps(),
+                new Start.UnpinStartApps(),
+                new Start.HideRecentItems(),
                 new Start.RestorePreviousStartMenu()),
 
             new Category("Taskbar", "Clean up the taskbar.",
                 new Taskbar.RemoveWidgets(),
+                new Taskbar.HideSearchAndTaskView(),
                 new Taskbar.AlignTaskbarLeft(),
                 new Taskbar.CombineButtonsWhenFull(),
                 new Taskbar.ShowAllTrayIcons(),
