@@ -14,7 +14,7 @@ namespace Chemo.Treatment.Start
 
         public override string Tooltip()
         {
-            return "Stops Windows from recommending apps in the Start menu and from quietly installing promoted apps.";
+            return "Stops the Start menu from recommending apps, tips, and shortcuts, and stops Windows from quietly installing promoted apps.";
         }
 
         protected override IEnumerable<ISetting> Settings()
@@ -24,9 +24,10 @@ namespace Chemo.Treatment.Start
                 // Consumer features policy. Only Enterprise and Education honor it; the values below cover Pro.
                 new RegistryValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures", 1),
 
-                // Start menu suggestions
+                // Start menu suggestions, including "Show recommendations for tips, shortcuts, new apps, and more"
                 new RegistryValue(ContentDeliveryManager, "SystemPaneSuggestionsEnabled", 0),
                 new RegistryValue(ContentDeliveryManager, "SubscribedContent-338388Enabled", 0),
+                new RegistryValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_IrisRecommendations", 0),
 
                 // Promoted apps that install themselves
                 new RegistryValue(ContentDeliveryManager, "SilentInstalledAppsEnabled", 0),

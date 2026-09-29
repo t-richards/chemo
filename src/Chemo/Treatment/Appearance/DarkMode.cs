@@ -1,5 +1,4 @@
 using Chemo.Settings;
-using System;
 using System.Collections.Generic;
 
 namespace Chemo.Treatment.Appearance
@@ -30,16 +29,7 @@ namespace Chemo.Treatment.Appearance
 
         protected override void OnSettingsChanged()
         {
-            // Tell the taskbar, Start menu, and open apps that the theme changed, as the Settings app does,
-            // so they switch now instead of after the next sign-in.
-            UnsafeNativeMethods.SendMessageTimeout(
-                UnsafeNativeMethods.HWND_BROADCAST,
-                UnsafeNativeMethods.WM_SETTINGCHANGE,
-                IntPtr.Zero,
-                "ImmersiveColorSet",
-                UnsafeNativeMethods.SMTO_ABORTIFHUNG,
-                100,
-                out _);
+            SettingChange.Broadcast("ImmersiveColorSet");
             Logger.Log("Notified open windows of the theme change.");
         }
     }

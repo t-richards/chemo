@@ -57,6 +57,76 @@ namespace Chemo
         [DllImport("user32.dll", CharSet = CharSet.Unicode, EntryPoint = "SendMessageTimeoutW")]
         public static extern IntPtr SendMessageTimeout(IntPtr hWnd, int msg, IntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
 
+        // SystemParametersInfo actions and flags
+        public const uint SPIF_UPDATEINIFILE = 0x01;
+        public const uint SPIF_SENDCHANGE = 0x02;
+        public const uint SPI_GETMOUSE = 0x0003;
+        public const uint SPI_SETMOUSE = 0x0004;
+        public const uint SPI_GETSCREENSAVETIMEOUT = 0x000E;
+        public const uint SPI_SETSCREENSAVETIMEOUT = 0x000F;
+        public const uint SPI_GETSCREENSAVEACTIVE = 0x0010;
+        public const uint SPI_SETSCREENSAVEACTIVE = 0x0011;
+        public const uint SPI_GETSTICKYKEYS = 0x003A;
+        public const uint SPI_SETSTICKYKEYS = 0x003B;
+        public const uint SPI_GETANIMATION = 0x0048;
+        public const uint SPI_SETANIMATION = 0x0049;
+        public const uint SPI_GETSCREENSAVESECURE = 0x0076;
+        public const uint SPI_SETSCREENSAVESECURE = 0x0077;
+        public const uint SPI_GETCLIENTAREAANIMATION = 0x1042;
+        public const uint SPI_SETCLIENTAREAANIMATION = 0x1043;
+        public const uint SKF_HOTKEYACTIVE = 0x00000004;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ANIMATIONINFO
+        {
+            public uint cbSize;
+            public int iMinAnimate;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct STICKYKEYS
+        {
+            public uint cbSize;
+            public uint dwFlags;
+        }
+
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref int pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, IntPtr pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, int[] pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref ANIMATIONINFO pvParam, uint fWinIni);
+
+        [DllImport("user32.dll", SetLastError = true, EntryPoint = "SystemParametersInfoW")]
+        public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, ref STICKYKEYS pvParam, uint fWinIni);
+
+        // Locale information for the current user
+        public const uint LOCALE_USER_DEFAULT = 0x0400;
+        public const uint LOCALE_SSHORTDATE = 0x0000001F;
+        public const uint LOCALE_SSHORTTIME = 0x00000079;
+        public const uint LOCALE_STIMEFORMAT = 0x00001003;
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern int GetLocaleInfoEx(string lpLocaleName, uint LCType, char[] lpLCData, int cchData);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetLocaleInfoW")]
+        public static extern bool SetLocaleInfo(uint Locale, uint LCType, string lpLCData);
+
+        // Power schemes
+        [DllImport("powrprof.dll")]
+        public static extern uint PowerGetActiveScheme(IntPtr UserRootPowerKey, out IntPtr ActivePolicyGuid);
+
+        [DllImport("powrprof.dll")]
+        public static extern uint PowerSetActiveScheme(IntPtr UserRootPowerKey, ref Guid SchemeGuid);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr LocalFree(IntPtr hMem);
+
         public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
         public const int LVM_SETITEMW = 0x1000 + 76;
         public const int LVS_EX_SUBITEMIMAGES = 0x0002;

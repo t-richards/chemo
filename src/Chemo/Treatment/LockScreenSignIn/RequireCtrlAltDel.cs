@@ -1,7 +1,7 @@
 using Microsoft.Win32;
 using System;
 
-namespace Chemo.Treatment.SignIn
+namespace Chemo.Treatment.LockScreenSignIn
 {
     class RequireCtrlAltDel : BaseTreatment
     {
