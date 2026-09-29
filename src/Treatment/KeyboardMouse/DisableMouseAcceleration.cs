@@ -8,12 +8,13 @@ namespace Chemo.Treatment.KeyboardMouse
     {
         public override string Name()
         {
-            return "Turn Off Mouse Acceleration";
+            return "Turn off mouse acceleration";
         }
 
         public override string Tooltip()
         {
-            return "Turns off Enhance pointer precision, so the pointer always moves the same distance for the same mouse movement, however fast you move it.";
+            return "Turns off Enhance pointer precision, so the pointer moves the same distance " +
+                "for the same mouse movement no matter how fast you move it.";
         }
 
         protected override IEnumerable<ISetting> Settings()

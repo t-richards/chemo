@@ -8,13 +8,13 @@ namespace Chemo.Treatment.FileExplorer
 
         public override string Name()
         {
-            return "Turn On Advanced File Explorer Settings";
+            return "Show file extensions, hidden files, and more";
         }
 
         public override string Tooltip()
         {
-            return "Turns on the switches in Settings > System > Advanced > File Explorer: shows file extensions, hidden files, " +
-                "the full folder path in the title bar, and empty drives, and adds 'Run as different user' to Start. Sign out to finish.";
+            return "Shows file extensions, hidden files, the full folder path in the title bar, and empty " +
+                "drives, and adds Run as different user to Start. Sign out to finish.";
         }
 
         protected override IEnumerable<ISetting> Settings()

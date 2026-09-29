@@ -7,13 +7,13 @@ namespace Chemo.Treatment.Taskbar
     {
         public override string Name()
         {
-            return "Show All System Tray Icons";
+            return "Show all tray icons";
         }
 
         public override string Tooltip()
         {
             return "Shows every app's icon next to the clock instead of hiding some behind the ^ arrow. " +
-                "Apps installed later start out hidden; run this again to show them.";
+                "Apps you install later start out hidden, so run this again to show them.";
         }
 
         protected override IEnumerable<ISetting> Settings()

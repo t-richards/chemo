@@ -9,12 +9,12 @@ namespace Chemo.Treatment.Appearance
 
         public override string Name()
         {
-            return "Dark Mode";
+            return "Use dark mode";
         }
 
         public override string Tooltip()
         {
-            return "Switches Windows (the taskbar and Start menu) and apps to dark mode, like choosing Dark in Settings > Personalization > Colors.";
+            return "Switches Windows and your apps to dark mode, the same as picking Dark in Settings > Personalization > Colors.";
         }
 
         protected override IEnumerable<ISetting> Settings()

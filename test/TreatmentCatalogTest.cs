@@ -43,5 +43,26 @@ namespace Chemo.Test
                     Assert.Equal(expectedNamespace, t.GetType().Namespace, ignoreCase: true));
             }
         }
+
+        [Fact]
+        public void ItMatchesTheReadme()
+        {
+            // The README lists each category in bold with its treatments under it, in the same order as the app.
+            List<string> expected = [];
+            foreach (Category category in TreatmentCatalog.Categories)
+            {
+                expected.Add($"- **{category.Name}**");
+                expected.AddRange(category.Treatments.Select(t => $"  - {t.Name()}"));
+            }
+
+            List<string> actual = File.ReadAllLines(Path.Combine(AppContext.BaseDirectory, "README.md"))
+                .SkipWhile(line => !string.Equals(line, "## Treatments", StringComparison.Ordinal))
+                .Skip(1)
+                .TakeWhile(line => !line.StartsWith("## ", StringComparison.Ordinal))
+                .Where(line => line.Length > 0)
+                .ToList();
+
+            Assert.Equal(expected, actual);
+        }
     }
 }

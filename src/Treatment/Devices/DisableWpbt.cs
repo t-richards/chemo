@@ -6,12 +6,13 @@ namespace Chemo.Treatment.Devices
     {
         public override string Name()
         {
-            return "Block PC Maker Software From Firmware";
+            return "Block apps hidden in your PC's firmware";
         }
 
         public override string Tooltip()
         {
-            return "Stops your PC's firmware from installing the manufacturer's software every time Windows starts (Windows Platform Binary Table).";
+            return "Stops your PC's firmware from installing the manufacturer's software every time Windows starts. " +
+                "Some PC makers use this to put their apps back after you remove them.";
         }
 
         protected override IEnumerable<ISetting> Settings()

@@ -8,12 +8,12 @@ namespace Chemo.Treatment.LockScreenSignIn
 
         public override string Name()
         {
-            return "Turn Off Lock Screen Tips";
+            return "Turn off lock screen tips";
         }
 
         public override string Tooltip()
         {
-            return "Stops Windows from showing fun facts, tips, and promotions on the lock screen. The lock screen picture isn't changed.";
+            return "Stops Windows from showing fun facts, tips, and ads on the lock screen. Your lock screen picture stays the same.";
         }
 
         protected override IEnumerable<ISetting> Settings()

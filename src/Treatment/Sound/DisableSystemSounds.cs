@@ -7,13 +7,13 @@ namespace Chemo.Treatment.Sound
     {
         public override string Name()
         {
-            return "Turn Off System Sounds";
+            return "Turn off system sounds";
         }
 
         public override string Tooltip()
         {
-            return "Switches to the No Sounds scheme and turns off the startup sound, silencing Windows' notification, error, and other event sounds. " +
-                "Alarms, ringtones for calls, music, and videos aren't affected.";
+            return "Switches to the No Sounds scheme and turns off the startup sound, so Windows stops making noise for " +
+                "notifications, errors, and other events. Alarms, calls, music, and videos still play sound.";
         }
 
         protected override IEnumerable<ISetting> Settings()

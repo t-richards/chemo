@@ -8,12 +8,12 @@ namespace Chemo.Treatment.Start
 
         public override string Name()
         {
-            return "Turn Off App Recommendations";
+            return "Turn off app recommendations";
         }
 
         public override string Tooltip()
         {
-            return "Stops the Start menu from recommending apps, tips, and shortcuts, and stops Windows from quietly installing promoted apps.";
+            return "Stops Start from recommending apps, tips, and shortcuts, and stops Windows from quietly installing apps it's promoting.";
         }
 
         protected override IEnumerable<ISetting> Settings()

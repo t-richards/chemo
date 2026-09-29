@@ -8,13 +8,13 @@ namespace Chemo.Treatment.Power
     {
         public override string Name()
         {
-            return "Disable Hibernation";
+            return "Turn off hibernation";
         }
 
         public override string Tooltip()
         {
-            return "Turns off hibernation and Fast Startup and deletes the hibernation file, freeing disk space. " +
-                "Laptops will shut down instead of hibernating when the battery runs out.";
+            return "Turns off hibernation and Fast Startup and deletes the hibernation file, which frees up disk space. " +
+                "Laptops shut down instead of hibernating when the battery runs out.";
         }
 
         protected override IEnumerable<ISetting> Settings()

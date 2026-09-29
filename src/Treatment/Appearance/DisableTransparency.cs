@@ -6,12 +6,13 @@ namespace Chemo.Treatment.Appearance
     {
         public override string Name()
         {
-            return "Disable Transparency";
+            return "Turn off transparency";
         }
 
         public override string Tooltip()
         {
-            return "Disables transparency in windows and applications.";
+            return "Makes the taskbar, Start, and window backgrounds solid instead of " +
+                "see-through, the same as turning off Transparency effects in Settings.";
         }
 
         protected override IEnumerable<ISetting> Settings()

@@ -8,13 +8,14 @@ namespace Chemo.Treatment.Privacy
 
         public override string Name()
         {
-            return "Disable Telemetry";
+            return "Turn off telemetry";
         }
 
         public override string Tooltip()
         {
-            return "Sends Microsoft the least diagnostic data Windows allows, and turns off the advertising ID, tailored experiences, " +
-                "typing and inking data collection, activity history, and feedback prompts.";
+            return "Sends Microsoft the least diagnostic data Windows allows, and turns off the advertising ID, tips " +
+                "and ads based on your diagnostic data, online speech recognition, typing and handwriting data " +
+                "collection, activity history, feedback requests, and PowerShell's telemetry.";
         }
 
         protected override IEnumerable<ISetting> Settings()

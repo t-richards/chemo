@@ -15,13 +15,13 @@ namespace Chemo.Treatment.CopilotAI
 
         public override string Name()
         {
-            return "Remove Windows AI";
+            return "Remove Copilot and Windows AI";
         }
 
         public override string Tooltip()
         {
-            return "Removes the Copilot apps and Click to Do for all users, and turns off Recall, the AI features in Paint and Notepad, " +
-                "and the Windows AI service so they stay off. Restart to finish.";
+            return "Removes the Copilot apps and Click to Do for everyone on this PC, and turns off Recall, the AI features " +
+                "in Paint and Notepad, and the Windows AI service so they stay off. Restart to finish.";
         }
 
         protected override IEnumerable<ISetting> Settings()

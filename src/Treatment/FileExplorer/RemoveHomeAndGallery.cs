@@ -14,7 +14,7 @@ namespace Chemo.Treatment.FileExplorer
 
         public override string Tooltip()
         {
-            return "Removes Home and Gallery from the left side of File Explorer, and opens File Explorer to This PC instead of Home. Sign out to finish.";
+            return "Removes Home and Gallery from the left side of File Explorer and opens File Explorer to This PC instead. Sign out to finish.";
         }
 
         protected override IEnumerable<ISetting> Settings()

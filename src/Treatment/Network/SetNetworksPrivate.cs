@@ -6,12 +6,12 @@ namespace Chemo.Treatment.Network
     {
         public override string Name()
         {
-            return "Make the Current Network Private";
+            return "Make your current network private";
         }
 
         public override string Tooltip()
         {
-            return "Marks the networks you're connected to now as private, so this PC can find and share with devices like printers and other PCs. " +
+            return "Marks the networks you're connected to right now as private, so this PC can see and share with printers and other PCs on them. " +
                 "Networks you join later aren't changed. Don't use this on public Wi-Fi.";
         }
 

@@ -9,12 +9,12 @@ namespace Chemo.Treatment.Apps
     {
         public override string Name()
         {
-            return "Deprovision Windows Store Apps";
+            return "Keep removed apps from coming back";
         }
 
         public override string Tooltip()
         {
-            return "Deprovisions the same apps so they don't return when a new user is created or a feature update is applied.";
+            return "Stops Windows from reinstalling the same apps when someone new signs in to this PC or when a big Windows update installs.";
         }
 
         protected override IEnumerable<ISetting> Settings()

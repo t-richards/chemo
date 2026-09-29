@@ -8,12 +8,13 @@ namespace Chemo.Treatment.Start
 
         public override string Name()
         {
-            return "Disable Internet Search Results";
+            return "Turn off web results in search";
         }
 
         public override string Tooltip()
         {
-            return "Prevents internet junk from appearing when searching apps, files, etc. in the start menu.";
+            return "Stops Start search from showing Bing web results, so searching only shows what's on your PC. " +
+                "Also stops search from using your location.";
         }
 
         protected override IEnumerable<ISetting> Settings()

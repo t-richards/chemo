@@ -7,7 +7,7 @@ namespace Chemo.Treatment.Time
     {
         public override string Name()
         {
-            return "Use a 24-Hour Clock";
+            return "Use a 24-hour clock";
         }
 
         public override string Tooltip()

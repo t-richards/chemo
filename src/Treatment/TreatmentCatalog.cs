@@ -26,7 +26,7 @@ namespace Chemo.Treatment
             new Category("Copilot & AI", "Remove Copilot and turn off the AI features built into Windows.",
                 new CopilotAI.RemoveWindowsAI()),
 
-            new Category("Devices", "Stop PC and device makers from installing software on their own.",
+            new Category("Devices", "Stop PC and device makers from installing their apps without asking.",
                 new Devices.PreventDeviceCompanionApps(),
                 new Devices.DisableWpbt()),
 
@@ -36,11 +36,11 @@ namespace Chemo.Treatment
                 new FileExplorer.RestorePreviousRightClickMenu(),
                 new FileExplorer.DisableFolderDiscovery()),
 
-            new Category("Keyboard & Mouse", "Stop the keyboard and mouse from doing things you didn't mean.",
+            new Category("Keyboard & mouse", "Stop the keyboard and mouse from doing things you didn't mean.",
                 new KeyboardMouse.DisableStickyKeysShortcut(),
                 new KeyboardMouse.DisableMouseAcceleration()),
 
-            new Category("Lock Screen & Sign-in", "Change what the lock screen shows and when your PC locks.",
+            new Category("Lock screen & sign-in", "Change the lock screen, how you sign in, and when your PC locks.",
                 new LockScreenSignIn.LockWhenIdle(),
                 new LockScreenSignIn.RequireCtrlAltDel(),
                 new LockScreenSignIn.SkipLockScreen(),
@@ -65,7 +65,7 @@ namespace Chemo.Treatment
                 new Sound.DisableSystemSounds(),
                 new Sound.KeepVolumeDuringCalls()),
 
-            new Category("Start", "Clean up the Start menu and search.",
+            new Category("Start", "Clean up Start and search.",
                 new Start.DisableInternetSearchResults(),
                 new Start.DisableStoreSearchResults(),
                 new Start.SuggestedApps(),

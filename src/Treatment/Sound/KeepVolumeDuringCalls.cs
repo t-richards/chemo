@@ -6,12 +6,12 @@ namespace Chemo.Treatment.Sound
     {
         public override string Name()
         {
-            return "Don't Lower Other Sounds During Calls";
+            return "Don't lower other sounds during calls";
         }
 
         public override string Tooltip()
         {
-            return "Stops Windows from turning down music and other sounds when it detects a call, such as in Teams or Discord.";
+            return "Stops Windows from turning down music and other sounds when it thinks you're on a call, like in Teams or Discord.";
         }
 
         protected override IEnumerable<ISetting> Settings()

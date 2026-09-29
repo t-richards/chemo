@@ -20,66 +20,67 @@ Chemo aims to support versions of Windows that are still covered under "Security
 ## Treatments
 
 - **Appearance**
-  - Enable Dark Mode
-  - Disable Transparency
+  - Use dark mode
+  - Turn off transparency
   - Turn off animations
   - Replace the Spotlight wallpaper
 - **Apps**
-  - Remove junk apps
-  - Uninstall OneDrive
+  - Remove preinstalled apps
+  - Keep removed apps from coming back
+  - Remove OneDrive
 - **Copilot & AI**
-  - Remove Copilot, Click to Do, and Recall
+  - Remove Copilot and Windows AI
 - **Devices**
-  - Prevent device companion apps
-  - Block PC maker software from firmware (WPBT)
+  - Stop devices from installing their own apps
+  - Block apps hidden in your PC's firmware
 - **File Explorer**
-  - Show file extensions, hidden files, full paths, and empty drives
+  - Show file extensions, hidden files, and more
   - Remove Home and Gallery
-  - Restore the previous right-click menu
-  - Disable automatic folder type discovery
-- **Keyboard & Mouse**
+  - Bring back the full right-click menu
+  - Use the same view for every folder
+- **Keyboard & mouse**
   - Turn off the Sticky Keys shortcut
   - Turn off mouse acceleration
-- **Lock Screen & Sign-in**
+- **Lock screen & sign-in**
   - Lock after 15 minutes away
-  - Require Ctrl+Alt+Del at sign-in
+  - Require Ctrl+Alt+Del to sign in
   - Skip the lock screen
   - Turn off lock screen tips
 - **Network**
-  - Make the current network private
+  - Make your current network private
 - **Performance**
   - Trim background services
-  - Disable background apps
+  - Stop Store apps running in the background
 - **Power**
   - Use the High performance power plan
-  - Disable hibernation
+  - Turn off hibernation
 - **Privacy**
-  - Disable telemetry
-  - Disable location tracking
+  - Turn off telemetry
+  - Turn off location tracking
 - **Sound**
-  - Turn off system sounds and the startup sound
+  - Turn off system sounds
   - Don't lower other sounds during calls
 - **Start**
-  - Disable internet search results
-  - Disable Store results in search
-  - Disable app recommendations
+  - Turn off web results in search
+  - Turn off Store results in search
+  - Turn off app recommendations
   - Unpin everything from Start
   - Hide recent items in Start
-  - Restore previous Start menu layout
+  - Bring back the previous Start menu
 - **Taskbar**
   - Remove Widgets
-  - Hide search and Task View
+  - Hide the search box and Task View
   - Unpin everything but File Explorer
-  - Align the taskbar to the left
-  - Combine taskbar buttons only when full
-  - Show all system tray icons
-  - Enable End task on right click
+  - Move taskbar icons to the left
+  - Combine taskbar buttons only when it's full
+  - Show all tray icons
+  - Add End task to the taskbar
 - **Time**
   - Use a 24-hour clock
   - Use year-month-day dates
-  - Set system clock to UTC.
+  - Keep the hardware clock in UTC
 - **Updates**
-  - Delay restarts after Windows Update
+  - Delay restarts after updates
 
 ## Download
 

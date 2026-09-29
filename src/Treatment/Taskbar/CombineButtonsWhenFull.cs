@@ -9,7 +9,7 @@ namespace Chemo.Treatment.Taskbar
 
         public override string Name()
         {
-            return "Combine Taskbar Buttons Only When Full";
+            return "Combine taskbar buttons only when it's full";
         }
 
         public override string Tooltip()

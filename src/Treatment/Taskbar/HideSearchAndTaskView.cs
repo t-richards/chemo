@@ -7,13 +7,13 @@ namespace Chemo.Treatment.Taskbar
     {
         public override string Name()
         {
-            return "Hide Search and Task View";
+            return "Hide the search box and Task View";
         }
 
         public override string Tooltip()
         {
-            return "Removes the search box and the Task View button from the taskbar. You can still search by opening Start and typing, " +
-                "and open Task View with Windows+Tab.";
+            return "Removes the search box and the Task View button from the taskbar. " +
+                "You can still search by opening Start and typing, and open Task View with Windows+Tab.";
         }
 
         protected override IEnumerable<ISetting> Settings()

@@ -9,13 +9,13 @@ namespace Chemo.Treatment.Start
     {
         public override string Name()
         {
-            return "Unpin Everything From Start";
+            return "Unpin everything from Start";
         }
 
         public override string Tooltip()
         {
-            return "Unpins every app from Start for your account, including pins for apps that aren't installed yet, like LinkedIn and WhatsApp. " +
-                "If you pin apps later, running this again unpins them too.";
+            return "Unpins every app from Start for your account, including pins for apps that aren't even installed yet, like LinkedIn and WhatsApp. " +
+                "If you pin apps later, running this again unpins those too.";
         }
 
         protected override IEnumerable<ISetting> Settings()

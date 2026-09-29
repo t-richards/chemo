@@ -44,7 +44,7 @@ namespace Chemo.Treatment.Apps
 
         public override string Tooltip()
         {
-            return "Uninstalls OneDrive and prevents it from running for all users. Files in your OneDrive folder are kept.";
+            return "Uninstalls OneDrive and stops it from running for everyone on this PC. Files already in your OneDrive folder stay where they are.";
         }
 
         protected override IEnumerable<ISetting> Settings()

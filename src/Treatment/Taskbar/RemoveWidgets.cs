@@ -13,7 +13,8 @@ namespace Chemo.Treatment.Taskbar
 
         public override string Tooltip()
         {
-            return "Removes the Widgets board and its news feed from the taskbar for all users, and turns Widgets off so it stays off if Windows reinstalls it. Sign out to finish.";
+            return "Removes Widgets and its news feed from the taskbar for everyone on this PC, " +
+                "and keeps it off if Windows reinstalls it. Sign out to finish.";
         }
 
         protected override IEnumerable<ISetting> Settings()

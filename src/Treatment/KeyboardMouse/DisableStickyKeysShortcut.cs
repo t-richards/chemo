@@ -9,12 +9,12 @@ namespace Chemo.Treatment.KeyboardMouse
     {
         public override string Name()
         {
-            return "Turn Off the Sticky Keys Shortcut";
+            return "Turn off the Sticky Keys shortcut";
         }
 
         public override string Tooltip()
         {
-            return "Stops pressing Shift five times from turning on Sticky Keys or asking whether to, which is easy to do by accident in games.";
+            return "Stops pressing Shift five times from turning on Sticky Keys or asking about it, which is easy to do by accident in games.";
         }
 
         protected override IEnumerable<ISetting> Settings()

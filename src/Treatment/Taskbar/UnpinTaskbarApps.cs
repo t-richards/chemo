@@ -7,13 +7,13 @@ namespace Chemo.Treatment.Taskbar
     {
         public override string Name()
         {
-            return "Unpin Apps From Taskbar";
+            return "Unpin everything but File Explorer";
         }
 
         public override string Tooltip()
         {
-            return "Unpins everything from the taskbar except File Explorer, such as Microsoft Edge and the Microsoft Store. " +
-                "If you pin apps later, running this again unpins them too.";
+            return "Unpins everything from the taskbar except File Explorer, like Microsoft Edge and the Microsoft Store. " +
+                "If you pin apps later, running this again unpins those too.";
         }
 
         protected override IEnumerable<ISetting> Settings()

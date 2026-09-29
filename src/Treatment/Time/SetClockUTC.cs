@@ -6,12 +6,13 @@ namespace Chemo.Treatment.Time
     {
         public override string Name()
         {
-            return "Set System Clock to UTC";
+            return "Keep the hardware clock in UTC";
         }
 
         public override string Tooltip()
         {
-            return "Sets the system's hardware clock to Coordinated Universal Time (UTC). The Windows default is localtime.";
+            return "Makes Windows keep your PC's hardware clock in UTC instead of local time, the way Linux does. " +
+                "This stops the clock from being off by hours when you switch between Windows and Linux on the same PC.";
         }
 
         protected override IEnumerable<ISetting> Settings()

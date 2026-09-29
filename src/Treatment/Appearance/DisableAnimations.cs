@@ -11,7 +11,7 @@ namespace Chemo.Treatment.Appearance
 
         public override string Name()
         {
-            return "Turn Off Animations";
+            return "Turn off animations";
         }
 
         public override string Tooltip()

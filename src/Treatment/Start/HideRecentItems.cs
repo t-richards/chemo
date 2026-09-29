@@ -8,12 +8,12 @@ namespace Chemo.Treatment.Start
 
         public override string Name()
         {
-            return "Hide Recent Items in Start";
+            return "Hide recent items in Start";
         }
 
         public override string Tooltip()
         {
-            return "Stops Start from listing recently added apps, your most used apps, and files you opened recently. " +
+            return "Stops Start from listing apps you recently installed, apps you use most, and files you recently opened. " +
                 "Recent files also disappear from File Explorer's Home and from jump lists. Restart to finish.";
         }
 

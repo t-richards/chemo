@@ -6,12 +6,13 @@ namespace Chemo.Treatment.Performance
     {
         public override string Name()
         {
-            return "Trim Background Services";
+            return "Trim background services";
         }
 
         public override string Tooltip()
         {
-            return "Turns off Offline Files and the diagnostic tracking service, and lets the Maps and Storage services start only when they're needed.";
+            return "Turns off Offline Files and the diagnostic data service, and lets the Maps " +
+                "and Storage services start only when something needs them.";
         }
 
         protected override IEnumerable<ISetting> Settings()

@@ -6,12 +6,12 @@ namespace Chemo.Treatment.Devices
     {
         public override string Name()
         {
-            return "Prevent Device Companion Apps";
+            return "Stop devices from installing their own apps";
         }
 
         public override string Tooltip()
         {
-            return "Stops Windows from downloading manufacturer apps and info when you plug in a device, such as a monitor or mouse.";
+            return "Stops Windows from downloading the maker's app and info when you plug in a device, like a mouse, keyboard, or monitor.";
         }
 
         protected override IEnumerable<ISetting> Settings()

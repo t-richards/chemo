@@ -8,12 +8,12 @@ namespace Chemo.Treatment.Start
     {
         public override string Name()
         {
-            return "Disable Store Results in Search";
+            return "Turn off Store results in search";
         }
 
         public override string Tooltip()
         {
-            return "Stops the Start menu from recommending Microsoft Store apps when you search for an app.";
+            return "Stops Start search from suggesting Microsoft Store apps when you search for an app.";
         }
 
         protected override IEnumerable<ISetting> Settings()

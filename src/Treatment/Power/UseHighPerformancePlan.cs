@@ -9,12 +9,12 @@ namespace Chemo.Treatment.Power
     {
         public override string Name()
         {
-            return "Use the High Performance Power Plan";
+            return "Use the High performance power plan";
         }
 
         public override string Tooltip()
         {
-            return "Keeps the processor running at full speed instead of saving power. Uses more electricity, and drains laptop batteries faster.";
+            return "Keeps the processor at full speed instead of saving power. Uses more electricity and drains laptop batteries faster.";
         }
 
         protected override IEnumerable<ISetting> Settings()

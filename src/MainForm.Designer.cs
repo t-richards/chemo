@@ -140,7 +140,7 @@ namespace Chemo
             this.btnInitiateTreatment.Name = "btnInitiateTreatment";
             this.btnInitiateTreatment.Size = new System.Drawing.Size(120, 30);
             this.btnInitiateTreatment.TabIndex = 2;
-            this.btnInitiateTreatment.Text = "Initiate Treatment";
+            this.btnInitiateTreatment.Text = "Apply";
             this.btnInitiateTreatment.UseVisualStyleBackColor = true;
             this.btnInitiateTreatment.Click += new System.EventHandler(this.BtnInitiateTreatment_Click);
             //

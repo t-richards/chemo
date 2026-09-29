@@ -9,12 +9,12 @@ namespace Chemo.Treatment.LockScreenSignIn
     {
         public override string Name()
         {
-            return "Lock After 15 Minutes Away";
+            return "Lock after 15 minutes away";
         }
 
         public override string Tooltip()
         {
-            return "Blanks the screen after 15 minutes without use, and asks you to sign in again when you come back.";
+            return "Blanks the screen after 15 minutes without use, and asks for your password or PIN when you come back.";
         }
 
         protected override IEnumerable<ISetting> Settings()

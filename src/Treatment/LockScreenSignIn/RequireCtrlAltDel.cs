@@ -6,12 +6,13 @@ namespace Chemo.Treatment.LockScreenSignIn
     {
         public override string Name()
         {
-            return "Require Ctrl+Alt+Del at Sign In";
+            return "Require Ctrl+Alt+Del to sign in";
         }
 
         public override string Tooltip()
         {
-            return "Requires the user to press Ctrl+Alt+Del at the sign in screen for security reasons.";
+            return "Makes you press Ctrl+Alt+Del before signing in. " +
+                "Only Windows can respond to that key combination, so a fake sign-in screen can't trick you into typing your password.";
         }
 
         protected override IEnumerable<ISetting> Settings()

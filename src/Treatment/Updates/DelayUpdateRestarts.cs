@@ -8,14 +8,14 @@ namespace Chemo.Treatment.Updates
 
         public override string Name()
         {
-            return "Delay Restarts After Updates";
+            return "Delay restarts after updates";
         }
 
         public override string Tooltip()
         {
-            return "Stops Windows from restarting on its own after updates for as long as Windows allows. Updates still download and install right away, " +
-                "and Windows reminds you to restart when it suits you. It only forces a restart 30 days after finding an update, or 7 days after " +
-                "installing it if that's later, with a 15-minute warning. Windows Home ignores this.";
+            return "Stops Windows from restarting on its own after updates for as long as it allows. Updates still download and install right " +
+                "away, and Windows reminds you to restart when it suits you. It only forces a restart 30 days after finding an update, or 7 " +
+                "days after installing it if that's later, and warns you 15 minutes before. Windows Home ignores this.";
         }
 
         protected override IEnumerable<ISetting> Settings()

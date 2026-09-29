@@ -9,13 +9,13 @@ namespace Chemo.Treatment.Appearance
     {
         public override string Name()
         {
-            return "Replace Spotlight Wallpaper";
+            return "Replace the Spotlight wallpaper";
         }
 
         public override string Tooltip()
         {
-            return "If the desktop background is Windows Spotlight, which downloads a new picture every day and puts a 'Learn about this picture' icon on the desktop, " +
-                "switches it to the default Windows wallpaper. A picture you chose yourself is left alone.";
+            return "If your desktop background is Windows Spotlight, which downloads a new picture every day and adds a \"Learn about this picture\" " +
+                "icon to the desktop, switches it to the standard Windows wallpaper. A picture you picked yourself is left alone.";
         }
 
         protected override IEnumerable<ISetting> Settings()
