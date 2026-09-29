@@ -6,15 +6,9 @@ namespace Chemo.Treatment.LockScreenSignIn
     {
         private const string ContentDeliveryManager = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
 
-        public override string Name()
-        {
-            return "Turn off lock screen tips";
-        }
+        public override string Name => "Turn off lock screen tips";
 
-        public override string Tooltip()
-        {
-            return "Stops Windows from showing fun facts, tips, and ads on the lock screen. Your lock screen picture stays the same.";
-        }
+        public override string Description => "Stops Windows from showing fun facts, tips, and ads on the lock screen. Your lock screen picture stays the same.";
 
         protected override IEnumerable<ISetting> Settings()
         {

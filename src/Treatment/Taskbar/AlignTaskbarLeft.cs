@@ -5,15 +5,9 @@ namespace Chemo.Treatment.Taskbar
 {
     internal sealed class AlignTaskbarLeft : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Move taskbar icons to the left";
-        }
+        public override string Name => "Move taskbar icons to the left";
 
-        public override string Tooltip()
-        {
-            return "Moves the Start button and app icons to the left end of the taskbar, where they were before Windows 11.";
-        }
+        public override string Description => "Moves the Start button and app icons to the left end of the taskbar, where they were before Windows 11.";
 
         protected override IEnumerable<ISetting> Settings()
         {

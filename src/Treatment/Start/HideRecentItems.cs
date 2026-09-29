@@ -6,16 +6,11 @@ namespace Chemo.Treatment.Start
     {
         private const string ExplorerPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer";
 
-        public override string Name()
-        {
-            return "Hide recent items in Start";
-        }
+        public override string Name => "Hide recent items in Start";
 
-        public override string Tooltip()
-        {
-            return "Stops Start from listing apps you recently installed, apps you use most, and files you recently opened. " +
-                "Recent files also disappear from File Explorer's Home and from jump lists. Restart to finish.";
-        }
+        public override string Description =>
+            "Stops Start from listing apps you recently installed, apps you use most, and files you recently opened. " +
+            "Recent files also disappear from File Explorer's Home and from jump lists. Restart to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

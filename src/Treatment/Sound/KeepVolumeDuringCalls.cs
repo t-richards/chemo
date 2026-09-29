@@ -4,15 +4,9 @@ namespace Chemo.Treatment.Sound
 {
     internal sealed class KeepVolumeDuringCalls : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Don't lower other sounds during calls";
-        }
+        public override string Name => "Don't lower other sounds during calls";
 
-        public override string Tooltip()
-        {
-            return "Stops Windows from turning down music and other sounds when it thinks you're on a call, like in Teams or Discord.";
-        }
+        public override string Description => "Stops Windows from turning down music and other sounds when it thinks you're on a call, like in Teams or Discord.";
 
         protected override IEnumerable<ISetting> Settings()
         {

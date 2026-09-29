@@ -4,16 +4,11 @@ namespace Chemo.Treatment.Performance
 {
     internal sealed class DisableBackgroundApps : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Stop Store apps running in the background";
-        }
+        public override string Name => "Stop Store apps running in the background";
 
-        public override string Tooltip()
-        {
-            return "Stops Microsoft Store apps from running when you aren't using them. " +
-                "Closed apps, like Phone Link, can't sync or show notifications until you open them. Sign out to finish.";
-        }
+        public override string Description =>
+            "Stops Microsoft Store apps from running when you aren't using them. " +
+            "Closed apps, like Phone Link, can't sync or show notifications until you open them. Sign out to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

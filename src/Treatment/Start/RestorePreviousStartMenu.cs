@@ -4,16 +4,11 @@ namespace Chemo.Treatment.Start
 {
     internal sealed class RestorePreviousStartMenu : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Bring back the previous Start menu";
-        }
+        public override string Name => "Bring back the previous Start menu";
 
-        public override string Tooltip()
-        {
-            return "Brings back the Start menu from before the Windows 11 25H2 redesign. " +
-                "Newer versions of Windows no longer have the old Start menu, so this does nothing there. Restart to finish.";
-        }
+        public override string Description =>
+            "Brings back the Start menu from before the Windows 11 25H2 redesign. " +
+            "Newer versions of Windows no longer have the old Start menu, so this does nothing there. Restart to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

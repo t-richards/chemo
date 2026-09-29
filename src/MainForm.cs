@@ -17,18 +17,18 @@ namespace Chemo
         {
             InitializeComponent();
 
-            categoryFont = new(lstTreatments.Font, FontStyle.Bold);
-            lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16), dark: false);
+            categoryFont = new(treatmentList.Font, FontStyle.Bold);
+            treatmentList.SmallImageList = FluentIcons.CreateStatusIcons(treatmentList.LogicalToDeviceUnits(16), dark: false);
 
             // The full version ends with "+" and the commit it was built from, which is too long for the menu but
             // useful in bug reports, so the menu shows the version number and clicking it copies the rest.
             fullVersion = typeof(MainForm).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
-            versionToolStripMenuItem.Text = $"Version {fullVersion.Split('+')[0]}";
-            versionToolStripMenuItem.ToolTipText = $"Copy {fullVersion}";
-            helpToolStripMenuItem.DropDown.ShowItemToolTips = true;
+            versionMenuItem.Text = $"Version {fullVersion.Split('+')[0]}";
+            versionMenuItem.ToolTipText = $"Copy {fullVersion}";
+            helpMenuItem.DropDown.ShowItemToolTips = true;
 
-            SetMenuIcon(versionToolStripMenuItem, StatusIcons.CopyGlyph);
-            SetMenuIcon(githubToolStripMenuItem, StatusIcons.OpenInNewWindowGlyph);
+            SetMenuIcon(versionMenuItem, FluentIcons.CopyGlyph);
+            SetMenuIcon(githubMenuItem, FluentIcons.OpenInNewWindowGlyph);
 
             InitTreatments();
             ShowDetails();
@@ -39,7 +39,7 @@ namespace Chemo
         /// </summary>
         private void SetMenuIcon(ToolStripMenuItem item, string glyph)
         {
-            item.Image = StatusIcons.DrawGlyph(glyph, LogicalToDeviceUnits(16), SystemColors.MenuText);
+            item.Image = FluentIcons.DrawGlyph(glyph, LogicalToDeviceUnits(16), SystemColors.MenuText);
             item.ImageScaling = ToolStripItemImageScaling.None;
         }
 
@@ -49,28 +49,28 @@ namespace Chemo
 
             // While its handle is created, the list reports every checked item as newly checked, before all of the
             // items are in place. Only follow check changes once the list is ready.
-            lstTreatments.ItemChecked += LstTreatments_ItemChecked;
+            treatmentList.ItemChecked += TreatmentList_ItemChecked;
         }
 
         public void InitTreatments()
         {
-            lstTreatments.Items.Clear();
+            treatmentList.Items.Clear();
 
             foreach (Category category in TreatmentCatalog.Categories)
             {
                 CategoryItem categoryItem = new(category, categoryFont);
-                lstTreatments.Items.Add(categoryItem);
+                treatmentList.Items.Add(categoryItem);
 
                 foreach (BaseTreatment treatment in category.Treatments)
                 {
                     TreatmentItem treatmentItem = new(treatment, categoryItem);
                     categoryItem.Treatments.Add(treatmentItem);
-                    lstTreatments.Items.Add(treatmentItem);
+                    treatmentList.Items.Add(treatmentItem);
                 }
             }
         }
 
-        private async void BtnAnalyze_Click(object sender, EventArgs e)
+        private async void AnalyzeButton_Click(object sender, EventArgs e)
         {
             List<TreatmentItem> treatments = CheckedTreatments();
             if (!BeginRun(treatments))
@@ -82,7 +82,7 @@ namespace Chemo
 
             foreach (TreatmentItem item in treatments)
             {
-                lblStatus.Text = $"Analyzing {item.Text}…";
+                statusLabel.Text = $"Analyzing {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Analyzing…");
 
                 (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Analyze);
@@ -96,7 +96,7 @@ namespace Chemo
                 item.SetStatus(status, text, duration);
                 RefreshDetails(item);
 
-                prgTreatmentApplication.Value += 1;
+                progressBar.Value += 1;
             }
 
             int readyCount = CountStatus(treatments, TreatmentStatus.Info);
@@ -116,7 +116,7 @@ namespace Chemo
             EndRun(summary);
         }
 
-        private async void BtnInitiateTreatment_Click(object sender, EventArgs e)
+        private async void ApplyButton_Click(object sender, EventArgs e)
         {
             List<TreatmentItem> treatments = CheckedTreatments();
             if (!BeginRun(treatments))
@@ -128,7 +128,7 @@ namespace Chemo
 
             foreach (TreatmentItem item in treatments)
             {
-                lblStatus.Text = $"Applying {item.Text}…";
+                statusLabel.Text = $"Applying {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Applying…");
 
                 (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Apply);
@@ -141,7 +141,7 @@ namespace Chemo
                 item.SetStatus(status, text, duration);
                 RefreshDetails(item);
 
-                prgTreatmentApplication.Value += 1;
+                progressBar.Value += 1;
             }
 
             int restartCount = CountStatus(treatments, TreatmentStatus.Restart);
@@ -206,7 +206,7 @@ namespace Chemo
 
         private List<TreatmentItem> CheckedTreatments()
         {
-            return lstTreatments.Items.OfType<TreatmentItem>().Where(item => item.Checked).ToList();
+            return treatmentList.Items.OfType<TreatmentItem>().Where(item => item.Checked).ToList();
         }
 
         /// <summary>
@@ -215,32 +215,32 @@ namespace Chemo
         /// <returns>Returns true if there is anything to run, false otherwise.</returns>
         private bool BeginRun(List<TreatmentItem> treatments)
         {
-            foreach (TreatmentItem item in lstTreatments.Items.OfType<TreatmentItem>())
+            foreach (TreatmentItem item in treatmentList.Items.OfType<TreatmentItem>())
             {
                 item.SetStatus(TreatmentStatus.NotStarted, "");
                 item.Treatment.Logger.Reset();
             }
 
             ShowDetails();
-            prgTreatmentApplication.Value = 0;
+            progressBar.Value = 0;
 
             if (treatments.Count == 0)
             {
-                lblStatus.Text = "Select at least one treatment.";
+                statusLabel.Text = "Select at least one treatment.";
                 return false;
             }
 
-            prgTreatmentApplication.Maximum = treatments.Count;
-            btnAnalyze.Enabled = false;
-            btnInitiateTreatment.Enabled = false;
+            progressBar.Maximum = treatments.Count;
+            analyzeButton.Enabled = false;
+            applyButton.Enabled = false;
             return true;
         }
 
         private void EndRun(string summary)
         {
-            lblStatus.Text = summary;
-            btnAnalyze.Enabled = true;
-            btnInitiateTreatment.Enabled = true;
+            statusLabel.Text = summary;
+            analyzeButton.Enabled = true;
+            applyButton.Enabled = true;
         }
 
         private static string Count(int count, string noun)
@@ -248,7 +248,7 @@ namespace Chemo
             return count == 1 ? $"1 {noun}" : $"{count} {noun}s";
         }
 
-        private void LstTreatments_ItemChecked(object sender, ItemCheckedEventArgs e)
+        private void TreatmentList_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             // Checking a category checks its treatments, and a category stays checked only while all of its treatments are.
             if (cascadingChecks)
@@ -279,7 +279,7 @@ namespace Chemo
             }
         }
 
-        private void LstTreatments_SelectedIndexChanged(object sender, EventArgs e)
+        private void TreatmentList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowDetails();
         }
@@ -300,9 +300,9 @@ namespace Chemo
         /// </summary>
         private void ShowDetails()
         {
-            ListViewItem? selected = lstTreatments.SelectedItems.Count > 0 ? lstTreatments.SelectedItems[0] : null;
+            ListViewItem? selected = treatmentList.SelectedItems.Count > 0 ? treatmentList.SelectedItems[0] : null;
 
-            txtDetails.Text = selected switch
+            detailsTextBox.Text = selected switch
             {
                 TreatmentItem item => TreatmentDetails(item.Treatment),
                 CategoryItem category => category.Category.Description,
@@ -313,25 +313,25 @@ namespace Chemo
         private static string TreatmentDetails(BaseTreatment treatment)
         {
             string log = treatment.Logger.ToString();
-            return log.Length == 0 ? treatment.Tooltip() : $"{treatment.Tooltip()}\r\n\r\n{log}";
+            return log.Length == 0 ? treatment.Description : $"{treatment.Description}\r\n\r\n{log}";
         }
 
-        private void GithubToolStripMenuItem_Click(object sender, EventArgs e)
+        private void GithubMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://github.com/t-richards/chemo") { UseShellExecute = true });
         }
 
-        private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+        private void VersionMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
                 Clipboard.SetText(fullVersion);
-                lblStatus.Text = $"Copied version {fullVersion} to the clipboard.";
+                statusLabel.Text = $"Copied version {fullVersion} to the clipboard.";
             }
             catch (ExternalException)
             {
                 // Another app has the clipboard open.
-                lblStatus.Text = "Couldn't copy the version because another app is using the clipboard. Try again.";
+                statusLabel.Text = "Couldn't copy the version because another app is using the clipboard. Try again.";
             }
         }
     }

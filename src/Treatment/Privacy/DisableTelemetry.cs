@@ -6,17 +6,12 @@ namespace Chemo.Treatment.Privacy
     {
         private const string HKCU = @"HKEY_CURRENT_USER\Software\Microsoft";
 
-        public override string Name()
-        {
-            return "Turn off telemetry";
-        }
+        public override string Name => "Turn off telemetry";
 
-        public override string Tooltip()
-        {
-            return "Sends Microsoft the least diagnostic data Windows allows, and turns off the advertising ID, tips " +
-                "and ads based on your diagnostic data, online speech recognition, typing and handwriting data " +
-                "collection, activity history, feedback requests, and PowerShell's telemetry.";
-        }
+        public override string Description =>
+            "Sends Microsoft the least diagnostic data Windows allows, and turns off the advertising ID, tips " +
+            "and ads based on your diagnostic data, online speech recognition, typing and handwriting data " +
+            "collection, activity history, feedback requests, and PowerShell's telemetry.";
 
         protected override IEnumerable<ISetting> Settings()
         {

@@ -6,16 +6,11 @@ namespace Chemo.Treatment.Start
     {
         private const string SearchKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search";
 
-        public override string Name()
-        {
-            return "Turn off web results in search";
-        }
+        public override string Name => "Turn off web results in search";
 
-        public override string Tooltip()
-        {
-            return "Stops Start search from showing Bing web results, so searching only shows what's on your PC. " +
-                "Also stops search from using your location.";
-        }
+        public override string Description =>
+            "Stops Start search from showing Bing web results, so searching only shows what's on your PC. " +
+            "Also stops search from using your location.";
 
         protected override IEnumerable<ISetting> Settings()
         {

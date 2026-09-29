@@ -5,15 +5,9 @@ namespace Chemo.Treatment.Time
 {
     internal sealed class UseIsoDates : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Use year-month-day dates";
-        }
+        public override string Name => "Use year-month-day dates";
 
-        public override string Tooltip()
-        {
-            return "Shows dates like 2026-09-28, which mean the same thing in every country and sort in order, including on the taskbar.";
-        }
+        public override string Description => "Shows dates like 2026-09-28, which mean the same thing in every country and sort in order, including on the taskbar.";
 
         protected override IEnumerable<ISetting> Settings()
         {

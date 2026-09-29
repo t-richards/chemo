@@ -6,16 +6,11 @@ namespace Chemo.Treatment.KeyboardMouse
 {
     internal sealed class DisableMouseAcceleration : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off mouse acceleration";
-        }
+        public override string Name => "Turn off mouse acceleration";
 
-        public override string Tooltip()
-        {
-            return "Turns off Enhance pointer precision, so the pointer moves the same distance " +
-                "for the same mouse movement no matter how fast you move it.";
-        }
+        public override string Description =>
+            "Turns off Enhance pointer precision, so the pointer moves the same distance " +
+            "for the same mouse movement no matter how fast you move it.";
 
         protected override IEnumerable<ISetting> Settings()
         {

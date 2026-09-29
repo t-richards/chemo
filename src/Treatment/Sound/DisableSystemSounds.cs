@@ -5,16 +5,11 @@ namespace Chemo.Treatment.Sound
 {
     internal sealed class DisableSystemSounds : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off system sounds";
-        }
+        public override string Name => "Turn off system sounds";
 
-        public override string Tooltip()
-        {
-            return "Switches to the No Sounds scheme and turns off the startup sound, so Windows stops making noise for " +
-                "notifications, errors, and other events. Alarms, calls, music, and videos still play sound.";
-        }
+        public override string Description =>
+            "Switches to the No Sounds scheme and turns off the startup sound, so Windows stops making noise for " +
+            "notifications, errors, and other events. Alarms, calls, music, and videos still play sound.";
 
         protected override IEnumerable<ISetting> Settings()
         {

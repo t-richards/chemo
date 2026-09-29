@@ -6,15 +6,9 @@ namespace Chemo.Treatment.Start
     {
         private const string ContentDeliveryManager = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager";
 
-        public override string Name()
-        {
-            return "Turn off app recommendations";
-        }
+        public override string Name => "Turn off app recommendations";
 
-        public override string Tooltip()
-        {
-            return "Stops Start from recommending apps, tips, and shortcuts, and stops Windows from quietly installing apps it's promoting.";
-        }
+        public override string Description => "Stops Start from recommending apps, tips, and shortcuts, and stops Windows from quietly installing apps it's promoting.";
 
         protected override IEnumerable<ISetting> Settings()
         {

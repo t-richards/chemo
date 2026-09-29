@@ -46,7 +46,5 @@ namespace Chemo.Utilities
                 return data.ToString();
             }
         }
-
-        public static MemoryLogger Instance => new();
     }
 }

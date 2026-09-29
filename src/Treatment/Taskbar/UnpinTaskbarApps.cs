@@ -5,16 +5,11 @@ namespace Chemo.Treatment.Taskbar
 {
     internal sealed class UnpinTaskbarApps : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Unpin everything but File Explorer";
-        }
+        public override string Name => "Unpin everything but File Explorer";
 
-        public override string Tooltip()
-        {
-            return "Unpins everything from the taskbar except File Explorer, like Microsoft Edge and the Microsoft Store. " +
-                "If you pin apps later, running this again unpins those too.";
-        }
+        public override string Description =>
+            "Unpins everything from the taskbar except File Explorer, like Microsoft Edge and the Microsoft Store. " +
+            "If you pin apps later, running this again unpins those too.";
 
         protected override IEnumerable<ISetting> Settings()
         {

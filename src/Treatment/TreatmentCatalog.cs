@@ -85,7 +85,7 @@ namespace Chemo.Treatment
             new Category("Time", "Change how Windows keeps and shows the time.",
                 new Time.Use24HourClock(),
                 new Time.UseIsoDates(),
-                new Time.SetClockUTC()),
+                new Time.SetClockUtc()),
 
             new Category("Updates", "Control when Windows Update interrupts you.",
                 new Updates.DelayUpdateRestarts()),

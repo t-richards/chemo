@@ -4,16 +4,11 @@ namespace Chemo.Treatment.Network
 {
     internal sealed class SetNetworksPrivate : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Make your current network private";
-        }
+        public override string Name => "Make your current network private";
 
-        public override string Tooltip()
-        {
-            return "Marks the networks you're connected to right now as private, so this PC can see and share with printers and other PCs on them. " +
-                "Networks you join later aren't changed. Don't use this on public Wi-Fi.";
-        }
+        public override string Description =>
+            "Marks the networks you're connected to right now as private, so this PC can see and share with printers and other PCs on them. " +
+            "Networks you join later aren't changed. Don't use this on public Wi-Fi.";
 
         protected override IEnumerable<ISetting> Settings()
         {

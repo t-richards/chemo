@@ -37,15 +37,9 @@ namespace Chemo.Treatment.Apps
         private static readonly string ProgramFilesPath = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Microsoft OneDrive");
 
-        public override string Name()
-        {
-            return "Remove OneDrive";
-        }
+        public override string Name => "Remove OneDrive";
 
-        public override string Tooltip()
-        {
-            return "Uninstalls OneDrive and stops it from running for everyone on this PC. Files already in your OneDrive folder stay where they are.";
-        }
+        public override string Description => "Uninstalls OneDrive and stops it from running for everyone on this PC. Files already in your OneDrive folder stay where they are.";
 
         protected override IEnumerable<ISetting> Settings()
         {

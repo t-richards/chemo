@@ -7,16 +7,11 @@ namespace Chemo.Treatment.Appearance
 {
     internal sealed class ReplaceSpotlightWallpaper : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Replace the Spotlight wallpaper";
-        }
+        public override string Name => "Replace the Spotlight wallpaper";
 
-        public override string Tooltip()
-        {
-            return "If your desktop background is Windows Spotlight, which downloads a new picture every day and adds a \"Learn about this picture\" " +
-                "icon to the desktop, switches it to the standard Windows wallpaper. A picture you picked yourself is left alone.";
-        }
+        public override string Description =>
+            "If your desktop background is Windows Spotlight, which downloads a new picture every day and adds a \"Learn about this picture\" " +
+            "icon to the desktop, switches it to the standard Windows wallpaper. A picture you picked yourself is left alone.";
 
         protected override IEnumerable<ISetting> Settings()
         {

@@ -7,15 +7,9 @@ namespace Chemo.Treatment.Power
 {
     internal sealed class UseHighPerformancePlan : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Use the High performance power plan";
-        }
+        public override string Name => "Use the High performance power plan";
 
-        public override string Tooltip()
-        {
-            return "Keeps the processor at full speed instead of saving power. Uses more electricity and drains laptop batteries faster.";
-        }
+        public override string Description => "Keeps the processor at full speed instead of saving power. Uses more electricity and drains laptop batteries faster.";
 
         protected override IEnumerable<ISetting> Settings()
         {

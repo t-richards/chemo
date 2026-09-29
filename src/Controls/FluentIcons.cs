@@ -3,26 +3,19 @@ using System.Drawing.Imaging;
 
 namespace Chemo.Controls
 {
-    internal enum TreatmentStatus
-    {
-        NotStarted,
-        Ok,
-        Info,
-        Restart,
-        Error,
-    }
-
     /// <summary>
-    /// Status icons drawn from the Windows 11 icon font, in the style of the Windows Settings app:
-    /// a colored circle with a mark cut out of it.
+    /// Icons drawn from Segoe Fluent Icons, the Windows 11 icon font: status icons in the style of the Windows Settings
+    /// app, a colored circle with a mark cut out of it, and single glyphs for menu items.
     /// </summary>
-    internal static class StatusIcons
+    internal static class FluentIcons
     {
         private const string FontName = "Segoe Fluent Icons";
 
-        // Menu icons, in Segoe Fluent Icons
+        // Menu icons
         public const string CopyGlyph = "";
         public const string OpenInNewWindowGlyph = "";
+
+        // Status icon parts
         private const string Circle = "";
         private const string Checkmark = "";
         private const string InfoMark = "";
@@ -34,7 +27,7 @@ namespace Chemo.Controls
         /// </summary>
         /// <param name="size">The icon size in device pixels.</param>
         /// <param name="dark">Whether the icons are shown on a dark background.</param>
-        public static ImageList Create(int size, bool dark)
+        public static ImageList CreateStatusIcons(int size, bool dark)
         {
             // Colors match the WinUI system fill colors for success, attention, caution, and critical.
             Color markColor = dark ? Color.FromArgb(228, 0, 0, 0) : Color.White;

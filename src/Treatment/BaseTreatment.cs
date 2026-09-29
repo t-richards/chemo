@@ -3,19 +3,17 @@ namespace Chemo.Treatment
 {
     internal abstract class BaseTreatment
     {
-        public MemoryLogger Logger { get; } = MemoryLogger.Instance;
+        public MemoryLogger Logger { get; } = new();
 
         /// <summary>
-        /// The short name of the treatment.
+        /// The treatment's name in the list.
         /// </summary>
-        /// <returns>The treatment name.</returns>
-        public abstract string Name();
+        public abstract string Name { get; }
 
         /// <summary>
-        /// The tooltip text of the treatment.
+        /// What the treatment does, shown as its tooltip and in the details pane.
         /// </summary>
-        /// <returns>The treatment tooltip.</returns>
-        public abstract string Tooltip();
+        public abstract string Description { get; }
 
         /// <summary>
         /// Determines whether the treatment should be applied. This operation should be idempotent.

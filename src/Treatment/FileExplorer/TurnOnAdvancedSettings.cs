@@ -6,16 +6,11 @@ namespace Chemo.Treatment.FileExplorer
     {
         private const string Advanced = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 
-        public override string Name()
-        {
-            return "Show file extensions, hidden files, and more";
-        }
+        public override string Name => "Show file extensions, hidden files, and more";
 
-        public override string Tooltip()
-        {
-            return "Shows file extensions, hidden files, the full folder path in the title bar, and empty " +
-                "drives, and adds Run as different user to Start. Sign out to finish.";
-        }
+        public override string Description =>
+            "Shows file extensions, hidden files, the full folder path in the title bar, and empty " +
+            "drives, and adds Run as different user to Start. Sign out to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

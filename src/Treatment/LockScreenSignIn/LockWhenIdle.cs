@@ -7,15 +7,9 @@ namespace Chemo.Treatment.LockScreenSignIn
 {
     internal sealed class LockWhenIdle : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Lock after 15 minutes away";
-        }
+        public override string Name => "Lock after 15 minutes away";
 
-        public override string Tooltip()
-        {
-            return "Blanks the screen after 15 minutes without use, and asks for your password or PIN when you come back.";
-        }
+        public override string Description => "Blanks the screen after 15 minutes without use, and asks for your password or PIN when you come back.";
 
         protected override IEnumerable<ISetting> Settings()
         {

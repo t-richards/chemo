@@ -6,16 +6,11 @@ namespace Chemo.Treatment.Taskbar
     {
         private static readonly string[] PackageNames = ["Microsoft.WidgetsPlatformRuntime", "MicrosoftWindows.Client.WebExperience"];
 
-        public override string Name()
-        {
-            return "Remove Widgets";
-        }
+        public override string Name => "Remove Widgets";
 
-        public override string Tooltip()
-        {
-            return "Removes Widgets and its news feed from the taskbar for everyone on this PC, " +
-                "and keeps it off if Windows reinstalls it. Sign out to finish.";
-        }
+        public override string Description =>
+            "Removes Widgets and its news feed from the taskbar for everyone on this PC, " +
+            "and keeps it off if Windows reinstalls it. Sign out to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

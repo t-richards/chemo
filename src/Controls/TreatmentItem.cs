@@ -21,8 +21,8 @@ namespace Chemo.Controls
         {
             Treatment = treatment;
             Category = category;
-            Text = treatment.Name();
-            ToolTipText = treatment.Tooltip();
+            Text = treatment.Name;
+            ToolTipText = treatment.Description;
             Checked = true;
             IndentCount = 1;
 

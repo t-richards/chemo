@@ -52,7 +52,7 @@ namespace Chemo.Test
             foreach (Category category in TreatmentCatalog.Categories)
             {
                 expected.Add($"- **{category.Name}**");
-                expected.AddRange(category.Treatments.Select(t => $"  - {t.Name()}"));
+                expected.AddRange(category.Treatments.Select(t => $"  - {t.Name}"));
             }
 
             List<string> actual = File.ReadAllLines(Path.Combine(AppContext.BaseDirectory, "README.md"))

@@ -6,16 +6,11 @@ namespace Chemo.Treatment.FileExplorer
 {
     internal sealed class DisableFolderDiscovery : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Use the same view for every folder";
-        }
+        public override string Name => "Use the same view for every folder";
 
-        public override string Tooltip()
-        {
-            return "Stops File Explorer from guessing what's in each folder, which makes big folders slow to open. " +
-                "Every folder uses the same general view, and any views you've set up are reset. Sign out to finish.";
-        }
+        public override string Description =>
+            "Stops File Explorer from guessing what's in each folder, which makes big folders slow to open. " +
+            "Every folder uses the same general view, and any views you've set up are reset. Sign out to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

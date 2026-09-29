@@ -6,15 +6,9 @@ namespace Chemo.Treatment.Start
 {
     internal sealed class DisableStoreSearchResults : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off Store results in search";
-        }
+        public override string Name => "Turn off Store results in search";
 
-        public override string Tooltip()
-        {
-            return "Stops Start search from suggesting Microsoft Store apps when you search for an app.";
-        }
+        public override string Description => "Stops Start search from suggesting Microsoft Store apps when you search for an app.";
 
         protected override IEnumerable<ISetting> Settings()
         {

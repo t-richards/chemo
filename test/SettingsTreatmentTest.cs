@@ -31,15 +31,9 @@ namespace Chemo.Test
                 this.settings = settings;
             }
 
-            public override string Name()
-            {
-                return "Fake";
-            }
+            public override string Name => "Fake";
 
-            public override string Tooltip()
-            {
-                return "Fake";
-            }
+            public override string Description => "Fake";
 
             protected override IEnumerable<ISetting> Settings()
             {

@@ -4,15 +4,9 @@ namespace Chemo.Treatment.Devices
 {
     internal sealed class PreventDeviceCompanionApps : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Stop devices from installing their own apps";
-        }
+        public override string Name => "Stop devices from installing their own apps";
 
-        public override string Tooltip()
-        {
-            return "Stops Windows from downloading the maker's app and info when you plug in a device, like a mouse, keyboard, or monitor.";
-        }
+        public override string Description => "Stops Windows from downloading the maker's app and info when you plug in a device, like a mouse, keyboard, or monitor.";
 
         protected override IEnumerable<ISetting> Settings()
         {

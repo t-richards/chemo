@@ -5,15 +5,9 @@ namespace Chemo.Treatment.Time
 {
     internal sealed class Use24HourClock : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Use a 24-hour clock";
-        }
+        public override string Name => "Use a 24-hour clock";
 
-        public override string Tooltip()
-        {
-            return "Shows times like 17:30 instead of 5:30 PM, including the clock on the taskbar.";
-        }
+        public override string Description => "Shows times like 17:30 instead of 5:30 PM, including the clock on the taskbar.";
 
         protected override IEnumerable<ISetting> Settings()
         {

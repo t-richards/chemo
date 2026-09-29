@@ -7,15 +7,9 @@ namespace Chemo.Treatment.Apps
 {
     internal sealed class DeprovisionStoreApps : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Keep removed apps from coming back";
-        }
+        public override string Name => "Keep removed apps from coming back";
 
-        public override string Tooltip()
-        {
-            return "Stops Windows from reinstalling the same apps when someone new signs in to this PC or when a big Windows update installs.";
-        }
+        public override string Description => "Stops Windows from reinstalling the same apps when someone new signs in to this PC or when a big Windows update installs.";
 
         protected override IEnumerable<ISetting> Settings()
         {

@@ -5,16 +5,11 @@ namespace Chemo.Treatment.FileExplorer
 {
     internal sealed class RestorePreviousRightClickMenu : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Bring back the full right-click menu";
-        }
+        public override string Name => "Bring back the full right-click menu";
 
-        public override string Tooltip()
-        {
-            return "Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you " +
-                "don't have to click Show more options every time. Sign out to finish.";
-        }
+        public override string Description =>
+            "Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you " +
+            "don't have to click Show more options every time. Sign out to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

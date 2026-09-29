@@ -7,15 +7,9 @@ namespace Chemo.Treatment.Appearance
     {
         private const string Personalize = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
-        public override string Name()
-        {
-            return "Use dark mode";
-        }
+        public override string Name => "Use dark mode";
 
-        public override string Tooltip()
-        {
-            return "Switches Windows and your apps to dark mode, the same as picking Dark in Settings > Personalization > Colors.";
-        }
+        public override string Description => "Switches Windows and your apps to dark mode, the same as picking Dark in Settings > Personalization > Colors.";
 
         protected override IEnumerable<ISetting> Settings()
         {

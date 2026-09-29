@@ -29,175 +29,175 @@ namespace Chemo
         /// </summary>
         private void InitializeComponent()
         {
-            this.splitDetails = new System.Windows.Forms.SplitContainer();
-            this.lstTreatments = new Chemo.Controls.TreatmentListView();
-            this.columnTreatment = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.txtDetails = new System.Windows.Forms.TextBox();
-            this.btnAnalyze = new System.Windows.Forms.Button();
-            this.btnInitiateTreatment = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.prgTreatmentApplication = new System.Windows.Forms.ToolStripProgressBar();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.versionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.githubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.splitDetails)).BeginInit();
-            this.splitDetails.Panel1.SuspendLayout();
-            this.splitDetails.Panel2.SuspendLayout();
-            this.splitDetails.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
+            this.treatmentList = new Chemo.Controls.TreatmentListView();
+            this.treatmentColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.statusColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.timeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.detailsTextBox = new System.Windows.Forms.TextBox();
+            this.analyzeButton = new System.Windows.Forms.Button();
+            this.applyButton = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.progressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.helpMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.versionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.githubMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             //
-            // splitDetails
+            // splitContainer
             //
-            this.splitDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitDetails.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-            this.splitDetails.Location = new System.Drawing.Point(12, 36);
-            this.splitDetails.Name = "splitDetails";
-            this.splitDetails.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer.Location = new System.Drawing.Point(12, 36);
+            this.splitContainer.Name = "splitContainer";
+            this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
             //
-            // splitDetails.Panel1
+            // splitContainer.Panel1
             //
-            this.splitDetails.Panel1.Controls.Add(this.lstTreatments);
+            this.splitContainer.Panel1.Controls.Add(this.treatmentList);
             //
-            // splitDetails.Panel2
+            // splitContainer.Panel2
             //
-            this.splitDetails.Panel2.Controls.Add(this.txtDetails);
-            this.splitDetails.Size = new System.Drawing.Size(836, 488);
-            this.splitDetails.SplitterDistance = 330;
-            this.splitDetails.TabIndex = 0;
+            this.splitContainer.Panel2.Controls.Add(this.detailsTextBox);
+            this.splitContainer.Size = new System.Drawing.Size(836, 488);
+            this.splitContainer.SplitterDistance = 330;
+            this.splitContainer.TabIndex = 0;
             //
-            // lstTreatments
+            // treatmentList
             //
-            this.lstTreatments.CheckBoxes = true;
-            this.lstTreatments.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnTreatment,
-            this.columnStatus,
-            this.columnTime});
-            this.lstTreatments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstTreatments.FullRowSelect = true;
-            this.lstTreatments.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstTreatments.HideSelection = false;
-            this.lstTreatments.Location = new System.Drawing.Point(0, 0);
-            this.lstTreatments.MultiSelect = false;
-            this.lstTreatments.Name = "lstTreatments";
-            this.lstTreatments.ShowItemToolTips = true;
-            this.lstTreatments.Size = new System.Drawing.Size(836, 330);
-            this.lstTreatments.TabIndex = 0;
-            this.lstTreatments.UseCompatibleStateImageBehavior = false;
-            this.lstTreatments.View = System.Windows.Forms.View.Details;
-            this.lstTreatments.SelectedIndexChanged += new System.EventHandler(this.LstTreatments_SelectedIndexChanged);
+            this.treatmentList.CheckBoxes = true;
+            this.treatmentList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.treatmentColumn,
+            this.statusColumn,
+            this.timeColumn});
+            this.treatmentList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treatmentList.FullRowSelect = true;
+            this.treatmentList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.treatmentList.HideSelection = false;
+            this.treatmentList.Location = new System.Drawing.Point(0, 0);
+            this.treatmentList.MultiSelect = false;
+            this.treatmentList.Name = "treatmentList";
+            this.treatmentList.ShowItemToolTips = true;
+            this.treatmentList.Size = new System.Drawing.Size(836, 330);
+            this.treatmentList.TabIndex = 0;
+            this.treatmentList.UseCompatibleStateImageBehavior = false;
+            this.treatmentList.View = System.Windows.Forms.View.Details;
+            this.treatmentList.SelectedIndexChanged += new System.EventHandler(this.TreatmentList_SelectedIndexChanged);
             //
-            // columnTreatment
+            // treatmentColumn
             //
-            this.columnTreatment.Text = "Treatment";
-            this.columnTreatment.Width = 420;
+            this.treatmentColumn.Text = "Treatment";
+            this.treatmentColumn.Width = 420;
             //
-            // columnStatus
+            // statusColumn
             //
-            this.columnStatus.Text = "Status";
-            this.columnStatus.Width = 260;
+            this.statusColumn.Text = "Status";
+            this.statusColumn.Width = 260;
             //
-            // columnTime
+            // timeColumn
             //
-            this.columnTime.Text = "Time";
-            this.columnTime.Width = 150;
+            this.timeColumn.Text = "Time";
+            this.timeColumn.Width = 150;
             //
-            // txtDetails
+            // detailsTextBox
             //
-            this.txtDetails.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtDetails.Font = new System.Drawing.Font("Consolas", 9F);
-            this.txtDetails.Location = new System.Drawing.Point(0, 0);
-            this.txtDetails.Multiline = true;
-            this.txtDetails.Name = "txtDetails";
-            this.txtDetails.ReadOnly = true;
-            this.txtDetails.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtDetails.Size = new System.Drawing.Size(836, 154);
-            this.txtDetails.TabIndex = 0;
-            this.txtDetails.WordWrap = false;
+            this.detailsTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.detailsTextBox.Font = new System.Drawing.Font("Consolas", 9F);
+            this.detailsTextBox.Location = new System.Drawing.Point(0, 0);
+            this.detailsTextBox.Multiline = true;
+            this.detailsTextBox.Name = "detailsTextBox";
+            this.detailsTextBox.ReadOnly = true;
+            this.detailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.detailsTextBox.Size = new System.Drawing.Size(836, 154);
+            this.detailsTextBox.TabIndex = 0;
+            this.detailsTextBox.WordWrap = false;
             //
-            // btnAnalyze
+            // analyzeButton
             //
-            this.btnAnalyze.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAnalyze.Location = new System.Drawing.Point(600, 536);
-            this.btnAnalyze.Name = "btnAnalyze";
-            this.btnAnalyze.Size = new System.Drawing.Size(120, 30);
-            this.btnAnalyze.TabIndex = 1;
-            this.btnAnalyze.Text = "Analyze";
-            this.btnAnalyze.UseVisualStyleBackColor = true;
-            this.btnAnalyze.Click += new System.EventHandler(this.BtnAnalyze_Click);
+            this.analyzeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.analyzeButton.Location = new System.Drawing.Point(600, 536);
+            this.analyzeButton.Name = "analyzeButton";
+            this.analyzeButton.Size = new System.Drawing.Size(120, 30);
+            this.analyzeButton.TabIndex = 1;
+            this.analyzeButton.Text = "Analyze";
+            this.analyzeButton.UseVisualStyleBackColor = true;
+            this.analyzeButton.Click += new System.EventHandler(this.AnalyzeButton_Click);
             //
-            // btnInitiateTreatment
+            // applyButton
             //
-            this.btnInitiateTreatment.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnInitiateTreatment.Location = new System.Drawing.Point(728, 536);
-            this.btnInitiateTreatment.Name = "btnInitiateTreatment";
-            this.btnInitiateTreatment.Size = new System.Drawing.Size(120, 30);
-            this.btnInitiateTreatment.TabIndex = 2;
-            this.btnInitiateTreatment.Text = "Apply";
-            this.btnInitiateTreatment.UseVisualStyleBackColor = true;
-            this.btnInitiateTreatment.Click += new System.EventHandler(this.BtnInitiateTreatment_Click);
+            this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.applyButton.Location = new System.Drawing.Point(728, 536);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(120, 30);
+            this.applyButton.TabIndex = 2;
+            this.applyButton.Text = "Apply";
+            this.applyButton.UseVisualStyleBackColor = true;
+            this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             //
-            // statusStrip1
+            // statusStrip
             //
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus,
-            this.prgTreatmentApplication});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 578);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(860, 22);
-            this.statusStrip1.TabIndex = 3;
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.progressBar});
+            this.statusStrip.Location = new System.Drawing.Point(0, 578);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(860, 22);
+            this.statusStrip.TabIndex = 3;
             //
-            // lblStatus
+            // statusLabel
             //
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(643, 17);
-            this.lblStatus.Spring = true;
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(643, 17);
+            this.statusLabel.Spring = true;
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
-            // prgTreatmentApplication
+            // progressBar
             //
-            this.prgTreatmentApplication.Name = "prgTreatmentApplication";
-            this.prgTreatmentApplication.Size = new System.Drawing.Size(200, 16);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(200, 16);
             //
-            // menuStrip1
+            // menuStrip
             //
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.helpToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(860, 24);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpMenuItem});
+            this.menuStrip.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip.Name = "menuStrip";
+            this.menuStrip.Size = new System.Drawing.Size(860, 24);
+            this.menuStrip.TabIndex = 4;
+            this.menuStrip.Text = "menuStrip";
             //
-            // helpToolStripMenuItem
+            // helpMenuItem
             //
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.versionToolStripMenuItem,
-            this.githubToolStripMenuItem});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.helpToolStripMenuItem.Text = "Help";
+            this.helpMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.versionMenuItem,
+            this.githubMenuItem});
+            this.helpMenuItem.Name = "helpMenuItem";
+            this.helpMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpMenuItem.Text = "Help";
             //
-            // versionToolStripMenuItem
+            // versionMenuItem
             //
-            this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
-            this.versionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.versionToolStripMenuItem.Text = "Version";
-            this.versionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
+            this.versionMenuItem.Name = "versionMenuItem";
+            this.versionMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.versionMenuItem.Text = "Version";
+            this.versionMenuItem.Click += new System.EventHandler(this.VersionMenuItem_Click);
             //
-            // githubToolStripMenuItem
+            // githubMenuItem
             //
-            this.githubToolStripMenuItem.Name = "githubToolStripMenuItem";
-            this.githubToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.githubToolStripMenuItem.Text = "View on GitHub";
-            this.githubToolStripMenuItem.Click += new System.EventHandler(this.GithubToolStripMenuItem_Click);
+            this.githubMenuItem.Name = "githubMenuItem";
+            this.githubMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.githubMenuItem.Text = "View on GitHub";
+            this.githubMenuItem.Click += new System.EventHandler(this.GithubMenuItem_Click);
             //
             // MainForm
             //
@@ -205,43 +205,43 @@ namespace Chemo
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(860, 600);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Controls.Add(this.splitDetails);
-            this.Controls.Add(this.btnAnalyze);
-            this.Controls.Add(this.btnInitiateTreatment);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            this.Controls.Add(this.splitContainer);
+            this.Controls.Add(this.analyzeButton);
+            this.Controls.Add(this.applyButton);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip);
+            this.MainMenuStrip = this.menuStrip;
             this.Name = "MainForm";
             this.Text = "Chemo";
-            this.splitDetails.Panel1.ResumeLayout(false);
-            this.splitDetails.Panel2.ResumeLayout(false);
-            this.splitDetails.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitDetails)).EndInit();
-            this.splitDetails.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            this.splitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.SplitContainer splitDetails;
-        private Chemo.Controls.TreatmentListView lstTreatments;
-        private System.Windows.Forms.ColumnHeader columnTreatment;
-        private System.Windows.Forms.ColumnHeader columnStatus;
-        private System.Windows.Forms.ColumnHeader columnTime;
-        private System.Windows.Forms.TextBox txtDetails;
-        private System.Windows.Forms.Button btnAnalyze;
-        private System.Windows.Forms.Button btnInitiateTreatment;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.ToolStripProgressBar prgTreatmentApplication;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem versionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem githubToolStripMenuItem;
+        private System.Windows.Forms.SplitContainer splitContainer;
+        private Chemo.Controls.TreatmentListView treatmentList;
+        private System.Windows.Forms.ColumnHeader treatmentColumn;
+        private System.Windows.Forms.ColumnHeader statusColumn;
+        private System.Windows.Forms.ColumnHeader timeColumn;
+        private System.Windows.Forms.TextBox detailsTextBox;
+        private System.Windows.Forms.Button analyzeButton;
+        private System.Windows.Forms.Button applyButton;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.ToolStripProgressBar progressBar;
+        private System.Windows.Forms.MenuStrip menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem helpMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem versionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem githubMenuItem;
     }
 }

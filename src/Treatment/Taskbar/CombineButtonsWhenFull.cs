@@ -7,15 +7,9 @@ namespace Chemo.Treatment.Taskbar
     {
         private const string Advanced = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
 
-        public override string Name()
-        {
-            return "Combine taskbar buttons only when it's full";
-        }
+        public override string Name => "Combine taskbar buttons only when it's full";
 
-        public override string Tooltip()
-        {
-            return "Shows each open window as its own labeled taskbar button, and only groups them when the taskbar runs out of room.";
-        }
+        public override string Description => "Shows each open window as its own labeled taskbar button, and only groups them when the taskbar runs out of room.";
 
         protected override IEnumerable<ISetting> Settings()
         {

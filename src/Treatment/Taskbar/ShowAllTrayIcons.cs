@@ -5,16 +5,11 @@ namespace Chemo.Treatment.Taskbar
 {
     internal sealed class ShowAllTrayIcons : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Show all tray icons";
-        }
+        public override string Name => "Show all tray icons";
 
-        public override string Tooltip()
-        {
-            return "Shows every app's icon next to the clock instead of hiding some behind the ^ arrow. " +
-                "Apps you install later start out hidden, so run this again to show them.";
-        }
+        public override string Description =>
+            "Shows every app's icon next to the clock instead of hiding some behind the ^ arrow. " +
+            "Apps you install later start out hidden, so run this again to show them.";
 
         protected override IEnumerable<ISetting> Settings()
         {

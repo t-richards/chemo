@@ -5,16 +5,11 @@ namespace Chemo.Treatment.Taskbar
 {
     internal sealed class HideSearchAndTaskView : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Hide the search box and Task View";
-        }
+        public override string Name => "Hide the search box and Task View";
 
-        public override string Tooltip()
-        {
-            return "Removes the search box and the Task View button from the taskbar. " +
-                "You can still search by opening Start and typing, and open Task View with Windows+Tab.";
-        }
+        public override string Description =>
+            "Removes the search box and the Task View button from the taskbar. " +
+            "You can still search by opening Start and typing, and open Task View with Windows+Tab.";
 
         protected override IEnumerable<ISetting> Settings()
         {

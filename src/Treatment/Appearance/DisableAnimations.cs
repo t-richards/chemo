@@ -9,15 +9,9 @@ namespace Chemo.Treatment.Appearance
     {
         private const uint UpdateAndNotify = UnsafeNativeMethods.SPIF_UPDATEINIFILE | UnsafeNativeMethods.SPIF_SENDCHANGE;
 
-        public override string Name()
-        {
-            return "Turn off animations";
-        }
+        public override string Name => "Turn off animations";
 
-        public override string Tooltip()
-        {
-            return "Turns off the animations when windows open, close, minimize, and maximize, and in apps and the taskbar, so Windows feels snappier.";
-        }
+        public override string Description => "Turns off the animations when windows open, close, minimize, and maximize, and in apps and the taskbar, so Windows feels snappier.";
 
         protected override IEnumerable<ISetting> Settings()
         {

@@ -13,16 +13,11 @@ namespace Chemo.Treatment.CopilotAI
         // Windows AI Components Host
         private static readonly ServiceStartup AIService = new("WSAIFabricSvc", ServiceStartType.Disabled);
 
-        public override string Name()
-        {
-            return "Remove Copilot and Windows AI";
-        }
+        public override string Name => "Remove Copilot and Windows AI";
 
-        public override string Tooltip()
-        {
-            return "Removes the Copilot apps and Click to Do for everyone on this PC, and turns off Recall, the AI features " +
-                "in Paint and Notepad, and the Windows AI service so they stay off. Restart to finish.";
-        }
+        public override string Description =>
+            "Removes the Copilot apps and Click to Do for everyone on this PC, and turns off Recall, the AI features " +
+            "in Paint and Notepad, and the Windows AI service so they stay off. Restart to finish.";
 
         protected override IEnumerable<ISetting> Settings()
         {

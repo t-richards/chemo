@@ -5,16 +5,11 @@ namespace Chemo.Treatment.Privacy
 {
     internal sealed class DisableLocationTracking : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off location tracking";
-        }
+        public override string Name => "Turn off location tracking";
 
-        public override string Tooltip()
-        {
-            return "Turns off location for every app and everyone on this PC. " +
-                "Apps like Weather and Find my device, and setting your time zone automatically, won't be able to find where you are.";
-        }
+        public override string Description =>
+            "Turns off location for every app and everyone on this PC. " +
+            "Apps like Weather and Find my device, and setting your time zone automatically, won't be able to find where you are.";
 
         protected override IEnumerable<ISetting> Settings()
         {

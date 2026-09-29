@@ -7,15 +7,9 @@ namespace Chemo.Treatment.KeyboardMouse
 {
     internal sealed class DisableStickyKeysShortcut : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off the Sticky Keys shortcut";
-        }
+        public override string Name => "Turn off the Sticky Keys shortcut";
 
-        public override string Tooltip()
-        {
-            return "Stops pressing Shift five times from turning on Sticky Keys or asking about it, which is easy to do by accident in games.";
-        }
+        public override string Description => "Stops pressing Shift five times from turning on Sticky Keys or asking about it, which is easy to do by accident in games.";
 
         protected override IEnumerable<ISetting> Settings()
         {

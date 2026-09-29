@@ -4,16 +4,11 @@ namespace Chemo.Treatment.LockScreenSignIn
 {
     internal sealed class SkipLockScreen : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Skip the lock screen";
-        }
+        public override string Name => "Skip the lock screen";
 
-        public override string Tooltip()
-        {
-            return "Goes straight to the password or PIN box when you start, wake, or lock your PC, without a lock " +
-                "screen to click or swipe away first. If Ctrl+Alt+Del is required, you press that instead.";
-        }
+        public override string Description =>
+            "Goes straight to the password or PIN box when you start, wake, or lock your PC, without a lock " +
+            "screen to click or swipe away first. If Ctrl+Alt+Del is required, you press that instead.";
 
         protected override IEnumerable<ISetting> Settings()
         {

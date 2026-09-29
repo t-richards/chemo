@@ -6,16 +6,11 @@ namespace Chemo.Treatment.Power
 {
     internal sealed class DisableHibernation : SettingsTreatment
     {
-        public override string Name()
-        {
-            return "Turn off hibernation";
-        }
+        public override string Name => "Turn off hibernation";
 
-        public override string Tooltip()
-        {
-            return "Turns off hibernation and Fast Startup and deletes the hibernation file, which frees up disk space. " +
-                "Laptops shut down instead of hibernating when the battery runs out.";
-        }
+        public override string Description =>
+            "Turns off hibernation and Fast Startup and deletes the hibernation file, which frees up disk space. " +
+            "Laptops shut down instead of hibernating when the battery runs out.";
 
         protected override IEnumerable<ISetting> Settings()
         {
