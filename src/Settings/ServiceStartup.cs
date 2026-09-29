@@ -5,7 +5,7 @@ using System.ServiceProcess;
 
 namespace Chemo.Settings
 {
-    public enum ServiceStartType
+    internal enum ServiceStartType
     {
         Automatic = 2,
         Manual = 3,
@@ -15,7 +15,7 @@ namespace Chemo.Settings
     /// <summary>
     /// A Windows service that should use a specific startup type.
     /// </summary>
-    public sealed class ServiceStartup : ISetting
+    internal sealed class ServiceStartup : ISetting
     {
         private const string ServicesKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\";
 

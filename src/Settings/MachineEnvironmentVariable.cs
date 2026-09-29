@@ -3,7 +3,7 @@ namespace Chemo.Settings
     /// <summary>
     /// A system-wide environment variable that should hold a specific value.
     /// </summary>
-    public sealed class MachineEnvironmentVariable : ISetting
+    internal sealed class MachineEnvironmentVariable : ISetting
     {
         public string Name { get; }
         public string Value { get; }

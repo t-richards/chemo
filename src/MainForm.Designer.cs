@@ -1,6 +1,6 @@
 namespace Chemo
 {
-    partial class frmMain
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -13,9 +13,10 @@ namespace Chemo
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                components?.Dispose();
+                categoryFont.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -198,7 +199,7 @@ namespace Chemo
             this.githubToolStripMenuItem.Text = "View on GitHub";
             this.githubToolStripMenuItem.Click += new System.EventHandler(this.GithubToolStripMenuItem_Click);
             //
-            // frmMain
+            // MainForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -210,7 +211,7 @@ namespace Chemo
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "frmMain";
+            this.Name = "MainForm";
             this.Text = "Chemo";
             this.splitDetails.Panel1.ResumeLayout(false);
             this.splitDetails.Panel2.ResumeLayout(false);

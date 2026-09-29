@@ -1,6 +1,6 @@
 namespace Chemo.Data
 {
-    public static class StoreApps
+    internal static class StoreApps
     {
         // Pre-installed apps on a typical Windows 11 Pro install that are ads, upsells, or discontinued.
         // Built-in utilities (Calculator, Clock, Camera, Media Player, Photos, Snipping Tool, etc.) and

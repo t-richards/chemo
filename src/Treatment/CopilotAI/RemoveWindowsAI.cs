@@ -1,5 +1,4 @@
 using Chemo.Settings;
-using Chemo.Utilities;
 
 namespace Chemo.Treatment.CopilotAI
 {

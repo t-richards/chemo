@@ -15,12 +15,15 @@
     <Product>Chemo</Product>
     <Copyright>Copyright © 2026 Tom Richards</Copyright>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Chemo.Test" />
   </ItemGroup>
 
   <ItemGroup>

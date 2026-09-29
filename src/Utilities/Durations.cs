@@ -1,6 +1,6 @@
 namespace Chemo.Utilities
 {
-    public static class Durations
+    internal static class Durations
     {
         /// <summary>
         /// Describes a duration the way a person would say it, such as "under a second" or "1 minute 5 seconds".

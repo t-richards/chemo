@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Chemo.Utilities
 {
-    public sealed class MemoryLogger
+    internal sealed class MemoryLogger
     {
         // Treatments log from a background thread while the details pane reads the log on the UI thread.
         private readonly object dataLock = new();
@@ -47,9 +47,6 @@ namespace Chemo.Utilities
             }
         }
 
-        public static MemoryLogger Instance
-        {
-            get => new();
-        }
+        public static MemoryLogger Instance => new();
     }
 }

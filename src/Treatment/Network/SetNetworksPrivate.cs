@@ -52,7 +52,7 @@ namespace Chemo.Treatment.Network
 
             public bool IsApplied()
             {
-                return !PublicNetworks().Any();
+                return PublicNetworks().Count == 0;
             }
 
             public void Apply()

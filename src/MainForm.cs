@@ -6,16 +6,18 @@ using System.Reflection;
 
 namespace Chemo
 {
-    public partial class frmMain : Form
+    internal partial class MainForm : Form
     {
+        private readonly Font categoryFont;
         private bool cascadingChecks;
 
-        public frmMain()
+        public MainForm()
         {
             InitializeComponent();
 
+            categoryFont = new(lstTreatments.Font, FontStyle.Bold);
             lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16), dark: false);
-            versionToolStripMenuItem.Text = $"Version {typeof(frmMain).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
+            versionToolStripMenuItem.Text = $"Version {typeof(MainForm).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
             InitTreatments();
             ShowDetails();
         }
@@ -32,7 +34,6 @@ namespace Chemo
         public void InitTreatments()
         {
             lstTreatments.Items.Clear();
-            Font categoryFont = new(lstTreatments.Font, FontStyle.Bold);
 
             foreach (Category category in TreatmentCatalog.Categories)
             {

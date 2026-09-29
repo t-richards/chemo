@@ -1,7 +1,7 @@
 using Chemo.Utilities;
 namespace Chemo.Treatment
 {
-    public abstract class BaseTreatment
+    internal abstract class BaseTreatment
     {
         public MemoryLogger Logger { get; } = MemoryLogger.Instance;
 

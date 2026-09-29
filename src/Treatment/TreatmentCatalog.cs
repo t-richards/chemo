@@ -8,7 +8,7 @@ namespace Chemo.Treatment
     /// works, and are listed alphabetically. Each category's treatments live in the matching folder
     /// and namespace under Treatment.
     /// </remarks>
-    public static class TreatmentCatalog
+    internal static class TreatmentCatalog
     {
         public static IReadOnlyList<Category> Categories { get; } =
         [

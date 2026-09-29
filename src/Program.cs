@@ -27,7 +27,8 @@ namespace Chemo
             DismApi.InitializeEx(DismLogLevel.LogErrors);
             try
             {
-                Application.Run(new frmMain());
+                using MainForm form = new();
+                Application.Run(form);
             }
             finally
             {

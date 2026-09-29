@@ -1,6 +1,6 @@
 namespace Chemo.Treatment
 {
-    public sealed class Category
+    internal sealed class Category
     {
         /// <summary>
         /// The category name shown in the treatment tree.

@@ -6,7 +6,7 @@ namespace Chemo.Settings
     /// <summary>
     /// App packages that no one on the PC should have installed.
     /// </summary>
-    public sealed class AppPackagesRemoved : ISetting
+    internal sealed class AppPackagesRemoved : ISetting
     {
         private readonly string description;
         private readonly Func<string, bool> shouldRemove;

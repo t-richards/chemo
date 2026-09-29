@@ -5,7 +5,7 @@ namespace Chemo.Treatment
     /// <summary>
     /// A treatment made up of settings that are each checked and applied on their own.
     /// </summary>
-    public abstract class SettingsTreatment : BaseTreatment
+    internal abstract class SettingsTreatment : BaseTreatment
     {
         /// <summary>
         /// The settings this treatment puts in place, in the order they are applied.

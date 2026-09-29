@@ -81,14 +81,14 @@ namespace Chemo.Utilities
         public const uint SKF_HOTKEYACTIVE = 0x00000004;
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct ANIMATIONINFO
+        internal struct ANIMATIONINFO
         {
             public uint cbSize;
             public int iMinAnimate;
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct STICKYKEYS
+        internal struct STICKYKEYS
         {
             public uint cbSize;
             public uint dwFlags;
@@ -156,7 +156,7 @@ namespace Chemo.Utilities
         public const uint LVIF_IMAGE = 0x0002;
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct LVITEMW
+        internal struct LVITEMW
         {
             public uint mask;
             public int iItem;

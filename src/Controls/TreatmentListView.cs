@@ -22,8 +22,9 @@ namespace Chemo.Controls
         {
             base.OnHandleCreated(e);
 
-            // Use File Explorer's look instead of the classic one Windows Forms defaults to.
-            UnsafeNativeMethods.SetWindowTheme(Handle, "Explorer", null);
+            // Use File Explorer's look instead of the classic one Windows Forms defaults to. If it fails, the list keeps
+            // the classic look.
+            _ = UnsafeNativeMethods.SetWindowTheme(Handle, "Explorer", null);
 
             // Windows supports images in any column, but Windows Forms doesn't expose it.
             UnsafeNativeMethods.SendMessage(

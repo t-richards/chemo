@@ -69,7 +69,7 @@ namespace Chemo.Controls
             {
                 // The mark glyphs are drawn relative to the circle, so both move by the offset that centers the circle.
                 RectangleF bounds = circle.GetBounds();
-                center.Translate((size - bounds.Width) / 2 - bounds.X, (size - bounds.Height) / 2 - bounds.Y);
+                center.Translate(((size - bounds.Width) / 2) - bounds.X, ((size - bounds.Height) / 2) - bounds.Y);
                 circle.Transform(center);
                 markPath.Transform(center);
 

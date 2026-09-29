@@ -6,12 +6,13 @@ namespace Chemo.Settings
     /// <summary>
     /// A registry value that should not exist.
     /// </summary>
-    public sealed class DeletedRegistryValue : ISetting
+    internal sealed class DeletedRegistryValue : ISetting
     {
         public string KeyName { get; }
         public string ValueName { get; }
 
         /// <param name="keyName">The full key path, starting with HKEY_CURRENT_USER or HKEY_LOCAL_MACHINE.</param>
+        /// <param name="valueName">The value to delete. The key is left in place.</param>
         public DeletedRegistryValue(string keyName, string valueName)
         {
             KeyName = keyName;

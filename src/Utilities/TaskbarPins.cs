@@ -166,7 +166,7 @@ namespace Chemo.Utilities
                 {
                     CMINVOKECOMMANDINFO info = new()
                     {
-                        cbSize = Marshal.SizeOf(typeof(CMINVOKECOMMANDINFO)),
+                        cbSize = Marshal.SizeOf<CMINVOKECOMMANDINFO>(),
                         fMask = CMIC_MASK_FLAG_NO_UI,
                         lpVerb = (IntPtr)(command - FirstCommand),
                         nShow = SW_SHOWNORMAL,
@@ -189,7 +189,7 @@ namespace Chemo.Utilities
             {
                 // Separators and submenus fall outside the range of commands.
                 uint command = UnsafeNativeMethods.GetMenuItemID(hmenu, position);
-                if (command < FirstCommand || command > LastCommand)
+                if (command is < FirstCommand or > LastCommand)
                 {
                     continue;
                 }

@@ -34,7 +34,7 @@ namespace Chemo.Treatment.Start
         private sealed class NothingPinned : ISetting
         {
             private const string ExplorerPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer";
-            private const string Layout = "{\"applyOnce\":true,\"pinnedList\":[{}]}";
+            private const string Layout = /*lang=json,strict*/ "{\"applyOnce\":true,\"pinnedList\":[{}]}";
             private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(30);
 
             public bool IsApplied()

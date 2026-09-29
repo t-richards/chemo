@@ -10,14 +10,16 @@ namespace Chemo.Settings
     /// SetLocaleInfo is used rather than writing the registry, because it also updates the related settings that
     /// older apps read and the copy Windows keeps in memory.
     /// </remarks>
-    public sealed class LocaleFormat : ISetting
+    internal sealed class LocaleFormat : ISetting
     {
         private readonly string description;
 
         public uint LocaleType { get; }
         public string Format { get; }
 
+        /// <param name="description">What the format is, for the log, such as "Short time format".</param>
         /// <param name="localeType">A LOCALE_ constant, such as LOCALE_SSHORTTIME.</param>
+        /// <param name="format">The format string, such as "HH:mm".</param>
         public LocaleFormat(string description, uint localeType, string format)
         {
             this.description = description;

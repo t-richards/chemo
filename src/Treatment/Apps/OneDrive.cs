@@ -127,7 +127,7 @@ namespace Chemo.Treatment.Apps
                 string? path = process.MainModule?.FileName;
                 return path != null && folders.Any(folder => path.StartsWith(folder + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
             }
-            catch (Exception ex) when (ex is Win32Exception || ex is InvalidOperationException)
+            catch (Exception ex) when (ex is Win32Exception or InvalidOperationException)
             {
                 // Windows doesn't let us inspect its own protected processes, and none of them are OneDrive.
                 return false;
@@ -158,7 +158,7 @@ namespace Chemo.Treatment.Apps
                         process.WaitForExit(5000);
                         Logger.Log("Stopped {0} ({1}).", process.ProcessName, process.Id);
                     }
-                    catch (Exception ex) when (ex is Win32Exception || ex is InvalidOperationException)
+                    catch (Exception ex) when (ex is Win32Exception or InvalidOperationException)
                     {
                         Logger.Log("Could not stop {0} ({1}): {2}", process.ProcessName, process.Id, ex.Message);
                     }
@@ -264,7 +264,7 @@ namespace Chemo.Treatment.Apps
                 File.SetAttributes(path, FileAttributes.Normal);
                 Directory.Delete(path, false);
             }
-            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 // Usually a file inside is in use and waiting to be deleted at restart. Windows deletes the
                 // folder at restart too, once it's empty.
@@ -289,7 +289,7 @@ namespace Chemo.Treatment.Apps
                 File.SetAttributes(path, FileAttributes.Normal);
                 File.Delete(path);
             }
-            catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
                 // Files that are in use, like OneDrive's File Explorer extension, can only be deleted at restart.
                 Logger.Log("{0} is in use and will be deleted when Windows restarts.", path);

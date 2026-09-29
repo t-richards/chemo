@@ -5,7 +5,7 @@ namespace Chemo.Utilities
     /// <summary>
     /// The files and folders Windows will delete the next time it restarts.
     /// </summary>
-    public static class PendingDeletes
+    internal static class PendingDeletes
     {
         private const string SessionManagerKey = @"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager";
 

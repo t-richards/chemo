@@ -3,7 +3,7 @@ namespace Chemo.Settings
     /// <summary>
     /// A single change made by a treatment, which is either in place or not.
     /// </summary>
-    public interface ISetting
+    internal interface ISetting
     {
         /// <summary>
         /// Determines whether the setting is already in place. This operation should be idempotent.
