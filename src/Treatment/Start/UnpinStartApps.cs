@@ -1,19 +1,16 @@
 using Chemo.Settings;
+using Chemo.Utilities;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace Chemo.Treatment.Start
 {
     class UnpinStartApps : SettingsTreatment
     {
-        private const string ExplorerPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer";
-
-        // %ProgramData%\Chemo\StartPins.json
-        private static readonly string LayoutPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Chemo", "StartPins.json");
-
         public override string Name()
         {
             return "Unpin Everything From Start";
@@ -21,45 +18,67 @@ namespace Chemo.Treatment.Start
 
         public override string Tooltip()
         {
-            return "Clears the Pinned section of Start for every user, including pins for apps that aren't installed yet, like LinkedIn and WhatsApp. " +
-                "Apps you pin afterwards stay pinned. Sign out to finish.";
+            return "Unpins every app from Start for your account, including pins for apps that aren't installed yet, like LinkedIn and WhatsApp. " +
+                "If you pin apps later, running this again unpins them too.";
         }
 
         protected override IEnumerable<ISetting> Settings()
         {
-            // The Configure Start Pins policy, which Windows 11 24H2 supports from the July 2025 update (KB5062660).
-            // Its JSON setting is the path to a layout file.
             return new ISetting[]
             {
-                new EmptyLayoutFile(),
-                new RegistryValue(ExplorerPolicies, "ConfigureStartPins", 1),
-                new RegistryValue(ExplorerPolicies, "ConfigureStartPinsJSON", LayoutPath, RegistryValueKind.ExpandString),
+                new NothingPinned(),
             };
         }
 
         /// <summary>
-        /// A layout with nothing pinned. applyOnce clears each user's pins at their next sign-in and then leaves
-        /// Start alone, where without it Windows would clear the pins at every sign-in. The single empty pin is
-        /// how winutil empties Start.
+        /// Windows has no way to unpin apps for someone, so this briefly sets the Configure Start Pins policy
+        /// (Windows 11 24H2 with KB5062660 and later) to an empty layout, waits for Start to apply it, and then
+        /// removes the policy and the layout file. The single empty pin is how winutil empties Start.
         /// </summary>
-        private sealed class EmptyLayoutFile : ISetting
+        private sealed class NothingPinned : ISetting
         {
+            private const string ExplorerPolicies = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Explorer";
             private const string Layout = "{\"applyOnce\":true,\"pinnedList\":[{}]}";
+            private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(30);
 
             public bool IsApplied()
             {
-                return File.Exists(LayoutPath) && File.ReadAllText(LayoutPath) == Layout;
+                return StartLayout.CountPins() == 0;
             }
 
             public void Apply()
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(LayoutPath));
-                File.WriteAllText(LayoutPath, Layout);
+                // ProgramData is where Start has been tested reading the layout from.
+                string layoutPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Chemo-StartPins.json");
+
+                try
+                {
+                    File.WriteAllText(layoutPath, Layout);
+                    Registry.SetValue(ExplorerPolicies, "ConfigureStartPins", 1, RegistryValueKind.DWord);
+                    Registry.SetValue(ExplorerPolicies, "ConfigureStartPinsJSON", layoutPath, RegistryValueKind.ExpandString);
+
+                    Stopwatch waited = Stopwatch.StartNew();
+                    while (StartLayout.CountPins() > 0)
+                    {
+                        if (waited.Elapsed > Timeout)
+                        {
+                            throw new TimeoutException($"Start didn't apply the empty layout within {Timeout.TotalSeconds} seconds.");
+                        }
+
+                        Thread.Sleep(500);
+                    }
+                }
+                finally
+                {
+                    RegistryUtils.DeleteValue(ExplorerPolicies, "ConfigureStartPins");
+                    RegistryUtils.DeleteValue(ExplorerPolicies, "ConfigureStartPinsJSON");
+                    File.Delete(layoutPath);
+                }
             }
 
             public override string ToString()
             {
-                return $"{LayoutPath} pins nothing to Start";
+                return "Nothing is pinned to Start";
             }
         }
     }
