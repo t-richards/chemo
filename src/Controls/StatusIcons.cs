@@ -19,6 +19,10 @@ namespace Chemo.Controls
     internal static class StatusIcons
     {
         private const string FontName = "Segoe Fluent Icons";
+
+        // Menu icons, in Segoe Fluent Icons
+        public const string CopyGlyph = "";
+        public const string OpenInNewWindowGlyph = "";
         private const string Circle = "";
         private const string Checkmark = "";
         private const string InfoMark = "";
@@ -76,6 +80,33 @@ namespace Chemo.Controls
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 graphics.FillPath(circleBrush, circle);
                 graphics.FillPath(markBrush, markPath);
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// Draws a single glyph from the icon font, centered, such as an icon for a menu item.
+        /// </summary>
+        /// <param name="glyph">The glyph's character in Segoe Fluent Icons.</param>
+        /// <param name="size">The icon size in device pixels.</param>
+        /// <param name="color">The glyph's color.</param>
+        public static Bitmap DrawGlyph(string glyph, int size, Color color)
+        {
+            Bitmap bitmap = new(size, size, PixelFormat.Format32bppArgb);
+
+            using (FontFamily family = new(FontName))
+            using (GraphicsPath path = Glyph(family, glyph, size))
+            using (Matrix center = new())
+            using (Graphics graphics = Graphics.FromImage(bitmap))
+            using (SolidBrush brush = new(color))
+            {
+                RectangleF bounds = path.GetBounds();
+                center.Translate(((size - bounds.Width) / 2) - bounds.X, ((size - bounds.Height) / 2) - bounds.Y);
+                path.Transform(center);
+
+                graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                graphics.FillPath(brush, path);
             }
 
             return bitmap;

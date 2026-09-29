@@ -187,10 +187,10 @@ namespace Chemo
             //
             // versionToolStripMenuItem
             //
-            this.versionToolStripMenuItem.Enabled = false;
             this.versionToolStripMenuItem.Name = "versionToolStripMenuItem";
             this.versionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.versionToolStripMenuItem.Text = "Version";
+            this.versionToolStripMenuItem.Click += new System.EventHandler(this.VersionToolStripMenuItem_Click);
             //
             // githubToolStripMenuItem
             //

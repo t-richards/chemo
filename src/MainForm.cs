@@ -3,12 +3,14 @@ using Chemo.Treatment;
 using Chemo.Utilities;
 using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Chemo
 {
     internal partial class MainForm : Form
     {
         private readonly Font categoryFont;
+        private readonly string fullVersion;
         private bool cascadingChecks;
 
         public MainForm()
@@ -17,9 +19,28 @@ namespace Chemo
 
             categoryFont = new(lstTreatments.Font, FontStyle.Bold);
             lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16), dark: false);
-            versionToolStripMenuItem.Text = $"Version {typeof(MainForm).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
+
+            // The full version ends with "+" and the commit it was built from, which is too long for the menu but
+            // useful in bug reports, so the menu shows the version number and clicking it copies the rest.
+            fullVersion = typeof(MainForm).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+            versionToolStripMenuItem.Text = $"Version {fullVersion.Split('+')[0]}";
+            versionToolStripMenuItem.ToolTipText = $"Copy {fullVersion}";
+            helpToolStripMenuItem.DropDown.ShowItemToolTips = true;
+
+            SetMenuIcon(versionToolStripMenuItem, StatusIcons.CopyGlyph);
+            SetMenuIcon(githubToolStripMenuItem, StatusIcons.OpenInNewWindowGlyph);
+
             InitTreatments();
             ShowDetails();
+        }
+
+        /// <summary>
+        /// Gives a menu item an icon drawn for the display's scale, so it isn't stretched.
+        /// </summary>
+        private void SetMenuIcon(ToolStripMenuItem item, string glyph)
+        {
+            item.Image = StatusIcons.DrawGlyph(glyph, LogicalToDeviceUnits(16), SystemColors.MenuText);
+            item.ImageScaling = ToolStripItemImageScaling.None;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -298,6 +319,20 @@ namespace Chemo
         private void GithubToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start(new ProcessStartInfo("https://github.com/t-richards/chemo") { UseShellExecute = true });
+        }
+
+        private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(fullVersion);
+                lblStatus.Text = $"Copied version {fullVersion} to the clipboard.";
+            }
+            catch (ExternalException)
+            {
+                // Another app has the clipboard open.
+                lblStatus.Text = "Couldn't copy the version because another app is using the clipboard. Try again.";
+            }
         }
     }
 }
