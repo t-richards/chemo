@@ -14,6 +14,13 @@ namespace Chemo.Controls
         // The image shown in each column after the first, keyed by item and column.
         private readonly Dictionary<(ListViewItem Item, int Column), string> subItemImages = new Dictionary<(ListViewItem, int), string>();
 
+        public TreatmentListView()
+        {
+            // Windows Forms turns this into the list view's own double buffering, which stops rows flickering as the
+            // pointer moves over them and tooltips come and go.
+            DoubleBuffered = true;
+        }
+
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
