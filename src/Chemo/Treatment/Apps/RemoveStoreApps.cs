@@ -1,5 +1,5 @@
 using Chemo.Data;
-using Windows.ApplicationModel;
+using System.Collections.Generic;
 
 namespace Chemo.Treatment.Apps
 {
@@ -19,16 +19,16 @@ namespace Chemo.Treatment.Apps
         {
             int packageCount = 0;
 
-            foreach (Package package in AppPackages.FindForAllUsers())
+            foreach (AppPackage package in AppPackages.FindForAllUsers())
             {
-                if (StoreApps.ShouldRemove(package.Id.Name))
+                if (StoreApps.ShouldRemove(package.Name))
                 {
-                    Logger.Log("Would remove {0}", package.Id.Name);
+                    Logger.Log("Would remove {0}", package.Name);
                     packageCount += 1;
                 }
                 else
                 {
-                    Logger.Log("Not removing {0}", package.Id.Name);
+                    Logger.Log("Not removing {0}", package.Name);
                 }
             }
 
@@ -42,25 +42,26 @@ namespace Chemo.Treatment.Apps
 
         public override bool PerformTreatment()
         {
-            int packageCount = 0;
+            List<AppPackage> packagesToRemove = new List<AppPackage>();
 
-            foreach (Package package in AppPackages.FindForAllUsers())
+            foreach (AppPackage package in AppPackages.FindForAllUsers())
             {
-                if (StoreApps.ShouldRemove(package.Id.Name))
+                if (StoreApps.ShouldRemove(package.Name))
                 {
-                    AppPackages.RemoveForAllUsers(package, Logger);
-                    packageCount += 1;
+                    packagesToRemove.Add(package);
                 }
                 else
                 {
-                    Logger.Log("Not removing {0}", package.Id.Name);
+                    Logger.Log("Not removing {0}", package.Name);
                 }
             }
 
-            if (packageCount <= 0)
+            if (packagesToRemove.Count <= 0)
             {
                 Logger.Log("No Windows Store applications were uninstalled.");
             }
+
+            AppPackages.RemoveForAllUsers(packagesToRemove, Logger);
             Logger.Log("");
 
             return true;

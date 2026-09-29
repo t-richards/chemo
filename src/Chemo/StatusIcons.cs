@@ -31,10 +31,9 @@ namespace Chemo
         /// Creates an image list holding an icon for each status, keyed by the status name.
         /// </summary>
         /// <param name="size">The icon size in device pixels.</param>
-        public static ImageList Create(int size)
+        /// <param name="dark">Whether the icons are shown on a dark background.</param>
+        public static ImageList Create(int size, bool dark)
         {
-            bool dark = Application.IsDarkModeEnabled;
-
             // Colors match the WinUI system fill colors for success, attention, caution, and critical.
             Color markColor = dark ? Color.FromArgb(228, 0, 0, 0) : Color.White;
             Color ok = dark ? Color.FromArgb(0x6C, 0xCB, 0x5F) : Color.FromArgb(0x0F, 0x7B, 0x0F);

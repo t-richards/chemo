@@ -18,9 +18,10 @@ namespace Chemo
         {
             InitializeComponent();
 
-            lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16));
+            lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16), dark: false);
             versionToolStripMenuItem.Text = $"Version {typeof(frmMain).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
             InitTreatments();
+            ShowDetails();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -287,7 +288,7 @@ namespace Chemo
             {
                 TreatmentItem item => TreatmentDetails(item.Treatment),
                 CategoryItem category => category.Category.Description,
-                _ => "",
+                _ => "Select a treatment to see what it does and what happened when it last ran.",
             };
         }
 

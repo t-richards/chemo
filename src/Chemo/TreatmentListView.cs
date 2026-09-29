@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Chemo
@@ -9,33 +10,27 @@ namespace Chemo
     /// </summary>
     class TreatmentListView : ListView
     {
+        // The image shown in each column after the first, keyed by item and column.
+        private readonly Dictionary<(ListViewItem Item, int Column), string> subItemImages = new Dictionary<(ListViewItem, int), string>();
+
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
 
-            // Windows Forms themes the list for dark mode itself, but leaves light mode with the classic look.
-            if (!Application.IsDarkModeEnabled)
-            {
-                UnsafeNativeMethods.SetWindowTheme(Handle, "Explorer", null);
-            }
+            // Use File Explorer's look instead of the classic one Windows Forms defaults to.
+            UnsafeNativeMethods.SetWindowTheme(Handle, "Explorer", null);
 
             // Windows supports images in any column, but Windows Forms doesn't expose it.
             UnsafeNativeMethods.SendMessage(
                 Handle,
                 UnsafeNativeMethods.LVM_SETEXTENDEDLISTVIEWSTYLE,
-                UnsafeNativeMethods.LVS_EX_SUBITEMIMAGES,
-                UnsafeNativeMethods.LVS_EX_SUBITEMIMAGES);
+                new IntPtr(UnsafeNativeMethods.LVS_EX_SUBITEMIMAGES),
+                new IntPtr(UnsafeNativeMethods.LVS_EX_SUBITEMIMAGES));
 
             // Items are added back when the handle is recreated, but their column images aren't.
-            foreach (ListViewItem item in Items)
+            foreach (KeyValuePair<(ListViewItem Item, int Column), string> image in subItemImages)
             {
-                for (int column = 1; column < item.SubItems.Count; column++)
-                {
-                    if (item.SubItems[column].Tag is string imageKey)
-                    {
-                        SendSubItemImage(item, column, imageKey);
-                    }
-                }
+                SendSubItemImage(image.Key.Item, image.Key.Column, image.Value);
             }
         }
 
@@ -55,7 +50,7 @@ namespace Chemo
         /// </summary>
         public void SetSubItemImage(ListViewItem item, int column, string imageKey)
         {
-            item.SubItems[column].Tag = imageKey;
+            subItemImages[(item, column)] = imageKey;
 
             if (IsHandleCreated)
             {

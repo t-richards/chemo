@@ -1,13 +1,12 @@
 using System.Globalization;
 using System.Text;
-using System.Threading;
 
 namespace Chemo
 {
     public sealed class MemoryLogger
     {
         // Treatments log from a background thread while the details pane reads the log on the UI thread.
-        private readonly Lock dataLock = new Lock();
+        private readonly object dataLock = new object();
         private StringBuilder data;
 
         public MemoryLogger()

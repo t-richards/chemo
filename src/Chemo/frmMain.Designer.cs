@@ -115,7 +115,6 @@ namespace Chemo
             this.txtDetails.Location = new System.Drawing.Point(0, 0);
             this.txtDetails.Multiline = true;
             this.txtDetails.Name = "txtDetails";
-            this.txtDetails.PlaceholderText = "Select a treatment to see what it does and what happened when it last ran.";
             this.txtDetails.ReadOnly = true;
             this.txtDetails.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtDetails.Size = new System.Drawing.Size(836, 154);
@@ -204,6 +203,7 @@ namespace Chemo
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(860, 600);
+            this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Controls.Add(this.splitDetails);
             this.Controls.Add(this.btnAnalyze);
             this.Controls.Add(this.btnInitiateTreatment);

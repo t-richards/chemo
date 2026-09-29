@@ -12,7 +12,7 @@ namespace Chemo.Test
         {
             string[] names = TreatmentCatalog.Categories.Select(c => c.Name).ToArray();
 
-            Assert.Equal(names.Order(StringComparer.OrdinalIgnoreCase), names);
+            Assert.Equal(names.OrderBy(name => name, StringComparer.OrdinalIgnoreCase), names);
         }
 
         [Fact]

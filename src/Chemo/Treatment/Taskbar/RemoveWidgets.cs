@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Windows.ApplicationModel;
 
 namespace Chemo.Treatment.Taskbar
 {
@@ -40,10 +39,10 @@ namespace Chemo.Treatment.Taskbar
                 Logger = logger;
             }
 
-            private static List<Package> FindPackages()
+            private static List<AppPackage> FindPackages()
             {
                 return AppPackages.FindForAllUsers()
-                    .Where(p => PackageNames.Contains(p.Id.Name, StringComparer.OrdinalIgnoreCase))
+                    .Where(p => PackageNames.Contains(p.Name, StringComparer.OrdinalIgnoreCase))
                     .ToList();
             }
 
@@ -61,13 +60,11 @@ namespace Chemo.Treatment.Taskbar
                     process.WaitForExit(5000);
                 }
 
-                List<Package> failed = FindPackages()
-                    .Where(package => !AppPackages.RemoveForAllUsers(package, Logger))
-                    .ToList();
+                List<AppPackage> failed = AppPackages.RemoveForAllUsers(FindPackages(), Logger);
 
                 if (failed.Count > 0)
                 {
-                    throw new InvalidOperationException($"Could not remove {string.Join(", ", failed.Select(p => p.Id.Name))}.");
+                    throw new InvalidOperationException($"Could not remove {string.Join(", ", failed.Select(p => p.Name))}.");
                 }
             }
 

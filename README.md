@@ -62,7 +62,6 @@ Chemo aims to support versions of Windows that are still covered under "Security
 
 The latest release can be [downloaded from the releases section on GitHub](https://github.com/t-richards/chemo/releases).
 
-
 ## License
 
 The application is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

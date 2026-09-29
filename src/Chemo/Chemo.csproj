@@ -4,7 +4,8 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationManifest>Chemo.manifest</ApplicationManifest>
-    <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
+    <DebugType>embedded</DebugType>
+    <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -18,7 +19,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Dism" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Dism" GeneratePathProperty="true" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(PkgMicrosoft_Dism)\lib\net472\Microsoft.Dism.dll" LogicalName="Microsoft.Dism.dll" Visible="false" />
   </ItemGroup>
 
 </Project>

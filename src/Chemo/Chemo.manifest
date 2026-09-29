@@ -16,6 +16,11 @@
     </application>
   </compatibility>
 
-  <!-- DPI awareness is configured by ApplicationHighDpiMode in Chemo.csproj. -->
+  <!-- Scale with the system DPI setting instead of being stretched by Windows. -->
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
+    </windowsSettings>
+  </application>
 
 </assembly>
