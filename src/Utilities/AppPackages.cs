@@ -1,6 +1,8 @@
+using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Management.Deployment;
 
@@ -14,6 +16,13 @@ namespace Chemo.Utilities
         public string Name { get; set; }
 
         public string PackageFullName { get; set; }
+
+        public string PackageFamilyName { get; set; }
+
+        /// <summary>
+        /// Whether the package is part of Windows, which Windows refuses to remove until it's retired.
+        /// </summary>
+        public bool IsSystemApp { get; set; }
     }
 
     /// <summary>
@@ -21,6 +30,12 @@ namespace Chemo.Utilities
     /// </summary>
     internal static class AppPackages
     {
+        private const string AllUserStore = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore";
+        private const string SystemSid = "S-1-5-18";
+
+        // SYSTEM, LOCAL SERVICE, and NETWORK SERVICE, which nobody signs in with.
+        private static readonly string[] ServiceSids = { SystemSid, "S-1-5-19", "S-1-5-20" };
+
         private static readonly PackageManager packageManager = new PackageManager();
 
         /// <summary>
@@ -29,10 +44,49 @@ namespace Chemo.Utilities
         public static List<AppPackage> FindForAllUsers()
         {
             return packageManager.FindPackages()
-                .Select(package => new AppPackage { Name = package.Id.Name, PackageFullName = package.Id.FullName })
+                .Select(package => new AppPackage
+                {
+                    Name = package.Id.Name,
+                    PackageFullName = package.Id.FullName,
+                    PackageFamilyName = package.Id.FamilyName,
+                    IsSystemApp = package.SignatureKind == PackageSignatureKind.System,
+                })
                 .GroupBy(package => package.PackageFullName)
                 .Select(group => group.First())
                 .ToList();
+        }
+
+        /// <summary>
+        /// Finds the people who have the package installed, rather than only staged. Service accounts are
+        /// skipped, because Windows leaves a removed system app installed for SYSTEM, pending a removal that
+        /// doesn't finish.
+        /// </summary>
+        /// <returns>The security IDs of those users.</returns>
+        public static List<string> FindInstalledUsers(AppPackage package)
+        {
+            return packageManager.FindUsers(package.PackageFullName)
+                .Where(user => user.InstallState == PackageInstallState.Installed && !ServiceSids.Contains(user.UserSecurityId))
+                .Select(user => user.UserSecurityId)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Retires a system app for everyone who has it, the way Windows retires the system apps it replaces, so
+        /// that it can be removed. Also keeps it from being installed for new users.
+        /// </summary>
+        public static void RetireSystemApp(AppPackage package)
+        {
+            // Other removal tools retire it for the system account as well.
+            IEnumerable<string> sids = packageManager.FindUsers(package.PackageFullName)
+                .Select(user => user.UserSecurityId)
+                .Append(SystemSid);
+
+            foreach (string sid in sids)
+            {
+                Registry.LocalMachine.CreateSubKey($@"{AllUserStore}\EndOfLife\{sid}\{package.PackageFullName}").Dispose();
+            }
+
+            Registry.LocalMachine.CreateSubKey($@"{AllUserStore}\Deprovisioned\{package.PackageFamilyName}").Dispose();
         }
 
         /// <summary>

@@ -33,7 +33,8 @@ namespace Chemo.Settings
 
         public override string ToString()
         {
-            return $@"{KeyName}\{ValueName} = {Value}";
+            string valueName = ValueName.Length == 0 ? "(Default)" : ValueName;
+            return $@"{KeyName}\{valueName} = {Value}";
         }
     }
 }

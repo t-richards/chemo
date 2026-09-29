@@ -2,6 +2,7 @@ using Chemo.Utilities;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
+using System.ServiceProcess;
 
 namespace Chemo.Settings
 {
@@ -33,6 +34,26 @@ namespace Chemo.Settings
             // A service that doesn't exist on this edition of Windows has nothing to change.
             object start = Registry.GetValue(ServicesKey + ServiceName, "Start", null);
             return start == null || (int)start == (int)StartType;
+        }
+
+        /// <summary>
+        /// Determines whether the service is running. Changing the startup type doesn't stop a running service,
+        /// so a disabled service keeps running until Windows restarts.
+        /// </summary>
+        public bool IsRunning()
+        {
+            using (ServiceController service = new ServiceController(ServiceName))
+            {
+                try
+                {
+                    return service.Status != ServiceControllerStatus.Stopped;
+                }
+                catch (InvalidOperationException)
+                {
+                    // The service doesn't exist on this edition of Windows.
+                    return false;
+                }
+            }
         }
 
         public void Apply()

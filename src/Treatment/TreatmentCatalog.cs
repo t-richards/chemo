@@ -24,11 +24,16 @@ namespace Chemo.Treatment
                 new Apps.DeprovisionStoreApps(),
                 new Apps.OneDrive()),
 
+            new Category("Copilot & AI", "Remove Copilot and turn off the AI features built into Windows.",
+                new CopilotAI.RemoveWindowsAI()),
+
             new Category("Devices", "Stop PC and device makers from installing software on their own.",
                 new Devices.PreventDeviceCompanionApps(),
                 new Devices.DisableWpbt()),
 
             new Category("File Explorer", "Change how File Explorer shows your files.",
+                new FileExplorer.RemoveHomeAndGallery(),
+                new FileExplorer.RestorePreviousRightClickMenu(),
                 new FileExplorer.DisableFolderDiscovery()),
 
             new Category("Keyboard & Mouse", "Stop the keyboard and mouse from doing things you didn't mean.",
@@ -44,7 +49,8 @@ namespace Chemo.Treatment
                 new Network.SetNetworksPrivate()),
 
             new Category("Performance", "Reduce what Windows runs in the background.",
-                new Performance.SetServicesToManual()),
+                new Performance.SetServicesToManual(),
+                new Performance.DisableBackgroundApps()),
 
             new Category("Power", "Change how your PC uses power, sleeps, and shuts down.",
                 new Power.UseHighPerformancePlan(),

@@ -17,47 +17,52 @@ Chemo aims to support versions of Windows that are still covered under "Security
 2. Apps
 - Remove junk apps
 - Uninstall OneDrive
-3. Devices
+3. Copilot & AI
+- Remove Copilot, Click to Do, and Recall
+4. Devices
 - Prevent device companion apps
 - Block PC maker software from firmware (WPBT)
-4. File Explorer
+5. File Explorer
+- Remove Home and Gallery
+- Restore the previous right-click menu
 - Disable automatic folder type discovery
-5. Keyboard & Mouse
+6. Keyboard & Mouse
 - Turn off the Sticky Keys shortcut
 - Turn off mouse acceleration
-6. Lock Screen & Sign-in
+7. Lock Screen & Sign-in
 - Lock after 15 minutes away
 - Require Ctrl+Alt+Del at sign-in
 - Turn off lock screen tips
-7. Network
+8. Network
 - Make the current network private
-8. Performance
+9. Performance
 - Trim background services
-9. Power
+- Disable background apps
+10. Power
 - Use the High performance power plan
 - Disable hibernation
-10. Privacy
+11. Privacy
 - Disable telemetry
 - Disable location tracking
-11. Sound
+12. Sound
 - Turn off system sounds
 - Don't lower other sounds during calls
-12. Start
+13. Start
 - Disable internet search results
 - Disable Store results in search
 - Disable app recommendations
 - Restore previous Start menu layout
-13. Taskbar
+14. Taskbar
 - Remove Widgets
 - Align the taskbar to the left
 - Combine taskbar buttons only when full
 - Show all system tray icons
 - Enable End task on right click
-14. Time
+15. Time
 - Use a 24-hour clock
 - Use year-month-day dates
 - Set system clock to UTC.
-15. Updates
+16. Updates
 - Disable forced reboot after Windows Update
 
 ## Download

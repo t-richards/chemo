@@ -36,6 +36,18 @@ namespace Chemo.Test
         }
 
         [Fact]
+        public void RegistryValueTellsEmptyDefaultValuesFromMissingOnes()
+        {
+            RegistryValue setting = new RegistryValue(KeyName, "", "", RegistryValueKind.String);
+            Registry.CurrentUser.CreateSubKey(subKey).Dispose();
+
+            Assert.False(setting.IsApplied());
+            setting.Apply();
+            Assert.True(setting.IsApplied());
+            Assert.Equal("", Registry.CurrentUser.OpenSubKey(subKey).GetValue(null));
+        }
+
+        [Fact]
         public void DeletedRegistryValueRemovesValues()
         {
             Registry.SetValue(KeyName, "Value", 1, RegistryValueKind.DWord);
@@ -67,6 +79,13 @@ namespace Chemo.Test
         public void ServiceStartupIgnoresMissingServices()
         {
             Assert.True(new ServiceStartup("Chemo.Test.Missing", ServiceStartType.Disabled).IsApplied());
+        }
+
+        [Fact]
+        public void ServiceStartupReadsWhetherServicesAreRunning()
+        {
+            Assert.True(new ServiceStartup("EventLog", ServiceStartType.Automatic).IsRunning());
+            Assert.False(new ServiceStartup("Chemo.Test.Missing", ServiceStartType.Disabled).IsRunning());
         }
     }
 }
