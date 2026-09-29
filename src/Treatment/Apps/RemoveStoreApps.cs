@@ -61,10 +61,10 @@ namespace Chemo.Treatment.Apps
                 Logger.Log("No Windows Store applications were uninstalled.");
             }
 
-            AppPackages.RemoveForAllUsers(packagesToRemove, Logger);
+            List<AppPackage> failed = AppPackages.RemoveForAllUsers(packagesToRemove, Logger);
             Logger.Log("");
 
-            return true;
+            return failed.Count == 0;
         }
     }
 }

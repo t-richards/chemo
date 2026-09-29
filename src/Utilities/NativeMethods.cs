@@ -1,5 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
+// Chemo runs as an administrator, often from the Downloads folder. Loading the Windows DLLs it calls only from
+// System32 stops a planted DLL of the same name next to Chemo.exe from running with those rights.
+[assembly: DefaultDllImportSearchPaths(DllImportSearchPath.System32)]
+
 namespace Chemo.Utilities
 {
     [Flags]

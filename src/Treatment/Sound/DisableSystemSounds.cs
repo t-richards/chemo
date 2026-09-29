@@ -47,7 +47,8 @@ namespace Chemo.Treatment.Sound
                         return true;
                     }
 
-                    if (schemes.GetValue("") as string != Scheme)
+                    // The scheme is a key name and the sounds are file paths, so neither is case-sensitive.
+                    if (!string.Equals(schemes.GetValue("") as string, Scheme, StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }
@@ -57,7 +58,7 @@ namespace Chemo.Treatment.Sound
                 {
                     using (eventKey)
                     {
-                        if (Sound(eventKey, ".Current") != Sound(eventKey, Scheme))
+                        if (!string.Equals(Sound(eventKey, ".Current"), Sound(eventKey, Scheme), StringComparison.OrdinalIgnoreCase))
                         {
                             return false;
                         }
@@ -114,7 +115,7 @@ namespace Chemo.Treatment.Sound
                                     continue;
                                 }
 
-                                if (eventKey.GetSubKeyNames().Contains(Scheme))
+                                if (eventKey.GetSubKeyNames().Contains(Scheme, StringComparer.OrdinalIgnoreCase))
                                 {
                                     yield return eventKey;
                                 }

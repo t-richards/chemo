@@ -18,28 +18,23 @@ namespace Chemo.Treatment.Apps
         public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
-            try
+
+            // A DISM failure is reported as an analysis error rather than as nothing to deprovision.
+            using (DismSession session = DismApi.OpenOnlineSession())
             {
-                using (DismSession session = DismApi.OpenOnlineSession())
+                DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
+                foreach (var package in dismAppxPackages)
                 {
-                    DismAppxPackageCollection dismAppxPackages = DismApi.GetProvisionedAppxPackages(session);
-                    foreach (var package in dismAppxPackages)
+                    if (StoreApps.ShouldRemove(package.DisplayName))
                     {
-                        if (StoreApps.ShouldRemove(package.DisplayName))
-                        {
-                            Logger.Log("Would deprovision {0}", package.DisplayName);
-                            packageCount += 1;
-                        }
-                        else
-                        {
-                            Logger.Log("Not deprovisioning {0}", package.DisplayName);
-                        }
+                        Logger.Log("Would deprovision {0}", package.DisplayName);
+                        packageCount += 1;
+                    }
+                    else
+                    {
+                        Logger.Log("Not deprovisioning {0}", package.DisplayName);
                     }
                 }
-            }
-            catch
-            {
-                return false;
             }
 
             if (packageCount > 0)

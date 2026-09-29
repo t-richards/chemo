@@ -196,7 +196,7 @@ namespace Chemo.Utilities
 
                 StringBuilder name = new StringBuilder(64);
                 if (menu.GetCommandString((UIntPtr)(command - FirstCommand), GCS_VERBW, IntPtr.Zero, name, (uint)name.Capacity) == 0 &&
-                    name.ToString() == verb)
+                    string.Equals(name.ToString(), verb, StringComparison.OrdinalIgnoreCase))
                 {
                     return command;
                 }

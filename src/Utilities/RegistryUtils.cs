@@ -4,16 +4,15 @@ namespace Chemo.Utilities
 {
     class RegistryUtils
     {
+        // A value of another type, such as a DWORD stored as a string, doesn't match rather than throwing.
         public static bool IntEquals(string keyName, string valueName, int expectedValue)
         {
-            var value = Registry.GetValue(keyName, valueName, null);
-            return (value != null && (int)value == expectedValue);
+            return Registry.GetValue(keyName, valueName, null) is int value && value == expectedValue;
         }
 
         public static bool StringEquals(string keyName, string valueName, string expectedValue)
         {
-            var value = Registry.GetValue(keyName, valueName, null);
-            return (value != null && (string)value == expectedValue);
+            return Registry.GetValue(keyName, valueName, null) is string value && value == expectedValue;
         }
 
         /// <summary>
