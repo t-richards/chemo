@@ -131,6 +131,22 @@ namespace Chemo.Utilities
         [DllImport("kernel32.dll")]
         public static extern IntPtr LocalFree(IntPtr hMem);
 
+        // Shell items and their context menus
+        [DllImport("shell32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        public static extern void SHCreateItemFromParsingName(string pszPath, IntPtr pbc, [MarshalAs(UnmanagedType.LPStruct)] Guid riid, [MarshalAs(UnmanagedType.IUnknown)] out object ppv);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr CreatePopupMenu();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool DestroyMenu(IntPtr hMenu);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int GetMenuItemCount(IntPtr hMenu);
+
+        [DllImport("user32.dll")]
+        public static extern uint GetMenuItemID(IntPtr hMenu, int nPos);
+
         public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
         public const int LVM_SETITEMW = 0x1000 + 76;
         public const int LVS_EX_SUBITEMIMAGES = 0x0002;

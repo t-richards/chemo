@@ -2,7 +2,9 @@
 
 [![build](https://github.com/t-richards/chemo/actions/workflows/dotnet.yml/badge.svg)](https://github.com/t-richards/chemo/actions/workflows/dotnet.yml)
 
-Chemo is an opinionated setup utility for Windows.
+> I want to bring my computer to the brink of death using an overdose of chemo, only to have it maybe survive and be a normal computer
+
+Chemo is an opinionated setup/debloat utility for Windows.
 
 ## Supported Windows Versions
 
@@ -58,6 +60,7 @@ Chemo aims to support versions of Windows that are still covered under "Security
 14. Taskbar
 - Remove Widgets
 - Hide search and Task View
+- Unpin everything but File Explorer
 - Align the taskbar to the left
 - Combine taskbar buttons only when full
 - Show all system tray icons

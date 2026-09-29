@@ -76,6 +76,7 @@ namespace Chemo.Treatment
             new Category("Taskbar", "Clean up the taskbar.",
                 new Taskbar.RemoveWidgets(),
                 new Taskbar.HideSearchAndTaskView(),
+                new Taskbar.UnpinTaskbarApps(),
                 new Taskbar.AlignTaskbarLeft(),
                 new Taskbar.CombineButtonsWhenFull(),
                 new Taskbar.ShowAllTrayIcons(),
