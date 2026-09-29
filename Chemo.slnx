@@ -5,6 +5,6 @@
     <File Path="Directory.Packages.props" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="src/Chemo/Chemo.csproj" />
-  <Project Path="test/Chemo.Test/Chemo.Test.csproj" />
+  <Project Path="src/Chemo.csproj" />
+  <Project Path="test/Chemo.Test.csproj" />
 </Solution>
