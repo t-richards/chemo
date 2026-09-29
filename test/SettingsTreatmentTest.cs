@@ -9,6 +9,8 @@ namespace Chemo.Test
         {
             public bool Applied { get; set; }
 
+            public bool Fails { get; set; }
+
             public bool IsApplied()
             {
                 return Applied;
@@ -16,6 +18,11 @@ namespace Chemo.Test
 
             public void Apply()
             {
+                if (Fails)
+                {
+                    throw new InvalidOperationException("Broken");
+                }
+
                 Applied = true;
             }
         }
@@ -52,11 +59,11 @@ namespace Chemo.Test
             FakeSetting missing = new();
             FakeTreatment treatment = new(missing, new FakeSetting(), new FakeSetting { Applied = true });
 
-            Assert.True(treatment.ShouldPerformTreatment());
-            Assert.True(treatment.PerformTreatment());
+            Assert.True(treatment.NeedsApplying());
+            Assert.True(treatment.Apply());
             Assert.True(missing.Applied);
             Assert.Equal(1, treatment.ChangeNotifications);
-            Assert.False(treatment.ShouldPerformTreatment());
+            Assert.False(treatment.NeedsApplying());
         }
 
         [Fact]
@@ -64,9 +71,22 @@ namespace Chemo.Test
         {
             FakeTreatment treatment = new(new FakeSetting { Applied = true });
 
-            Assert.False(treatment.ShouldPerformTreatment());
-            Assert.True(treatment.PerformTreatment());
+            Assert.False(treatment.NeedsApplying());
+            Assert.True(treatment.Apply());
             Assert.Equal(0, treatment.ChangeNotifications);
+        }
+
+        [Fact]
+        public void ItKeepsGoingPastASettingThatFails()
+        {
+            FakeSetting broken = new() { Fails = true };
+            FakeSetting next = new();
+            FakeTreatment treatment = new(broken, next);
+
+            Assert.False(treatment.Apply());
+            Assert.True(next.Applied);
+            Assert.Contains("Could not set", treatment.Logger.ToString(), StringComparison.Ordinal);
+            Assert.True(treatment.NeedsApplying());
         }
     }
 }

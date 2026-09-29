@@ -11,13 +11,13 @@ namespace Chemo.Controls
         private const int StatusColumn = 1;
         private const int TimeColumn = 2;
 
-        public BaseTreatment Treatment { get; }
+        public SettingsTreatment Treatment { get; }
 
         public CategoryItem Category { get; }
 
         public TreatmentStatus Status { get; private set; }
 
-        public TreatmentItem(BaseTreatment treatment, CategoryItem category)
+        public TreatmentItem(SettingsTreatment treatment, CategoryItem category)
         {
             Treatment = treatment;
             Category = category;

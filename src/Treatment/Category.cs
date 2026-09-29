@@ -15,9 +15,9 @@ namespace Chemo.Treatment
         /// <summary>
         /// The treatments in this category, in the order they are applied.
         /// </summary>
-        public IReadOnlyList<BaseTreatment> Treatments { get; }
+        public IReadOnlyList<SettingsTreatment> Treatments { get; }
 
-        public Category(string name, string description, params BaseTreatment[] treatments)
+        public Category(string name, string description, params SettingsTreatment[] treatments)
         {
             Name = name;
             Description = description;

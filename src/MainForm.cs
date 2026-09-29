@@ -61,7 +61,7 @@ namespace Chemo
                 CategoryItem categoryItem = new(category, categoryFont);
                 treatmentList.Items.Add(categoryItem);
 
-                foreach (BaseTreatment treatment in category.Treatments)
+                foreach (SettingsTreatment treatment in category.Treatments)
                 {
                     TreatmentItem treatmentItem = new(treatment, categoryItem);
                     categoryItem.Treatments.Add(treatmentItem);
@@ -85,7 +85,7 @@ namespace Chemo
                 statusLabel.Text = $"Analyzing {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Analyzing…");
 
-                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Analyze);
+                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, AnalyzeTreatment);
                 string text = status switch
                 {
                     TreatmentStatus.Info => "Ready to apply",
@@ -131,7 +131,7 @@ namespace Chemo
                 statusLabel.Text = $"Applying {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Applying…");
 
-                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, Apply);
+                (TreatmentStatus status, TimeSpan duration) = await RunStep(item.Treatment, ApplyTreatment);
                 string text = status switch
                 {
                     TreatmentStatus.Restart => "Applied, restart to finish",
@@ -159,9 +159,9 @@ namespace Chemo
             EndRun(summary);
         }
 
-        private static TreatmentStatus Analyze(BaseTreatment treatment)
+        private static TreatmentStatus AnalyzeTreatment(SettingsTreatment treatment)
         {
-            if (treatment.ShouldPerformTreatment())
+            if (treatment.NeedsApplying())
             {
                 return TreatmentStatus.Info;
             }
@@ -169,9 +169,9 @@ namespace Chemo
             return treatment.RestartPending() ? TreatmentStatus.Restart : TreatmentStatus.Ok;
         }
 
-        private static TreatmentStatus Apply(BaseTreatment treatment)
+        private static TreatmentStatus ApplyTreatment(SettingsTreatment treatment)
         {
-            if (!treatment.PerformTreatment())
+            if (!treatment.Apply())
             {
                 return TreatmentStatus.Error;
             }
@@ -183,7 +183,7 @@ namespace Chemo
         /// Runs part of a treatment in the background. An exception is recorded in the treatment's log and
         /// reported as an error.
         /// </summary>
-        private static async Task<(TreatmentStatus Status, TimeSpan Duration)> RunStep(BaseTreatment treatment, Func<BaseTreatment, TreatmentStatus> step)
+        private static async Task<(TreatmentStatus Status, TimeSpan Duration)> RunStep(SettingsTreatment treatment, Func<SettingsTreatment, TreatmentStatus> step)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
@@ -310,7 +310,7 @@ namespace Chemo
             };
         }
 
-        private static string TreatmentDetails(BaseTreatment treatment)
+        private static string TreatmentDetails(SettingsTreatment treatment)
         {
             string log = treatment.Logger.ToString();
             return log.Length == 0 ? treatment.Description : $"{treatment.Description}\r\n\r\n{log}";

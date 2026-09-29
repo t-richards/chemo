@@ -1,9 +1,13 @@
+using Chemo.Settings;
 using Chemo.Treatment;
+using System.Reflection;
 
 namespace Chemo.Test
 {
     public class TreatmentCatalogTest
     {
+        private static IEnumerable<SettingsTreatment> Treatments => TreatmentCatalog.Categories.SelectMany(c => c.Treatments);
+
         [Fact]
         public void ItListsCategoriesAlphabetically()
         {
@@ -21,8 +25,8 @@ namespace Chemo.Test
         [Fact]
         public void ItIncludesEveryTreatmentOnce()
         {
-            Type[] treatmentTypes = typeof(BaseTreatment).Assembly.GetTypes()
-                .Where(t => t.IsSubclassOf(typeof(BaseTreatment)) && !t.IsAbstract)
+            Type[] treatmentTypes = typeof(SettingsTreatment).Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(SettingsTreatment)) && !t.IsAbstract)
                 .ToArray();
             Type[] catalogTypes = TreatmentCatalog.Categories
                 .SelectMany(c => c.Treatments)
@@ -42,6 +46,39 @@ namespace Chemo.Test
                 Assert.All(category.Treatments, t =>
                     Assert.Equal(expectedNamespace, t.GetType().Namespace, ignoreCase: true));
             }
+        }
+
+        [Fact]
+        public void ItGivesEveryTreatmentADifferentName()
+        {
+            Assert.Distinct(Treatments.Select(t => t.Name), StringComparer.OrdinalIgnoreCase);
+        }
+
+        [Fact]
+        public void ItNamesTreatmentsWithLabelsAndDescribesThemInSentences()
+        {
+            Assert.All(Treatments, t =>
+            {
+                Assert.False(string.IsNullOrWhiteSpace(t.Name));
+                Assert.False(t.Name.EndsWith(".", StringComparison.Ordinal), $"{t.Name} ends with a period.");
+                Assert.EndsWith(".", t.Description, StringComparison.Ordinal);
+                Assert.DoesNotContain("  ", t.Description, StringComparison.Ordinal);
+            });
+        }
+
+        [Fact]
+        public void ItDescribesEverySetting()
+        {
+            // The details pane logs each setting by its description, which shouldn't fall back to the type's name.
+            MethodInfo settings = typeof(SettingsTreatment).GetMethod("Settings", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            Assert.All(Treatments, t =>
+            {
+                ISetting[] treatmentSettings = ((IEnumerable<ISetting>)settings.Invoke(t, null)).ToArray();
+
+                Assert.NotEmpty(treatmentSettings);
+                Assert.All(treatmentSettings, s => Assert.NotEqual(s.GetType().ToString(), s.ToString(), StringComparer.Ordinal));
+            });
         }
 
         [Fact]
