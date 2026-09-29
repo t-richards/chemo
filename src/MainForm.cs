@@ -27,7 +27,7 @@ namespace Chemo
             // useful in bug reports, so the menu shows the version number and clicking it copies the rest.
             fullVersion = typeof(MainForm).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
             versionMenuItem.Text = $"Version {fullVersion.Split('+')[0]}";
-            versionMenuItem.ToolTipText = $"Copy {fullVersion}";
+            versionMenuItem.ToolTipText = "Copy full version with build information";
             helpMenuItem.DropDown.ShowItemToolTips = true;
             helpMenuItem.DropDown.Opened += HelpMenu_Opened;
 
@@ -495,7 +495,7 @@ namespace Chemo
             try
             {
                 Clipboard.SetText(fullVersion);
-                statusLabel.Text = $"Copied version {fullVersion} to the clipboard.";
+                statusLabel.Text = $"Copied {fullVersion} to the clipboard.";
             }
             catch (ExternalException)
             {
