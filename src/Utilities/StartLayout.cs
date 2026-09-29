@@ -10,9 +10,7 @@ namespace Chemo.Utilities
     internal static class StartLayout
     {
         [ComImport, Guid("75AB852C-0441-46D4-A205-EF0A33F98255")]
-        private class StartLayoutCmdlet
-        {
-        }
+        private class StartLayoutCmdlet;
 
         [ComImport, Guid("0BAC4102-61E9-48A5-93DD-D295ABA65369"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IStartLayoutCmdlet
@@ -28,9 +26,7 @@ namespace Chemo.Utilities
         }
 
         [DataContract]
-        private sealed class Pin
-        {
-        }
+        private sealed class Pin;
 
         /// <summary>
         /// Counts the apps and sites pinned to Start for the current user.

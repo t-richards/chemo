@@ -63,3 +63,25 @@ dotnet_diagnostic.IDE0072.severity = none
 
 # Methods whose return value isn't needed, like HashSet.Add, don't need a discard.
 dotnet_diagnostic.IDE0058.severity = none
+
+# Meziantou rules turned off.
+
+# Naming every literal argument would clutter the code.
+dotnet_diagnostic.MA0003.severity = none
+
+# Small types live next to the type that uses them, like TreatmentStatus beside StatusIcons.
+dotnet_diagnostic.MA0048.severity = none
+
+# Method length alone isn't a problem.
+dotnet_diagnostic.MA0051.severity = none
+
+# Numbers shown to the user are formatted for their region on purpose.
+dotnet_diagnostic.MA0076.severity = none
+
+# GUIDs stay as strings, which match the documentation and can be searched for.
+dotnet_diagnostic.MA0176.severity = none
+
+# CA1852 already seals classes, and MA0038 is Meziantou's deprecated copy of CA1822, which also flags event handlers
+# that the designer needs as instance methods.
+dotnet_diagnostic.MA0053.severity = none
+dotnet_diagnostic.MA0038.severity = none

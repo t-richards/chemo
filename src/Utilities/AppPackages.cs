@@ -54,7 +54,7 @@ namespace Chemo.Utilities
                     package.Id.FullName,
                     package.Id.FamilyName,
                     package.SignatureKind == PackageSignatureKind.System))
-                .GroupBy(package => package.PackageFullName)
+                .GroupBy(package => package.PackageFullName, StringComparer.OrdinalIgnoreCase)
                 .Select(group => group.First())
                 .ToList();
         }
@@ -68,7 +68,7 @@ namespace Chemo.Utilities
         public static List<string> FindInstalledUsers(AppPackage package)
         {
             return packageManager.FindUsers(package.PackageFullName)
-                .Where(user => user.InstallState == PackageInstallState.Installed && !ServiceSids.Contains(user.UserSecurityId))
+                .Where(user => user.InstallState == PackageInstallState.Installed && !ServiceSids.Contains(user.UserSecurityId, StringComparer.OrdinalIgnoreCase))
                 .Select(user => user.UserSecurityId)
                 .ToList();
         }

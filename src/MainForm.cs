@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Chemo
 {
-    internal partial class MainForm : Form
+    internal sealed partial class MainForm : Form
     {
         private readonly Font categoryFont;
         private readonly string fullVersion;
@@ -269,7 +269,7 @@ namespace Chemo
                         break;
 
                     case TreatmentItem treatment:
-                        treatment.Category.Checked = treatment.Category.Treatments.All(t => t.Checked);
+                        treatment.Category.Checked = treatment.Category.Treatments.TrueForAll(t => t.Checked);
                         break;
                 }
             }

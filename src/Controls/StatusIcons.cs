@@ -46,7 +46,7 @@ namespace Chemo.Controls
             ImageList imageList = new()
             {
                 ColorDepth = ColorDepth.Depth32Bit,
-                ImageSize = new Size(size, size)
+                ImageSize = new Size(size, size),
             };
 
             // Nothing is shown until a treatment has a result.

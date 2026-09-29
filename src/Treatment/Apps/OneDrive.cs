@@ -362,7 +362,7 @@ namespace Chemo.Treatment.Apps
         public override bool RestartPending()
         {
             HashSet<string> pendingDeletes = PendingDeletes.Read();
-            return Leftovers().Any(pendingDeletes.Contains);
+            return Leftovers().Exists(pendingDeletes.Contains);
         }
 
         private void DeleteFoldersAndFiles()

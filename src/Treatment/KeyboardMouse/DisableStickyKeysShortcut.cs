@@ -31,7 +31,7 @@ namespace Chemo.Treatment.KeyboardMouse
             {
                 UnsafeNativeMethods.STICKYKEYS stickyKeys = new()
                 {
-                    cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.STICKYKEYS>()
+                    cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.STICKYKEYS>(),
                 };
 
                 if (!UnsafeNativeMethods.SystemParametersInfo(UnsafeNativeMethods.SPI_GETSTICKYKEYS, stickyKeys.cbSize, ref stickyKeys, 0))

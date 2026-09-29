@@ -16,7 +16,7 @@ namespace Chemo.Settings
 
         public bool IsApplied()
         {
-            return Environment.GetEnvironmentVariable(Name, EnvironmentVariableTarget.Machine) == Value;
+            return string.Equals(Environment.GetEnvironmentVariable(Name, EnvironmentVariableTarget.Machine), Value, StringComparison.Ordinal);
         }
 
         public void Apply()

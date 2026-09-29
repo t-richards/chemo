@@ -9,7 +9,7 @@ namespace Chemo.Test
         {
             string[] names = TreatmentCatalog.Categories.Select(c => c.Name).ToArray();
 
-            Assert.Equal(names.OrderBy(name => name, StringComparer.OrdinalIgnoreCase), names);
+            Assert.Equal(names.OrderBy(name => name, StringComparer.OrdinalIgnoreCase), names, StringComparer.Ordinal);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace Chemo.Test
                 .Select(t => t.GetType())
                 .ToArray();
 
-            Assert.Equal(treatmentTypes.OrderBy(t => t.FullName), catalogTypes.OrderBy(t => t.FullName));
+            Assert.Equal(treatmentTypes.OrderBy(t => t.FullName, StringComparer.Ordinal), catalogTypes.OrderBy(t => t.FullName, StringComparer.Ordinal));
         }
 
         [Fact]

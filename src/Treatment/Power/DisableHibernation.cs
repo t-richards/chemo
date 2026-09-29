@@ -42,7 +42,7 @@ namespace Chemo.Treatment.Power
                 ProcessStartInfo startInfo = new(Path.Combine(Environment.SystemDirectory, "powercfg.exe"), "/hibernate off")
                 {
                     UseShellExecute = false,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
                 };
 
                 using Process process = Process.Start(startInfo);

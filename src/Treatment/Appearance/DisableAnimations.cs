@@ -63,7 +63,7 @@ namespace Chemo.Treatment.Appearance
             {
                 UnsafeNativeMethods.ANIMATIONINFO info = new()
                 {
-                    cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.ANIMATIONINFO>()
+                    cbSize = (uint)Marshal.SizeOf<UnsafeNativeMethods.ANIMATIONINFO>(),
                 };
 
                 if (!UnsafeNativeMethods.SystemParametersInfo(UnsafeNativeMethods.SPI_GETANIMATION, info.cbSize, ref info, 0))

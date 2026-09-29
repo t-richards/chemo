@@ -37,7 +37,7 @@ namespace Chemo.Settings
             }
 
             // The length includes the terminating null.
-            return new string(buffer, 0, length - 1) == Format;
+            return string.Equals(new string(buffer, 0, length - 1), Format, StringComparison.Ordinal);
         }
 
         public void Apply()

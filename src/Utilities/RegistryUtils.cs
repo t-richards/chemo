@@ -12,7 +12,7 @@ namespace Chemo.Utilities
 
         public static bool StringEquals(string keyName, string valueName, string expectedValue)
         {
-            return Registry.GetValue(keyName, valueName, null) is string value && value == expectedValue;
+            return Registry.GetValue(keyName, valueName, null) is string value && string.Equals(value, expectedValue, StringComparison.Ordinal);
         }
 
         /// <summary>

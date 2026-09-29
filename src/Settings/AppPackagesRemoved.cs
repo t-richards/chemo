@@ -27,9 +27,9 @@ namespace Chemo.Settings
 
         private List<AppPackage> FindPackages()
         {
+            // Names first, since checking who has a package installed is slower.
             return AppPackages.FindForAllUsers()
-                .Where(p => shouldRemove(p.Name))
-                .Where(p => AppPackages.FindInstalledUsers(p).Count > 0)
+                .Where(p => shouldRemove(p.Name) && AppPackages.FindInstalledUsers(p).Count > 0)
                 .ToList();
         }
 
