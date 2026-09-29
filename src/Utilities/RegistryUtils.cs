@@ -20,16 +20,43 @@ namespace Chemo.Utilities
         /// </summary>
         public static void DeleteValue(string keyName, string valueName)
         {
+            RegistryKey root = Root(keyName, out string subKeyName);
+            using RegistryKey key = root.OpenSubKey(subKeyName, true);
+            key?.DeleteValue(valueName, false);
+        }
+
+        /// <summary>
+        /// Determines whether a key exists. The key name is a full path, like the ones Registry.GetValue takes.
+        /// </summary>
+        public static bool KeyExists(string keyName)
+        {
+            RegistryKey root = Root(keyName, out string subKeyName);
+            using RegistryKey? key = root.OpenSubKey(subKeyName);
+            return key != null;
+        }
+
+        /// <summary>
+        /// Deletes a key and everything in it, if it exists. The key name is a full path, like the ones
+        /// Registry.GetValue takes.
+        /// </summary>
+        public static void DeleteKey(string keyName)
+        {
+            RegistryKey root = Root(keyName, out string subKeyName);
+            root.DeleteSubKeyTree(subKeyName, false);
+        }
+
+        private static RegistryKey Root(string keyName, out string subKeyName)
+        {
             int separator = keyName.IndexOf('\\');
-            RegistryKey root = keyName.Substring(0, separator) switch
+            subKeyName = keyName.Substring(separator + 1);
+
+            return keyName.Substring(0, separator) switch
             {
                 "HKEY_CURRENT_USER" => Registry.CurrentUser,
                 "HKEY_LOCAL_MACHINE" => Registry.LocalMachine,
+                "HKEY_CLASSES_ROOT" => Registry.ClassesRoot,
                 _ => throw new ArgumentException($"Unsupported registry root in {keyName}.", nameof(keyName)),
             };
-
-            using RegistryKey key = root.OpenSubKey(keyName.Substring(separator + 1), true);
-            key?.DeleteValue(valueName, false);
         }
     }
 }

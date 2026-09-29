@@ -66,6 +66,27 @@ namespace Chemo.Test
         }
 
         [Fact]
+        public void DeletedRegistryKeyRemovesKeysAndWhatsInThem()
+        {
+            Registry.SetValue(KeyName + @"\Parent\Child", "Value", 1, RegistryValueKind.DWord);
+            DeletedRegistryKey setting = new(KeyName + @"\Parent");
+
+            Assert.False(setting.IsApplied());
+            setting.Apply();
+            Assert.True(setting.IsApplied());
+            Assert.Null(Registry.CurrentUser.OpenSubKey(subKey + @"\Parent"));
+        }
+
+        [Fact]
+        public void DeletedRegistryKeyIgnoresMissingKeys()
+        {
+            DeletedRegistryKey setting = new(KeyName + @"\Missing");
+
+            Assert.True(setting.IsApplied());
+            setting.Apply();
+        }
+
+        [Fact]
         public void ServiceStartupReadsStartType()
         {
             // The event log service always starts automatically.
