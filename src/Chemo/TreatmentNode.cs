@@ -15,11 +15,5 @@ namespace Chemo
             Checked = true;
             ImageKey = "NotStarted";
         }
-
-        public TreatmentNode Unchecked()
-        {
-            Checked = false;
-            return this;
-        }
     }
 }

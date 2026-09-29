@@ -40,79 +40,17 @@ namespace Chemo
         {
             treeViewTreatments.Nodes.Clear();
 
-            // top-level node
-            TreeNode primary = new TreeNode("Primary Treatments")
+            foreach (Category category in TreatmentCatalog.Categories)
             {
-                Checked = true
-            };
+                TreatmentNode[] treatmentNodes = category.Treatments.Select(t => new TreatmentNode(t)).ToArray();
+                TreeNode categoryNode = new TreeNode(category.Name, treatmentNodes)
+                {
+                    Checked = true,
+                    ToolTipText = category.Description
+                };
 
-            // appearance
-            TreeNode appearance = new TreeNode("Appearance", new TreeNode[]
-            {
-                new TreatmentNode(new Treatment.Appearance.DarkMode()),
-                new TreatmentNode(new Treatment.Appearance.DisableTransparency())
-            })
-            {
-                Checked = true,
-                ToolTipText = "Treatments related to visual appearance."
-            };
-
-            // apps
-            TreeNode apps = new TreeNode("Apps", new TreeNode[] {
-                new TreatmentNode(new Treatment.Apps.OneDrive()),
-                new TreatmentNode(new Treatment.Apps.DisableCortana()),
-            })
-            {
-                Checked = true,
-                ToolTipText = "Treatments related to store apps or other apps."
-            };
-
-            // config
-            TreeNode config = new TreeNode("Config", new TreeNode[] {
-                new TreatmentNode(new Treatment.Config.WindowsUpdateReboot()),
-                new TreatmentNode(new Treatment.Config.RequireCtrlAltDel()),
-                new TreatmentNode(new Treatment.Config.DisableInternetSearchResults()),
-                new TreatmentNode(new Treatment.Config.SetClockUTC()),
-                new TreatmentNode(new Treatment.Config.SuggestedApps()),
-            })
-            {
-                Checked = true,
-                ToolTipText = "Opinionated configuration changes."
-            };
-
-            // features
-            TreeNode features = new TreeNode("Features", new TreeNode[]{
-                new TreatmentNode(new Treatment.Features.InternetExplorer())
-            })
-            {
-                Checked = true,
-                ToolTipText = "Windows Feature toggles."
-            };
-
-            // add root node children, and add node to tree
-            primary.Nodes.AddRange(new TreeNode[]
-            {
-                appearance,
-                apps,
-                config,
-                features
-            });
-            treeViewTreatments.Nodes.Add(primary);
-
-            // second top-level node
-            TreeNode secondary = new TreeNode("Secondary Treatments", new TreeNode[]
-            {
-                new TreatmentNode(new Treatment.Config.GameBar()).Unchecked(),
-                new TreatmentNode(new Treatment.Apps.RemoveStoreApps()).Unchecked(),
-                new TreatmentNode(new Treatment.Apps.DeprovisionStoreApps()).Unchecked(),
-            })
-            {
-                Checked = false,
-                ToolTipText = "Treatments that may not be easily undone."
-            };
-
-            // add node to tree
-            treeViewTreatments.Nodes.Add(secondary);
+                treeViewTreatments.Nodes.Add(categoryNode);
+            }
 
             treeViewTreatments.ExpandAll();
         }

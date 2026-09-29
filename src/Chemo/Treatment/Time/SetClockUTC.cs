@@ -1,7 +1,7 @@
 using Microsoft.Win32;
 using System;
 
-namespace Chemo.Treatment.Config
+namespace Chemo.Treatment.Time
 {
     class SetClockUTC : BaseTreatment
     {

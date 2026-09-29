@@ -1,0 +1,50 @@
+using Chemo.Treatment;
+using System;
+using System.Linq;
+using Xunit;
+
+namespace Chemo.Test
+{
+    public class TreatmentCatalogTest
+    {
+        [Fact]
+        public void ItListsCategoriesAlphabetically()
+        {
+            string[] names = TreatmentCatalog.Categories.Select(c => c.Name).ToArray();
+
+            Assert.Equal(names.Order(StringComparer.OrdinalIgnoreCase), names);
+        }
+
+        [Fact]
+        public void ItHasNoEmptyCategories()
+        {
+            Assert.All(TreatmentCatalog.Categories, c => Assert.NotEmpty(c.Treatments));
+        }
+
+        [Fact]
+        public void ItIncludesEveryTreatmentOnce()
+        {
+            Type[] treatmentTypes = typeof(BaseTreatment).Assembly.GetTypes()
+                .Where(t => t.IsSubclassOf(typeof(BaseTreatment)) && !t.IsAbstract)
+                .ToArray();
+            Type[] catalogTypes = TreatmentCatalog.Categories
+                .SelectMany(c => c.Treatments)
+                .Select(t => t.GetType())
+                .ToArray();
+
+            Assert.Equal(treatmentTypes.OrderBy(t => t.FullName), catalogTypes.OrderBy(t => t.FullName));
+        }
+
+        [Fact]
+        public void ItKeepsTreatmentsInTheirCategoryNamespace()
+        {
+            foreach (Category category in TreatmentCatalog.Categories)
+            {
+                string expectedNamespace = "Chemo.Treatment." + category.Name.Replace("-", "");
+
+                Assert.All(category.Treatments, t =>
+                    Assert.Equal(expectedNamespace, t.GetType().Namespace, ignoreCase: true));
+            }
+        }
+    }
+}
