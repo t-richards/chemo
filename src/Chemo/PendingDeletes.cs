@@ -23,7 +23,7 @@ namespace Chemo
 
         /// <summary>
         /// The registry lists pairs of NT paths: the file to move, then where to move it. An empty destination
-        /// means the file is deleted.
+        /// means the file is deleted. Windows 11 writes paths like "*1\??\C:\path", with a prefix before the "\??\".
         /// </summary>
         public static HashSet<string> Parse(string[] operations)
         {
@@ -37,7 +37,9 @@ namespace Chemo
             {
                 if (operations[i + 1].Length == 0)
                 {
-                    paths.Add(operations[i].StartsWith(@"\??\", StringComparison.Ordinal) ? operations[i].Substring(4) : operations[i]);
+                    string source = operations[i];
+                    int prefixEnd = source.IndexOf(@"\??\", StringComparison.Ordinal);
+                    paths.Add(prefixEnd >= 0 ? source.Substring(prefixEnd + 4) : source);
                 }
             }
 

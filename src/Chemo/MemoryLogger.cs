@@ -1,10 +1,13 @@
 using System.Globalization;
 using System.Text;
+using System.Threading;
 
 namespace Chemo
 {
     public sealed class MemoryLogger
     {
+        // Treatments log from a background thread while the details pane reads the log on the UI thread.
+        private readonly Lock dataLock = new Lock();
         private StringBuilder data;
 
         public MemoryLogger()
@@ -20,7 +23,10 @@ namespace Chemo
         public void Log(string format, params object[] args)
         {
             format += "\r\n";
-            data.AppendFormat(CultureInfo.InvariantCulture, format, args);
+            lock (dataLock)
+            {
+                data.AppendFormat(CultureInfo.InvariantCulture, format, args);
+            }
         }
 
         /// <summary>
@@ -28,12 +34,18 @@ namespace Chemo
         /// </summary>
         public void Reset()
         {
-            data = new StringBuilder();
+            lock (dataLock)
+            {
+                data = new StringBuilder();
+            }
         }
 
         public override string ToString()
         {
-            return data.ToString();
+            lock (dataLock)
+            {
+                return data.ToString();
+            }
         }
 
         public static MemoryLogger Instance

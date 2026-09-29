@@ -1,6 +1,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Chemo.Treatment.Apps
         private readonly string ShortcutPath;
         private readonly string LocalAppDataPath;
         private readonly string ProgramDataPath;
+        private readonly string ProgramFilesPath;
 
         public override string Name()
         {
@@ -66,6 +68,12 @@ namespace Chemo.Treatment.Apps
                 Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
                 "Microsoft OneDrive"
             );
+
+            // %PROGRAMFILES%\Microsoft OneDrive, where OneDrive runs from when it's installed for all users
+            ProgramFilesPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                "Microsoft OneDrive"
+            );
         }
 
         #region Uninstaller
@@ -86,25 +94,79 @@ namespace Chemo.Treatment.Apps
             using (Process process = Process.Start(new ProcessStartInfo(UninstallerPath, "/uninstall") { UseShellExecute = false }))
             {
                 process.WaitForExit();
-                Logger.Log("OneDrive uninstaller exited with code {0}.", process.ExitCode);
+                Logger.Log(process.ExitCode == 0
+                    ? "OneDrive uninstaller finished."
+                    : $"OneDrive uninstaller exited with code 0x{process.ExitCode:X8}.");
             }
         }
         #endregion
 
         #region Processes
-        private static bool ProcessesRunning()
+        /// <summary>
+        /// Finds OneDrive and its helpers, such as its sync service, by name and by where they run from.
+        /// </summary>
+        private List<Process> FindProcesses()
         {
-            return ProcessNames.Any(name => Process.GetProcessesByName(name).Length > 0);
+            string[] folders = { LocalAppDataPath, ProgramFilesPath };
+            List<Process> found = new List<Process>();
+
+            foreach (Process process in Process.GetProcesses())
+            {
+                if (ProcessNames.Contains(process.ProcessName, StringComparer.OrdinalIgnoreCase) || IsRunningFrom(process, folders))
+                {
+                    found.Add(process);
+                }
+                else
+                {
+                    process.Dispose();
+                }
+            }
+
+            return found;
         }
 
-        private static void KillProcesses()
+        private static bool IsRunningFrom(Process process, string[] folders)
         {
-            foreach (string name in ProcessNames)
+            try
             {
-                foreach (Process proc in Process.GetProcessesByName(name))
+                string path = process.MainModule?.FileName;
+                return path != null && folders.Any(folder => path.StartsWith(folder + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (Exception ex) when (ex is Win32Exception || ex is InvalidOperationException)
+            {
+                // Windows doesn't let us inspect its own protected processes, and none of them are OneDrive.
+                return false;
+            }
+        }
+
+        private bool ProcessesRunning()
+        {
+            List<Process> processes = FindProcesses();
+            foreach (Process process in processes)
+            {
+                Logger.Log("Would stop {0} ({1}).", process.ProcessName, process.Id);
+                process.Dispose();
+            }
+
+            return processes.Count > 0;
+        }
+
+        private void KillProcesses()
+        {
+            foreach (Process process in FindProcesses())
+            {
+                using (process)
                 {
-                    proc.Kill();
-                    proc.WaitForExit(5000);
+                    try
+                    {
+                        process.Kill();
+                        process.WaitForExit(5000);
+                        Logger.Log("Stopped {0} ({1}).", process.ProcessName, process.Id);
+                    }
+                    catch (Exception ex) when (ex is Win32Exception || ex is InvalidOperationException)
+                    {
+                        Logger.Log("Could not stop {0} ({1}): {2}", process.ProcessName, process.Id, ex.Message);
+                    }
                 }
             }
         }
@@ -219,7 +281,7 @@ namespace Chemo.Treatment.Apps
             {
                 // Usually a file inside is in use and waiting to be deleted at restart. Windows deletes the
                 // folder at restart too, once it's empty.
-                Logger.Log("Deleting {0} on restart: {1}", path, ex.Message);
+                Logger.Log("{0} will be deleted when Windows restarts, after the files in it.", path);
                 DeleteOnReboot(path);
             }
             catch (Exception ex)
@@ -243,7 +305,7 @@ namespace Chemo.Treatment.Apps
             catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException)
             {
                 // Files that are in use, like OneDrive's File Explorer extension, can only be deleted at restart.
-                Logger.Log("Deleting {0} on restart: {1}", path, ex.Message);
+                Logger.Log("{0} is in use and will be deleted when Windows restarts.", path);
                 DeleteOnReboot(path);
             }
             catch (Exception ex)
@@ -252,9 +314,12 @@ namespace Chemo.Treatment.Apps
             }
         }
 
-        private static bool DeleteOnReboot(string path)
+        private void DeleteOnReboot(string path)
         {
-            return UnsafeNativeMethods.MoveFileEx(path, null, MoveFileFlags.DelayUntilReboot);
+            if (!UnsafeNativeMethods.MoveFileEx(path, null, MoveFileFlags.DelayUntilReboot))
+            {
+                Logger.Log("Could not schedule {0} to be deleted at restart: {1}", path, new Win32Exception().Message);
+            }
         }
 
         /// <summary>
@@ -307,12 +372,6 @@ namespace Chemo.Treatment.Apps
             return leftovers;
         }
 
-        private bool FoldersExist()
-        {
-            HashSet<string> pendingDeletes = PendingDeletes.Read();
-            return Leftovers().Any(path => !pendingDeletes.Contains(path));
-        }
-
         public override bool RestartPending()
         {
             HashSet<string> pendingDeletes = PendingDeletes.Read();
@@ -344,7 +403,6 @@ namespace Chemo.Treatment.Apps
 
             if (ProcessesRunning())
             {
-                Logger.Log("Would kill one or more running OneDrive processes.");
                 retval = true;
             }
             else
@@ -372,16 +430,22 @@ namespace Chemo.Treatment.Apps
                 Logger.Log("No OneDrive registry keys are present.");
             }
 
-            if (FoldersExist())
+            List<string> leftovers = Leftovers();
+            HashSet<string> pendingDeletes = PendingDeletes.Read();
+            foreach (string path in leftovers)
             {
-                Logger.Log("Would delete one or more leftover OneDrive folders.");
-                retval = true;
+                if (pendingDeletes.Contains(path))
+                {
+                    Logger.Log("{0} will be deleted when Windows restarts.", path);
+                }
+                else
+                {
+                    Logger.Log("Would delete {0}.", path);
+                    retval = true;
+                }
             }
-            else if (RestartPending())
-            {
-                Logger.Log("Leftover OneDrive files will be deleted when Windows restarts.");
-            }
-            else
+
+            if (leftovers.Count == 0)
             {
                 Logger.Log("No leftover OneDrive folders are present.");
             }
@@ -391,68 +455,35 @@ namespace Chemo.Treatment.Apps
 
         public override bool PerformTreatment()
         {
+            // OneDrive is stopped again after the uninstaller runs, because the uninstaller can leave helpers like its
+            // sync service running, and their files can't be deleted until they stop.
             bool retval = true;
-
-            try
-            {
-                Logger.Log("Running the OneDrive uninstaller...");
-                Uninstall();
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not run the OneDrive uninstaller: {0}", ex.Message);
-                retval = false;
-            }
-
-            try
-            {
-                Logger.Log("Terminating any running OneDrive processes...");
-                KillProcesses();
-                Logger.Log("Completed termination of running OneDrive processes");
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not kill running OneDrive processes: {0}", ex.Message);
-                retval = false;
-            }
-
-            try
-            {
-                Logger.Log("Setting the policy that prevents OneDrive from running...");
-                ApplyPolicy();
-                Logger.Log("Completed setting the OneDrive policy.");
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not set the OneDrive policy: {0}", ex.Message);
-                retval = false;
-            }
-
-            try
-            {
-                Logger.Log("Removing OneDrive keys from registry...");
-                DeleteRegistryKeys();
-                Logger.Log("Completed removal of OneDrive keys from registry");
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not remove OneDrive keys from registry: {0}", ex.Message);
-                retval = false;
-            }
-
-            try
-            {
-                Logger.Log("Deleting leftover OneDrive folders...");
-                DeleteFoldersAndFiles();
-                Logger.Log("Completed removal of leftover OneDrive folders.");
-            }
-            catch (Exception ex)
-            {
-                Logger.Log("Could not delete leftover OneDrive folders: {0}", ex.Message);
-                retval = false;
-            }
-
+            retval &= Step("Stopping OneDrive", KillProcesses);
+            retval &= Step("Running the OneDrive uninstaller", Uninstall);
+            retval &= Step("Stopping anything the uninstaller left running", KillProcesses);
+            retval &= Step("Setting the policy that prevents OneDrive from running", ApplyPolicy);
+            retval &= Step("Removing OneDrive keys from the registry", DeleteRegistryKeys);
+            retval &= Step("Deleting leftover OneDrive folders", DeleteFoldersAndFiles);
             return retval;
+        }
+
+        /// <summary>
+        /// Logs and runs one part of the treatment, logging any failure so the remaining parts still run.
+        /// </summary>
+        private bool Step(string description, Action action)
+        {
+            Logger.Log("{0}...", description);
+
+            try
+            {
+                action();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Failed: {0}", ex.Message);
+                return false;
+            }
         }
     }
 }

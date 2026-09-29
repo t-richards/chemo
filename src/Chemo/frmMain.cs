@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace Chemo
             InitializeComponent();
 
             lstTreatments.SmallImageList = StatusIcons.Create(lstTreatments.LogicalToDeviceUnits(16));
+            versionToolStripMenuItem.Text = $"Version {typeof(frmMain).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion}";
             InitTreatments();
         }
 
@@ -69,10 +71,11 @@ namespace Chemo
                 {
                     TreatmentStatus.Info => "Ready to apply",
                     TreatmentStatus.Restart => "Restart to finish",
-                    TreatmentStatus.Error => "Couldn't analyze, right-click for details",
+                    TreatmentStatus.Error => "Couldn't analyze, see details",
                     _ => "Already applied",
                 };
                 item.SetStatus(status, text, duration);
+                RefreshDetails(item);
 
                 prgTreatmentApplication.Value += 1;
             }
@@ -113,10 +116,11 @@ namespace Chemo
                 string text = status switch
                 {
                     TreatmentStatus.Restart => "Applied, restart to finish",
-                    TreatmentStatus.Error => "Failed, right-click for details",
+                    TreatmentStatus.Error => "Failed, see details",
                     _ => "Applied",
                 };
                 item.SetStatus(status, text, duration);
+                RefreshDetails(item);
 
                 prgTreatmentApplication.Value += 1;
             }
@@ -131,7 +135,7 @@ namespace Chemo
             }
             if (failedCount > 0)
             {
-                summary += $" {failedCount} failed; right-click for details.";
+                summary += $" {failedCount} failed; select a treatment to see what went wrong.";
             }
             EndRun(summary);
         }
@@ -171,7 +175,7 @@ namespace Chemo
             }
             catch (Exception ex)
             {
-                treatment.Logger.Log("{0}", ex.Message);
+                treatment.Logger.Log("{0}: {1}", ex.GetType().Name, ex.Message.Trim());
                 return (TreatmentStatus.Error, stopwatch.Elapsed);
             }
         }
@@ -198,6 +202,7 @@ namespace Chemo
                 item.Treatment.Logger.Reset();
             }
 
+            ShowDetails();
             prgTreatmentApplication.Value = 0;
 
             if (treatments.Count == 0)
@@ -255,49 +260,46 @@ namespace Chemo
             }
         }
 
-        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LstTreatments_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Form aboutForm = new frmAbout();
-            aboutForm.ShowDialog();
-            aboutForm.Dispose();
+            ShowDetails();
         }
 
-        private void LstTreatments_MouseClick(object sender, MouseEventArgs e)
+        /// <summary>
+        /// Updates the details pane if it's showing this treatment.
+        /// </summary>
+        private void RefreshDetails(TreatmentItem item)
         {
-            if (e.Button != MouseButtons.Right)
+            if (item.Selected)
             {
-                return;
+                ShowDetails();
             }
+        }
 
-            lstTreatments.ContextMenuStrip?.Dispose();
-            lstTreatments.ContextMenuStrip = null;
+        /// <summary>
+        /// Shows what the selected treatment does and its log from the last run, or the selected category's description.
+        /// </summary>
+        private void ShowDetails()
+        {
+            ListViewItem selected = lstTreatments.SelectedItems.Count > 0 ? lstTreatments.SelectedItems[0] : null;
 
-            if (lstTreatments.HitTest(e.Location).Item is not TreatmentItem item)
+            txtDetails.Text = selected switch
             {
-                return;
-            }
-
-            ContextMenuStrip menu = new ContextMenuStrip
-            {
-                Tag = item.Treatment
+                TreatmentItem item => TreatmentDetails(item.Treatment),
+                CategoryItem category => category.Category.Description,
+                _ => "",
             };
-            menu.Items.Add($"Show Details for {item.Text}", null, LstTreatments_OnContextMenuClick);
-
-            lstTreatments.ContextMenuStrip = menu;
         }
 
-        private void LstTreatments_OnContextMenuClick(object sender, EventArgs e)
+        private static string TreatmentDetails(BaseTreatment treatment)
         {
-            ToolStripItem senderItem = (ToolStripItem)sender;
-            BaseTreatment treatment = (BaseTreatment)senderItem.Owner.Tag;
-            string message = treatment.Logger.ToString();
+            string log = treatment.Logger.ToString();
+            return log.Length == 0 ? treatment.Tooltip() : $"{treatment.Tooltip()}\r\n\r\n{log}";
+        }
 
-            if (string.IsNullOrEmpty(message))
-            {
-                return;
-            }
-
-            MessageBox.Show(message, treatment.Name());
+        private void GithubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://github.com/t-richards/chemo") { UseShellExecute = true });
         }
     }
 }
