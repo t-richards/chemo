@@ -19,7 +19,7 @@ namespace Chemo.Treatment
 
         private void OnGithubLabelClick(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/t-richards/chemo");
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://github.com/t-richards/chemo") { UseShellExecute = true });
         }
     }
 }

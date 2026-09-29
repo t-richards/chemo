@@ -3,44 +3,15 @@ on: [push]
 
 jobs:
   build:
-
+    name: build application
     runs-on: windows-latest
 
     steps:
     - name: Checkout source
-      uses: actions/checkout@v3
-
-    - name: Setup ducible
-      uses: t-richards/setup-ducible@master
-
-    - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Setup Windows SDK
-      uses: GuillaumeFalourd/setup-windows10-sdk-action@v1.6
-      with:
-        sdk-version: 18362
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1
-
-    - name: Restore NuGet Packages
-      run: nuget restore Chemo.sln
+      uses: actions/checkout@v7
 
     - name: Build application
-      run: msbuild Chemo.sln /p:Configuration=Release
+      run: dotnet build Chemo.slnx -c Release
 
-    - name: Merge assemblies
-      shell: cmd
-      run: |
-        "%USERPROFILE%"\.nuget\packages\ILRepack\2.0.18\tools\ILRepack.exe /out:build/Chemo.exe src\Chemo\bin\Release\Chemo.exe src\Chemo\bin\Release\Microsoft.Dism.dll
-        cp build\Chemo.exe Chemo.exe
-
-    - name: Reproducible build
-      run: ducible Chemo.exe
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: Chemo.exe
-        path: Chemo.exe
+    - name: Run tests
+      run: dotnet test Chemo.slnx -c Release --no-build

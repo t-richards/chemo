@@ -338,20 +338,20 @@ namespace Chemo
             }
 
             string text = $"Show Details for {hitTestInfo.Item.Text}";
-            MenuItem[] menuItems = new MenuItem[]
-            {
-                new MenuItem(text, LstResults_OnContextMenuClick)
-            };
-            lstResults.ContextMenu = new ContextMenu(menuItems)
+            ContextMenuStrip menu = new ContextMenuStrip
             {
                 Tag = hitTestInfo.Item.Tag
             };
+            menu.Items.Add(text, null, LstResults_OnContextMenuClick);
+
+            lstResults.ContextMenuStrip?.Dispose();
+            lstResults.ContextMenuStrip = menu;
         }
 
         private void LstResults_OnContextMenuClick(object sender, EventArgs e)
         {
-            MenuItem senderItem = (MenuItem)sender;
-            BaseTreatment treatment = (BaseTreatment)senderItem.Parent.Tag;
+            ToolStripItem senderItem = (ToolStripItem)sender;
+            BaseTreatment treatment = (BaseTreatment)senderItem.Owner.Tag;
             string message = treatment.Logger.ToString();
 
             if (string.IsNullOrEmpty(message))
