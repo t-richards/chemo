@@ -146,6 +146,16 @@ namespace Chemo.Controls
         }
 
         /// <summary>
+        /// Determines whether any part of an item's row is scrolled into view.
+        /// </summary>
+        public bool IsInView(ListViewItem item)
+        {
+            // The details view scrolls a whole row at a time, so the top row always starts just below the column headers.
+            Rectangle bounds = item.Bounds;
+            return bounds.Bottom > TopItem.Bounds.Top && bounds.Top < ClientSize.Height;
+        }
+
+        /// <summary>
         /// Shows an image from the small image list next to the text in a column other than the first.
         /// </summary>
         public void SetSubItemImage(ListViewItem item, int column, string imageKey)

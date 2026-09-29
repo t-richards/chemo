@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\README.md" Link="README.md" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\doc\treatments.md" Link="treatments.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
     <File Path="README.md" />
+    <File Path="doc/treatments.md" />
   </Folder>
   <Project Path="src/Chemo.csproj" />
   <Project Path="test/Chemo.Test.csproj" />

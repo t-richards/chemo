@@ -82,21 +82,19 @@ namespace Chemo.Test
         }
 
         [Fact]
-        public void ItMatchesTheReadme()
+        public void ItMatchesTheTreatmentsDoc()
         {
-            // The README lists each category in bold with its treatments under it, in the same order as the app.
+            // treatments.md has a heading for each category with a heading for each of its treatments under it, in the
+            // same order as the app. Anything else there is free text.
             List<string> expected = [];
             foreach (Category category in TreatmentCatalog.Categories)
             {
-                expected.Add($"- **{category.Name}**");
-                expected.AddRange(category.Treatments.Select(t => $"  - {t.Name}"));
+                expected.Add($"## {category.Name}");
+                expected.AddRange(category.Treatments.Select(t => $"### {t.Name}"));
             }
 
-            List<string> actual = File.ReadAllLines(Path.Combine(AppContext.BaseDirectory, "README.md"))
-                .SkipWhile(line => !string.Equals(line, "## Treatments", StringComparison.Ordinal))
-                .Skip(1)
-                .TakeWhile(line => !line.StartsWith("## ", StringComparison.Ordinal))
-                .Where(line => line.Length > 0)
+            List<string> actual = File.ReadAllLines(Path.Combine(AppContext.BaseDirectory, "treatments.md"))
+                .Where(line => line.StartsWith("## ", StringComparison.Ordinal) || line.StartsWith("### ", StringComparison.Ordinal))
                 .ToList();
 
             Assert.Equal(expected, actual);

@@ -294,9 +294,19 @@ namespace Chemo
             }
 
             Stopwatch overallTime = Stopwatch.StartNew();
+            TreatmentItem? previous = null;
 
             foreach (TreatmentItem item in treatments)
             {
+                // Scroll just far enough to show the treatment being applied, so the list follows the run to the
+                // bottom. If the previous treatment has been scrolled out of view to look at something else, leave the
+                // list where it is.
+                if (previous is null || treatmentList.IsInView(previous))
+                {
+                    item.EnsureVisible();
+                }
+                previous = item;
+
                 statusLabel.Text = $"Applying {item.Text}…";
                 item.SetStatus(TreatmentStatus.NotStarted, "Applying…");
 
