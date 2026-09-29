@@ -6,7 +6,7 @@ namespace Chemo.Treatment.Config
     class SuggestedApps : BaseTreatment
     {
         // Tiles
-        private const string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Cloud Content";
+        private const string CloudContent = @"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent";
         private const string ConsumerFeaturesKey = "DisableWindowsConsumerFeatures";
         private const int ConsumerFeaturesValue = 1;
 

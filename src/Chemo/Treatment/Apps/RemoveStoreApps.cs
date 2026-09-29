@@ -1,5 +1,6 @@
 using Chemo.Data;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Windows.ApplicationModel;
 using Windows.Foundation;
@@ -18,13 +19,13 @@ namespace Chemo.Treatment.Apps
 
         public override string Tooltip()
         {
-            return "Removes most pre-installed Windows Store apps.";
+            return "Removes pre-installed ads, upsells, and discontinued apps such as News, Teams, and Solitaire for all users.";
         }
 
         public override bool ShouldPerformTreatment()
         {
             int packageCount = 0;
-            IEnumerable<Package> packages = packageManager.FindPackages();
+            IEnumerable<Package> packages = packageManager.FindPackages().DistinctBy(p => p.Id.FullName);
 
             foreach (Package package in packages)
             {
@@ -50,7 +51,7 @@ namespace Chemo.Treatment.Apps
         public override bool PerformTreatment()
         {
             int packageCount = 0;
-            IEnumerable<Package> packages = packageManager.FindPackages();
+            IEnumerable<Package> packages = packageManager.FindPackages().DistinctBy(p => p.Id.FullName);
 
             foreach (var package in packages)
             {
@@ -77,7 +78,7 @@ namespace Chemo.Treatment.Apps
         private void RemovePackage(Package package)
         {
             IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> deploymentOperation =
-                packageManager.RemovePackageAsync(package.Id.FullName);
+                packageManager.RemovePackageAsync(package.Id.FullName, RemovalOptions.RemoveForAllUsers);
 
             ManualResetEvent opCompletedEvent = new ManualResetEvent(false);
 

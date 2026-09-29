@@ -5,10 +5,32 @@ namespace Chemo.Test
 {
     public class StoreAppsTest
     {
-        [Fact]
-        public void ItRemovesCandyCrush()
+        [Theory]
+        [InlineData("Microsoft.BingNews")]
+        [InlineData("MSTeams")]
+        [InlineData("MicrosoftTeams")]
+        [InlineData("Microsoft.MicrosoftSolitaireCollection")]
+        public void ItRemovesJunkApps(string packageName)
         {
-            Assert.True(StoreApps.ShouldRemove("king.com.CandyCrushSaga"));
+            Assert.True(StoreApps.ShouldRemove(packageName));
+        }
+
+        [Fact]
+        public void ItIgnoresCase()
+        {
+            Assert.True(StoreApps.ShouldRemove("microsoft.bingnews"));
+        }
+
+        [Theory]
+        [InlineData("Microsoft.DesktopAppInstaller")]
+        [InlineData("Microsoft.WindowsStore")]
+        [InlineData("Microsoft.WindowsCalculator")]
+        [InlineData("Microsoft.ZuneMusic")]
+        [InlineData("Microsoft.XboxIdentityProvider")]
+        [InlineData("Microsoft.GetHelp")]
+        public void ItKeepsUsefulApps(string packageName)
+        {
+            Assert.False(StoreApps.ShouldRemove(packageName));
         }
 
         [Fact]

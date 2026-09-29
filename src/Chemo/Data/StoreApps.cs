@@ -1,68 +1,38 @@
+using System;
 using System.Collections.Generic;
 
 namespace Chemo.Data
 {
     public static class StoreApps
     {
-        private static readonly HashSet<string> AppsToRemove = new HashSet<string>
+        // Pre-installed apps on a typical Windows 11 Pro install that are ads, upsells, or discontinued.
+        // Built-in utilities (Calculator, Clock, Camera, Media Player, Photos, Snipping Tool, etc.) and
+        // anything other apps depend on (App Installer, Store, Xbox identity, codecs) are deliberately kept.
+        private static readonly HashSet<string> AppsToRemove = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "46928bounde.EclipseManager",
-            "828B5831.HiddenCityMysteryofShadows",
-            "A278AB0D.DragonManiaLegends",
-            "ActiproSoftwareLLC.562882FEEB491",
-            "AdobeSystemsIncorporated.AdobePhotoshopExpress",
-            "D5EA27B7.Duolingo-LearnLanguagesforFree",
-            "Fitbit.FitbitCoach",
-            "king.com.BubbleWitch3Saga",
-            "king.com.CandyCrushSaga",
-            "king.com.CandyCrushSodaSaga",
-            "king.com.FarmHeroesSaga",
-            "Microsoft.3DBuilder",
-            "Microsoft.BingFinance",
-            "Microsoft.BingFoodAndDrink",
-            "Microsoft.BingHealthAndFitness",
-            "Microsoft.BingNews",
-            "Microsoft.BingSports",
-            "Microsoft.BingTravel",
-            "Microsoft.BingWeather",
-            "Microsoft.DesktopAppInstaller",
-            "Microsoft.FreshPaint",
-            "Microsoft.GetHelp",
-            "Microsoft.Getstarted",
-            "Microsoft.Messaging",
-            "Microsoft.Microsoft3DViewer",
-            "Microsoft.MicrosoftOfficeHub",
-            "Microsoft.MicrosoftPowerBIForWindows",
-            "Microsoft.MicrosoftSolitaireCollection",
-            "Microsoft.MicrosoftStickyNotes",
-            "Microsoft.MinecraftUWP",
-            "Microsoft.MSPaint",
-            "Microsoft.NetworkSpeedTest",
-            "Microsoft.Office.OneNote",
-            "Microsoft.Office.Sway",
-            "Microsoft.OneConnect",
-            "Microsoft.People",
-            "Microsoft.Print3D",
-            "Microsoft.SkypeApp",
-            "Microsoft.Wallet",
-            "Microsoft.WindowsAlarms",
-            "Microsoft.WindowsCamera",
-            "microsoft.windowscommunicationsapps",
-            "Microsoft.WindowsFeedbackHub",
-            "Microsoft.WindowsMaps",
-            "Microsoft.WindowsSoundRecorder",
-            "Microsoft.Xbox.TCUI",
-            "Microsoft.XboxApp",
-            "Microsoft.XboxGameOverlay",
-            "Microsoft.XboxGamingOverlay",
-            "Microsoft.XboxIdentityProvider",
-            "Microsoft.XboxSpeechToTextOverlay",
-            "Microsoft.ZuneMusic",
-            "Microsoft.ZuneVideo",
-            "Nordcurrent.CookingFever",
-            "NORDCURRENT.COOKINGFEVER",
-            "PandoraMediaInc.29680B314EFC2",
-            "ThumbmunkeysLtd.PhototasticCollage"
+            // Bing & MSN content
+            "Microsoft.BingNews",                       // News
+            "Microsoft.BingSearch",                     // Bing Search
+            "Microsoft.BingWeather",                    // Weather
+            "Microsoft.Copilot",                        // Copilot
+
+            // Upsells & promotions
+            "Clipchamp.Clipchamp",                      // Clipchamp
+            "Microsoft.Getstarted",                     // Tips
+            "Microsoft.MicrosoftOfficeHub",             // Microsoft 365 Copilot
+            "Microsoft.MicrosoftSolitaireCollection",   // Solitaire & Casual Games
+            "Microsoft.PowerAutomateDesktop",           // Power Automate
+            "Microsoft.WindowsFeedbackHub",             // Feedback Hub
+
+            // Teams
+            "MicrosoftTeams",                           // Teams (personal), Windows 11 23H2 and earlier
+            "MSTeams",                                  // Teams
+
+            // Discontinued
+            "Microsoft.549981C3F5F10",                  // Cortana
+            "Microsoft.Windows.DevHome",                // Dev Home
+            "Microsoft.windowscommunicationsapps",      // Mail and Calendar
+            "Microsoft.WindowsMaps",                    // Maps
         };
 
         public static bool ShouldRemove(string packageName)

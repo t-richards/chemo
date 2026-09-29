@@ -13,7 +13,7 @@ namespace Chemo.Treatment.Apps
 
         public override string Tooltip()
         {
-            return "Deprovisions all packages.This prevents Windows Store application from re-appearing when a new user is created, or when a feature update is applied.";
+            return "Deprovisions the same apps so they don't return when a new user is created or a feature update is applied.";
         }
 
         public override bool ShouldPerformTreatment()
