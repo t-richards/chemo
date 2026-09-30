@@ -192,7 +192,7 @@ Unpins every app from Start for your account, including pins for apps that aren'
 
 ### Hide recent items in Start
 
-Stops Start from listing apps you recently installed, apps you use most, and files you recently opened. Recent files also disappear from File Explorer's Home and from jump lists. Restart to finish.
+Hides the Recent section in Start, and stops Start from listing apps you recently installed, apps you use most, and files you recently opened. Recent files also disappear from File Explorer's Home and from jump lists.
 
 ### Bring back the previous Start menu
 
