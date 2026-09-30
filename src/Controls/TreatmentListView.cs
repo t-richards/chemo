@@ -3,8 +3,8 @@ using Chemo.Utilities;
 namespace Chemo.Controls
 {
     /// <summary>
-    /// A details list view that can show images in any column, not just the first, whose last column fills the
-    /// remaining width, and that can switch to Windows' dark look.
+    /// A details list view that can show images in any column, not just the first, whose columns scale with the
+    /// display and whose last column fills the remaining width, and that can switch to Windows' dark look.
     /// </summary>
     internal sealed class TreatmentListView : ListView
     {
@@ -131,6 +131,18 @@ namespace Chemo.Controls
 
                 default:
                     return false;
+            }
+        }
+
+        protected override void ScaleControl(SizeF factor, BoundsSpecified specified)
+        {
+            base.ScaleControl(factor, specified);
+
+            // Windows Forms scales the list with the rest of the window at higher display scaling, but leaves its
+            // columns at their designed widths, too narrow for the larger text.
+            foreach (ColumnHeader column in Columns)
+            {
+                column.Width = (int)Math.Round(column.Width * factor.Width, MidpointRounding.AwayFromZero);
             }
         }
 

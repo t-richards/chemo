@@ -6,7 +6,7 @@
 
 Chemo is an opinionated setup/debloat utility for Windows. Chemo is my first stop after a fresh install of Windows. Before I install any apps or prepare a system image, I hit it with a dose of Chemo.
 
-<img width="897" height="664" alt="Image" src="https://github.com/user-attachments/assets/6da1382d-3dbf-4fc9-b4f1-d1c0111c98ec" />
+<img width="806" height="632" alt="Image" src="https://github.com/user-attachments/assets/31a511d7-f843-4648-bc3f-076ba596b989" />
 
 ## Supported Windows Versions / Editions
 

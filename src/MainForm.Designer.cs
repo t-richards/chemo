@@ -74,7 +74,7 @@ namespace Chemo
             // splitContainer.Panel2
             //
             this.splitContainer.Panel2.Controls.Add(this.detailsTextBox);
-            this.splitContainer.Size = new System.Drawing.Size(836, 488);
+            this.splitContainer.Size = new System.Drawing.Size(780, 488);
             this.splitContainer.SplitterDistance = 330;
             this.splitContainer.TabIndex = 0;
             //
@@ -93,7 +93,7 @@ namespace Chemo
             this.treatmentList.MultiSelect = false;
             this.treatmentList.Name = "treatmentList";
             this.treatmentList.ShowItemToolTips = true;
-            this.treatmentList.Size = new System.Drawing.Size(836, 330);
+            this.treatmentList.Size = new System.Drawing.Size(780, 330);
             this.treatmentList.TabIndex = 0;
             this.treatmentList.UseCompatibleStateImageBehavior = false;
             this.treatmentList.View = System.Windows.Forms.View.Details;
@@ -102,17 +102,17 @@ namespace Chemo
             // treatmentColumn
             //
             this.treatmentColumn.Text = "Treatment";
-            this.treatmentColumn.Width = 420;
+            this.treatmentColumn.Width = 340;
             //
             // statusColumn
             //
             this.statusColumn.Text = "Status";
-            this.statusColumn.Width = 260;
+            this.statusColumn.Width = 220;
             //
             // timeColumn
             //
             this.timeColumn.Text = "Time";
-            this.timeColumn.Width = 150;
+            this.timeColumn.Width = 199;
             //
             // detailsTextBox
             //
@@ -123,7 +123,7 @@ namespace Chemo
             this.detailsTextBox.Name = "detailsTextBox";
             this.detailsTextBox.ReadOnly = true;
             this.detailsTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.detailsTextBox.Size = new System.Drawing.Size(836, 154);
+            this.detailsTextBox.Size = new System.Drawing.Size(780, 154);
             this.detailsTextBox.TabIndex = 0;
             this.detailsTextBox.WordWrap = false;
             //
@@ -131,7 +131,7 @@ namespace Chemo
             //
             this.analyzeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.analyzeButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.analyzeButton.Location = new System.Drawing.Point(600, 536);
+            this.analyzeButton.Location = new System.Drawing.Point(544, 536);
             this.analyzeButton.Name = "analyzeButton";
             this.analyzeButton.Size = new System.Drawing.Size(120, 30);
             this.analyzeButton.TabIndex = 1;
@@ -143,7 +143,7 @@ namespace Chemo
             //
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.applyButton.Location = new System.Drawing.Point(728, 536);
+            this.applyButton.Location = new System.Drawing.Point(672, 536);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(120, 30);
             this.applyButton.TabIndex = 2;
@@ -158,13 +158,13 @@ namespace Chemo
             this.progressBar});
             this.statusStrip.Location = new System.Drawing.Point(0, 578);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(860, 22);
+            this.statusStrip.Size = new System.Drawing.Size(804, 22);
             this.statusStrip.TabIndex = 3;
             //
             // statusLabel
             //
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(643, 17);
+            this.statusLabel.Size = new System.Drawing.Size(587, 17);
             this.statusLabel.Spring = true;
             this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             //
@@ -180,7 +180,7 @@ namespace Chemo
             this.helpMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(860, 24);
+            this.menuStrip.Size = new System.Drawing.Size(804, 24);
             this.menuStrip.TabIndex = 4;
             this.menuStrip.Text = "menuStrip";
             //
@@ -252,7 +252,7 @@ namespace Chemo
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(860, 600);
+            this.ClientSize = new System.Drawing.Size(804, 600);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.analyzeButton);
