@@ -4,7 +4,7 @@ Chemo's set of treatments represent all the things that I want changed on a fres
 
 All treatments are enabled by default. Uncheck anything you don't want, click Analyze to see what would change, then click Apply.
 
-Some treatments only finish after you sign out or restart Windows.
+Some treatments only finish after you sign out or restart Windows. A few need File Explorer restarted, which Chemo does for you once, after applying everything.
 
 ## Appearance
 
@@ -68,7 +68,7 @@ Change how File Explorer shows your files.
 
 ### Show file extensions, hidden files, and more
 
-Shows file extensions, hidden files, the full folder path in the title bar, and empty drives, and adds Run as different user to Start. Sign out to finish.
+Shows file extensions, hidden files, and empty drives, and adds Run as different user to desktop apps in Start. Folder tabs show the full path, except for special folders like Documents. Chemo restarts File Explorer to finish, which closes open folder windows.
 
 ### Remove Home and Gallery
 
@@ -76,11 +76,11 @@ Removes Home and Gallery from the left side of File Explorer and opens File Expl
 
 ### Bring back the full right-click menu
 
-Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you don't have to click Show more options every time. Chemo restarts File Explorer when it's done, so the taskbar blinks and open folder windows close.
+Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you don't have to click Show more options every time. Chemo restarts File Explorer to finish, which closes open folder windows.
 
 ### Use the same view for every folder
 
-Stops File Explorer from guessing what's in each folder, which makes big folders slow to open. Every folder uses the same general view, and any views you've set up are reset. Sign out to finish.
+Stops File Explorer from guessing what's in each folder, which makes big folders slow to open. Every folder uses the same general view, and any views you've set up are reset. Chemo restarts File Explorer to finish, which closes open folder windows.
 
 ## Keyboard & mouse
 
@@ -132,7 +132,7 @@ Turns off Offline Files and the diagnostic data service, and lets the Maps and S
 
 ### Stop Store apps running in the background
 
-Stops Microsoft Store apps from running when you aren't using them. Closed apps, like Phone Link, can't sync or show notifications until you open them. Sign out to finish.
+Stops Microsoft Store apps from running when you aren't using them. Closed apps, like Phone Link, can't sync or show notifications until you open them.
 
 ## Power
 

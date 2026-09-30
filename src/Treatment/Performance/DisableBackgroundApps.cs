@@ -8,7 +8,7 @@ namespace Chemo.Treatment.Performance
 
         public override string Description =>
             "Stops Microsoft Store apps from running when you aren't using them. " +
-            "Closed apps, like Phone Link, can't sync or show notifications until you open them. Sign out to finish.";
+            "Closed apps, like Phone Link, can't sync or show notifications until you open them.";
 
         protected override IEnumerable<ISetting> Settings()
         {

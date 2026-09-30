@@ -10,7 +10,11 @@ namespace Chemo.Treatment.FileExplorer
 
         public override string Description =>
             "Stops File Explorer from guessing what's in each folder, which makes big folders slow to open. " +
-            "Every folder uses the same general view, and any views you've set up are reset. Sign out to finish.";
+            "Every folder uses the same general view, and any views you've set up are reset. Chemo restarts File Explorer " +
+            "to finish, which closes open folder windows.";
+
+        // Folders File Explorer has already opened can keep their old view until it restarts.
+        public override bool NeedsExplorerRestart => true;
 
         protected override IEnumerable<ISetting> Settings()
         {
