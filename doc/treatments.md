@@ -194,10 +194,6 @@ Unpins every app from Start for your account, including pins for apps that aren'
 
 Hides the Recent section in Start, and stops Start from listing apps you recently installed, apps you use most, and files you recently opened. Recent files also disappear from File Explorer's Home and from jump lists.
 
-### Bring back the previous Start menu
-
-Brings back the Start menu from before the Windows 11 25H2 redesign. Newer versions of Windows no longer have the old Start menu, so this does nothing there. Restart to finish.
-
 ## Taskbar
 
 Clean up the taskbar.

@@ -70,8 +70,7 @@ namespace Chemo.Treatment
                 new Start.DisableStoreSearchResults(),
                 new Start.SuggestedApps(),
                 new Start.UnpinStartApps(),
-                new Start.HideRecentItems(),
-                new Start.RestorePreviousStartMenu()),
+                new Start.HideRecentItems()),
 
             new Category("Taskbar", "Clean up the taskbar.",
                 new Taskbar.RemoveWidgets(),
