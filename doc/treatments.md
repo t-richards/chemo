@@ -200,7 +200,7 @@ Clean up the taskbar.
 
 ### Remove Widgets
 
-Removes Widgets and its news feed from the taskbar for everyone on this PC, and keeps it off if Windows reinstalls it.
+Removes Widgets and its news feed from the taskbar for everyone on this PC. If a Windows update brings it back, run this again.
 
 ### Hide the search box and Task View
 
