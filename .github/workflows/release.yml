@@ -19,4 +19,4 @@ jobs:
       - name: Create release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} --latest src/bin/Release/Chemo.exe
+        run: gh release upload ${{ github.ref_name }} --clobber src/bin/Release/Chemo.exe
