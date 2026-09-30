@@ -8,8 +8,11 @@ namespace Chemo.Treatment.FileExplorer
         public override string Name => "Bring back the full right-click menu";
 
         public override string Description =>
-            "Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you " +
-            "don't have to click Show more options every time. Sign out to finish.";
+            "Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you don't have to click " +
+            "Show more options every time. Chemo restarts File Explorer when it's done, so the taskbar blinks and open folder windows close.";
+
+        // File Explorer loads the menu once, when it starts.
+        public override bool NeedsExplorerRestart => true;
 
         protected override IEnumerable<ISetting> Settings()
         {

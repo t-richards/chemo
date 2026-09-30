@@ -24,6 +24,17 @@ namespace Chemo.Treatment
         public abstract string Description { get; }
 
         /// <summary>
+        /// Whether File Explorer only picks up the treatment's changes when it starts. After applying, Chemo restarts
+        /// File Explorer once if any of these treatments changed something.
+        /// </summary>
+        public virtual bool NeedsExplorerRestart => false;
+
+        /// <summary>
+        /// Whether the last time the treatment was applied, it changed at least one setting.
+        /// </summary>
+        public bool Changed { get; private set; }
+
+        /// <summary>
         /// The settings this treatment puts in place, in the order they are applied.
         /// </summary>
         protected abstract IEnumerable<ISetting> Settings();
@@ -76,7 +87,7 @@ namespace Chemo.Treatment
         public bool Apply()
         {
             bool succeeded = true;
-            bool changed = false;
+            Changed = false;
 
             foreach (ISetting setting in Settings())
             {
@@ -90,7 +101,7 @@ namespace Chemo.Treatment
 
                     setting.Apply();
                     Logger.Log("Set: {0}", setting);
-                    changed = true;
+                    Changed = true;
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +110,7 @@ namespace Chemo.Treatment
                 }
             }
 
-            if (changed)
+            if (Changed)
             {
                 try
                 {

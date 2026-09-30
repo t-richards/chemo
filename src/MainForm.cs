@@ -323,6 +323,7 @@ namespace Chemo
                 progressBar.Value += 1;
             }
 
+            int signOutCount = await RestartExplorerIfNeeded(treatments);
             int restartCount = CountStatus(treatments, TreatmentStatus.Restart);
             int failedCount = CountStatus(treatments, TreatmentStatus.Error);
 
@@ -331,11 +332,55 @@ namespace Chemo
             {
                 summary += $" Restart Windows to finish {Count(restartCount, "treatment")}.";
             }
+            if (signOutCount > 0)
+            {
+                summary += $" File Explorer couldn't restart, so sign out to finish {Count(signOutCount, "treatment")}.";
+            }
             if (failedCount > 0)
             {
                 summary += $" {failedCount} failed; select a treatment to see what went wrong.";
             }
             EndRun(summary);
+        }
+
+        /// <summary>
+        /// Restarts File Explorer once if any treatment it only picks up when it starts changed something, and logs how
+        /// it went in each of those treatments.
+        /// </summary>
+        /// <returns>Returns how many treatments still need a sign-out because File Explorer couldn't restart.</returns>
+        private async Task<int> RestartExplorerIfNeeded(List<TreatmentItem> treatments)
+        {
+            List<TreatmentItem> waiting = treatments.Where(item => item.Treatment.NeedsExplorerRestart && item.Treatment.Changed).ToList();
+            if (waiting.Count == 0)
+            {
+                return 0;
+            }
+
+            statusLabel.Text = "Restarting File Explorer…";
+            Exception? failure = null;
+            try
+            {
+                await Task.Run(ExplorerShell.Restart);
+            }
+            catch (Exception ex)
+            {
+                failure = ex;
+            }
+
+            foreach (TreatmentItem item in waiting)
+            {
+                if (failure is null)
+                {
+                    item.Treatment.Logger.Log("Restarted File Explorer.");
+                }
+                else
+                {
+                    item.Treatment.Logger.Log("Could not restart File Explorer: {0}", failure.Message);
+                }
+                RefreshDetails(item);
+            }
+
+            return failure is null ? 0 : waiting.Count;
         }
 
         private static TreatmentStatus AnalyzeTreatment(SettingsTreatment treatment)

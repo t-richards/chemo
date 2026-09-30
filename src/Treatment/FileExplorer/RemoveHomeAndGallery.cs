@@ -9,7 +9,7 @@ namespace Chemo.Treatment.FileExplorer
 
         public override string Name => "Remove Home and Gallery";
 
-        public override string Description => "Removes Home and Gallery from the left side of File Explorer and opens File Explorer to This PC instead. Sign out to finish.";
+        public override string Description => "Removes Home and Gallery from the left side of File Explorer and opens File Explorer to This PC instead.";
 
         protected override IEnumerable<ISetting> Settings()
         {

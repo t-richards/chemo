@@ -72,11 +72,11 @@ Shows file extensions, hidden files, the full folder path in the title bar, and 
 
 ### Remove Home and Gallery
 
-Removes Home and Gallery from the left side of File Explorer and opens File Explorer to This PC instead. Sign out to finish.
+Removes Home and Gallery from the left side of File Explorer and opens File Explorer to This PC instead.
 
 ### Bring back the full right-click menu
 
-Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you don't have to click Show more options every time. Sign out to finish.
+Brings back the Windows 10 right-click menu in File Explorer and on the desktop, so you don't have to click Show more options every time. Chemo restarts File Explorer when it's done, so the taskbar blinks and open folder windows close.
 
 ### Use the same view for every folder
 
@@ -204,7 +204,7 @@ Clean up the taskbar.
 
 ### Remove Widgets
 
-Removes Widgets and its news feed from the taskbar for everyone on this PC, and keeps it off if Windows reinstalls it. Sign out to finish.
+Removes Widgets and its news feed from the taskbar for everyone on this PC, and keeps it off if Windows reinstalls it.
 
 ### Hide the search box and Task View
 

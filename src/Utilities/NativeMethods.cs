@@ -182,6 +182,13 @@ namespace Chemo.Utilities
         [DllImport("user32.dll")]
         public static extern uint GetMenuItemID(IntPtr hMenu, int nPos);
 
+        // The desktop's owner
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetShellWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
         public const int LVM_GETHEADER = 0x1000 + 31;
         public const int LVM_SETEXTENDEDLISTVIEWSTYLE = 0x1000 + 54;
         public const int LVM_SETITEMW = 0x1000 + 76;

@@ -10,7 +10,7 @@ namespace Chemo.Treatment.Taskbar
 
         public override string Description =>
             "Removes Widgets and its news feed from the taskbar for everyone on this PC, " +
-            "and keeps it off if Windows reinstalls it. Sign out to finish.";
+            "and keeps it off if Windows reinstalls it.";
 
         protected override IEnumerable<ISetting> Settings()
         {

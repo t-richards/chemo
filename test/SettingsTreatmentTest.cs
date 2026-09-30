@@ -62,6 +62,7 @@ namespace Chemo.Test
             Assert.True(treatment.NeedsApplying());
             Assert.True(treatment.Apply());
             Assert.True(missing.Applied);
+            Assert.True(treatment.Changed);
             Assert.Equal(1, treatment.ChangeNotifications);
             Assert.False(treatment.NeedsApplying());
         }
@@ -73,7 +74,19 @@ namespace Chemo.Test
 
             Assert.False(treatment.NeedsApplying());
             Assert.True(treatment.Apply());
+            Assert.False(treatment.Changed);
             Assert.Equal(0, treatment.ChangeNotifications);
+        }
+
+        [Fact]
+        public void ItOnlyReportsChangesFromTheLastApply()
+        {
+            FakeTreatment treatment = new(new FakeSetting());
+
+            Assert.True(treatment.Apply());
+            Assert.True(treatment.Changed);
+            Assert.True(treatment.Apply());
+            Assert.False(treatment.Changed);
         }
 
         [Fact]
