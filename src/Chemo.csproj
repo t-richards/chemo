@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>Chemo.manifest</ApplicationManifest>
+    <DebugType>embedded</DebugType>
+    <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.3.0</Version>
+    <Description>Chemo is an opinionated Windows 11 setup tool.</Description>
+    <Company>tomrichards.net</Company>
+    <Product>Chemo</Product>
+    <Copyright>Copyright © 2026 Tom Richards</Copyright>
+    <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.ServiceProcess" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Chemo.Test" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Dism" GeneratePathProperty="true" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Windows.SDK.Contracts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="$(PkgMicrosoft_Dism)\lib\net472\Microsoft.Dism.dll" LogicalName="Microsoft.Dism.dll" Visible="false" />
+  </ItemGroup>
+
+</Project>
