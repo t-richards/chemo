@@ -1,0 +1,22 @@
+name: release
+
+on:
+  push:
+    tags: ['*.*.*']
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v7
+
+      - name: Build application
+        run: dotnet build Chemo.slnx -c Release -p:Version=${{ github.ref_name }}
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ github.ref_name }} --latest src/bin/Release/Chemo.exe

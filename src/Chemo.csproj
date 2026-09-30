@@ -6,6 +6,7 @@
     <ApplicationManifest>Chemo.manifest</ApplicationManifest>
     <DebugType>embedded</DebugType>
     <GenerateSupportedRuntime>false</GenerateSupportedRuntime>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <PropertyGroup>

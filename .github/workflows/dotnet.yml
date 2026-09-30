@@ -1,9 +1,9 @@
-name: build
+name: dotnet
 on: [push]
 
 jobs:
   build:
-    name: build application
+    name: build / test / lint
     runs-on: windows-latest
 
     steps:
