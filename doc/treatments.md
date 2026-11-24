@@ -106,10 +106,6 @@ Blanks the screen after 15 minutes without use, and asks for your password or PI
 
 Makes you press Ctrl+Alt+Del before signing in. Only Windows can respond to that key combination, so a fake sign-in screen can't trick you into typing your password.
 
-### Skip the lock screen
-
-Goes straight to the password or PIN box when you start, wake, or lock your PC, without a lock screen to click or swipe away first. If Ctrl+Alt+Del is required, you press that instead.
-
 ### Turn off lock screen tips
 
 Stops Windows from showing fun facts, tips, and ads on the lock screen. Your lock screen picture stays the same.

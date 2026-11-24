@@ -43,7 +43,6 @@ namespace Chemo.Treatment
             new Category("Lock screen & sign-in", "Change the lock screen, how you sign in, and when your PC locks.",
                 new LockScreenSignIn.LockWhenIdle(),
                 new LockScreenSignIn.RequireCtrlAltDel(),
-                new LockScreenSignIn.SkipLockScreen(),
                 new LockScreenSignIn.DisableLockScreenTips()),
 
             new Category("Network", "Change how your PC treats the networks it connects to.",
